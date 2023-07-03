@@ -35,7 +35,7 @@ const Sidebar = () => {
               className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
             >
               <TruckIcon className='w-[25px] h-[25px]' />
-              <p className='capitalize'>delevery</p>
+              <p className='capitalize'>purchase order</p>
             </div>
             {/* <div
               onClick={() => navigate('approve')}

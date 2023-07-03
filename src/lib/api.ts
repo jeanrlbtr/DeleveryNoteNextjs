@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = 'https://dev.saptakarsa.com';
+export const baseURL = 'https://dev.saptakarsa.com/gtw';
 export const API = axios.create({
   baseURL,
 });

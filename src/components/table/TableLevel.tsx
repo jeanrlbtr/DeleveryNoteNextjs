@@ -6,11 +6,25 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
+import ClientFetching from '@/hooks/clientFetching';
+import { useQuery } from '@tanstack/react-query';
+import TableLoading from './TableLoading';
 
-const TableLevel = ({ levelData }: { levelData: any }) => {
+const TableLevel = () => {
   const [open, setOpen] = useState(false);
-  const [level, setLevel] = useState<any>({});
   const { register, handleSubmit, setValue } = useForm();
+  const axiosFetching = ClientFetching();
+  const { data: levelData, isLoading } = useQuery({
+    queryKey: ['getLevel'],
+    queryFn: async () => {
+      const res = await axiosFetching.get('/delivery/v1/levels');
+      return res.data.data;
+    },
+  });
+
+  if (isLoading) {
+    return <TableLoading />;
+  }
 
   return (
     <DataTable

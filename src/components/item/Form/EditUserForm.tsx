@@ -19,18 +19,19 @@ interface User {
 }
 
 const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[] }) => {
-  const { toast } = useToast();
-
+  const [autoUpdate, setAutoUpdate] = useState<string>(defaultValue?.autoUpdate);
   const defaultValuesUser = {
-    name: defaultValue.name,
-    username: defaultValue.username,
+    name: defaultValue?.name,
+    username: defaultValue?.username,
     password: '',
-    isActive: defaultValue.isActive,
-    autoUpdate: defaultValue.autoUpdate,
-    levelId: defaultValue.levelUser.id,
+    isActive: defaultValue?.isActive,
+    autoUpdate: defaultValue?.autoUpdate,
+    levelId: defaultValue?.levelUser.id,
     image: '',
   };
-  const [user, setUser] = useState<any>({});
+
+  const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -73,6 +74,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
         <div className='w-max md:w-[500px]'>
           <Input
             placeholder='Name'
+            disabled={defaultValuesUser.autoUpdate}
             defaultValue={defaultValuesUser.name}
             {...register('name', {})}
           />
@@ -84,6 +86,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <Input
             placeholder='Username'
             defaultValue={defaultValuesUser.username}
+            disabled={defaultValuesUser.autoUpdate}
             {...register('username', {})}
           />
         </div>
@@ -94,6 +97,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <Input
             placeholder='Password'
             type='password'
+            disabled={defaultValuesUser.autoUpdate}
             defaultValue={defaultValuesUser.password}
             {...register('password', {})}
           />
@@ -104,6 +108,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
         <div className='w-max md:w-[500px]'>
           <input
             type='checkbox'
+            disabled={defaultValuesUser.autoUpdate}
             className='cursor-pointer'
             {...register('isActive')}
           />
@@ -115,7 +120,8 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <input
             type='checkbox'
             className='cursor-pointer'
-            {...register('autoUpdate')}
+            // {...register('autoUpdate')}
+            onChange={(e) => console.log(e.target.value)}
           />
         </div>
       </div>
@@ -123,6 +129,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
         <label htmlFor=''>Level Id</label>
         <div className='w-max md:w-[500px]'>
           <Select
+            disabled={defaultValuesUser.autoUpdate}
             defaultValue={`${defaultValuesUser.levelId}`}
             onValueChange={(e: any) => register('levelId').onChange(e)}
           >
@@ -151,18 +158,10 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <Input
             placeholder='Image'
             type='file'
+            disabled={defaultValuesUser.autoUpdate}
             defaultValue={defaultValuesUser.image}
-            // ref={register('image').ref}
-            // onChange={(e: any) => register('image').onChange(e?.target.files[0])}
             {...register('image', {})}
           />
-          {/* <ControllerInput
-            type='file'
-            control={control}
-            name='Photo'
-            title='Photo'
-            rules={{}}
-          /> */}
         </div>
       </div>
       <div className='flex justify-end'>

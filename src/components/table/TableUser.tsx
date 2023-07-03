@@ -8,21 +8,30 @@ import ModalPageAccess from '../item/Form/PageAccessForm';
 import EditUserForm from '../item/Form/EditUserForm';
 import ModalAccess from '../item/Form/AccessForm';
 import ClientFetching from '@/hooks/clientFetching';
-interface Props {
-  user: any;
-  level: any;
-}
+import { useQuery } from '@tanstack/react-query';
+import TableLoading from './TableLoading';
 
-const TableUser = ({ user, level }: Props) => {
-  const [id, setid] = useState<string>();
+const TableUser = () => {
+  const [detailUser, setDetailUser] = useState<any>({});
   const fetchingUser = ClientFetching();
-  const getUserDetail = async () => {
-    try {
-      const res = await fetchingUser.get(`/delivery/v1/user/${id}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { data: level, isLoading: isLoadingLevel } = useQuery({
+    queryKey: ['getLevel'],
+    queryFn: async () => {
+      const res = await fetchingUser.get('/delivery/v1/levels');
+      return res.data.data;
+    },
+  });
+
+  const { data: user, isLoading: isLoadingUser } = useQuery({
+    queryKey: ['getUser'],
+    queryFn: async () => {
+      const res = await fetchingUser.get('/delivery/v1/users');
+      return res.data.data;
+    },
+  });
+  if (isLoadingLevel || isLoadingUser) {
+    return <TableLoading />;
+  }
   return (
     <DataTable
       action={true}
@@ -45,7 +54,6 @@ const TableUser = ({ user, level }: Props) => {
               </DialogContent>
             </Dialog>
           </div>
-
           <div>
             <Dialog>
               <DialogTrigger>
@@ -75,10 +83,7 @@ const TableUser = ({ user, level }: Props) => {
               <Dialog>
                 <DialogTrigger>
                   <div
-                    // onClick={() => {
-                    //   setDetailUser(row.original);
-                    //   getLevel();
-                    // }}
+                    onClick={() => setDetailUser(row.original)}
                     className='bg-[green] w-[50px] text-[13px] text-[white] rounded-[6px] px-2 py-1'
                   >
                     Edit
@@ -91,29 +96,16 @@ const TableUser = ({ user, level }: Props) => {
                   <div className='px-4 py-2'>
                     <EditUserForm
                       level={level}
-                      defaultValue={{}}
+                      defaultValue={detailUser}
                     />
                   </div>
                 </DialogContent>
               </Dialog>
             </div>
-
             <div>
               <Dialog>
                 <DialogTrigger>
-                  <div
-                    // onClick={() => {
-                    //   setId(row.original.id);
-                    //   if (id) {
-                    //     getUserData();
-                    //     getFeature();
-                    //     setOpenAccess(true);
-                    //   }
-                    // }}
-                    className='bg-[#d65421] text-[13px] text-[white] rounded-[6px] px-2 py-1'
-                  >
-                    Access
-                  </div>
+                  <div className='bg-[#d65421] text-[13px] text-[white] rounded-[6px] px-2 py-1'>Access</div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -122,11 +114,7 @@ const TableUser = ({ user, level }: Props) => {
                   <div className='px-4 py-2 min-w-[700px] max-w-[800px]'>
                     <p className='text-[24px] text-[#525252] mb-[20px]'>User Access</p>
                     <div className='flex gap-[20px]'>
-                      <ModalAccess
-                        data={[]}
-                        id={''}
-                        userData={{}}
-                      />
+                      <ModalAccess id={`${row.original.id}`} />
                     </div>
                   </div>
                 </DialogContent>

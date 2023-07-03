@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('access_token')?.value;
-  const refreshToken = req.cookies.get('refresh_token')?.value;
 
   const url = req.url;
   if (req.nextUrl.pathname.startsWith('/login') && !token) {
@@ -16,5 +15,5 @@ export function middleware(req: NextRequest) {
   }
 }
 export const config = {
-  matcher: ['/login', '/users', '/profile', '/notes', '/', '/approve', '/level'],
+  matcher: ['/login', '/users', '/profile', '/notes/:path*', '/', '/approve', '/level'],
 };

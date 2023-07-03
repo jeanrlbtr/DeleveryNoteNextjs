@@ -1,12 +1,11 @@
+'use client';
+
 import { Container } from '@/components/item';
 import TableNote from '@/components/table/TableNote';
-import { getNote } from '@/fetchingServer/NoteFetching';
-
-async function DeleveryNote() {
-  const data = await getNote();
+function DeleveryNote() {
   return (
     <Container title='Delevery Note'>
-      <TableNote data={data.notes} />
+      <TableNote />
     </Container>
   );
 }

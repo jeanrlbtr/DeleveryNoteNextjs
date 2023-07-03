@@ -1,37 +1,10 @@
 'use client';
 
+import { Delevery, Invoice, Level, Loading, NoteDetail, Users, History, Items } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import Image from 'next/image';
 
-export type Delevery = {
-  no: number;
-  store: string;
-  sales: string;
-  address: string;
-  nomor_sj: string;
-  dateDelevery: string;
-  status: boolean;
-};
-
-export type Users = {
-  name: string;
-  username: string;
-  isActive: boolean;
-  levelId: string;
-  image: string;
-  autoUpdate: boolean;
-};
-export type Invoice = {
-  name: string;
-  qty: number;
-};
-
-export type Level = {
-  code: number;
-  name: string;
-};
-
-export const InvoiceColumn: ColumnDef<Invoice>[] = [
+const InvoiceColumn: ColumnDef<Invoice>[] = [
   {
     header: 'Name',
     accessorKey: 'name',
@@ -42,7 +15,7 @@ export const InvoiceColumn: ColumnDef<Invoice>[] = [
   },
 ];
 
-export const LevelColumn: ColumnDef<Level>[] = [
+const LevelColumn: ColumnDef<Level>[] = [
   {
     header: 'Level',
     accessorKey: 'code',
@@ -53,7 +26,82 @@ export const LevelColumn: ColumnDef<Level>[] = [
   },
 ];
 
-export const userColumn: ColumnDef<Users>[] = [
+const LoadingColumn: ColumnDef<Loading>[] = [
+  {
+    header: 'Loading',
+    accessorKey: 'loading',
+    cell: ({ row }) => {
+      return <div>loading please Wait</div>;
+    },
+  },
+];
+
+const detailNoteColumn: ColumnDef<NoteDetail>[] = [
+  {
+    header: 'Store',
+    accessorKey: 'store',
+  },
+  {
+    header: 'Sales',
+    accessorKey: 'sales',
+  },
+  {
+    header: 'Nomor SJ',
+    accessorKey: 'no',
+  },
+  {
+    header: 'Address',
+    accessorKey: 'recipientAddress',
+  },
+  {
+    header: 'Date',
+    accessorKey: 'dateNote',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateNote')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+];
+
+const historyColumn: ColumnDef<History>[] = [
+  {
+    header: 'Store',
+    accessorKey: 'store',
+  },
+  {
+    header: 'Sales',
+    accessorKey: 'sales',
+  },
+  {
+    header: 'Nomor Sj',
+    accessorKey: 'no',
+  },
+  {
+    header: 'Address',
+    accessorKey: 'recipientAddress',
+  },
+  {
+    header: 'Date',
+    accessorKey: 'addDate',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('addDate')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+];
+
+const itemColumn: ColumnDef<Items>[] = [
+  {
+    header: 'Reason',
+    accessorKey: 'reasonChanged',
+  },
+  {
+    header: 'Date',
+    accessorKey: 'addDate',
+  },
+];
+
+const userColumn: ColumnDef<Users>[] = [
   {
     header: 'Photo',
     accessorKey: 'image',
@@ -101,7 +149,8 @@ export const userColumn: ColumnDef<Users>[] = [
     },
   },
 ];
-export const columnsDelevery: ColumnDef<Delevery>[] = [
+
+const columnsDelevery: ColumnDef<Delevery>[] = [
   {
     header: 'Nomor SJ',
     accessorKey: 'no',
@@ -163,3 +212,5 @@ export const columnsDelevery: ColumnDef<Delevery>[] = [
   //   },
   // },
 ];
+
+export { InvoiceColumn, columnsDelevery, userColumn, LevelColumn, LoadingColumn, itemColumn, historyColumn, detailNoteColumn };

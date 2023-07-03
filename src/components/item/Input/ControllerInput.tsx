@@ -10,9 +10,10 @@ interface InputProps {
   type: string;
   className?: string;
   defaultValue?: string;
+  errors: any;
 }
 
-const ControllerInput = ({ control, name, rules, title, className, type, ...props }: InputProps) => {
+const ControllerInput = ({ control, name, rules, title, className, errors, type, defaultValue }: InputProps) => {
   const handleChangeFile = (e: any, field: any) => {
     field.onChange(e.target.files[0]);
   };
@@ -21,8 +22,7 @@ const ControllerInput = ({ control, name, rules, title, className, type, ...prop
     <div className={className}>
       <label htmlFor=''>{title}</label>
       <Controller
-        defaultValue={props.defaultValue}
-        {...props}
+        defaultValue={defaultValue}
         name={name}
         control={control}
         rules={rules}
@@ -30,12 +30,15 @@ const ControllerInput = ({ control, name, rules, title, className, type, ...prop
           return (
             <>
               {type !== 'file' ? (
-                <Input
-                  {...field}
-                  placeholder={title}
-                  type={type}
-                  className='w-[500px]'
-                />
+                <div className='flex  flex-col text-[red] text-[13px]'>
+                  <Input
+                    {...field}
+                    placeholder={title}
+                    type={type}
+                    className='w-[500px]'
+                  />
+                  {errors[name] && <span>{errors[name].message}</span>}
+                </div>
               ) : (
                 <Input
                   onChange={(e) => handleChangeFile(e, field)}

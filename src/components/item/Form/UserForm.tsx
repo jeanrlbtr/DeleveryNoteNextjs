@@ -64,7 +64,7 @@ const UserForm = ({ level }: { level: any }) => {
   };
 
   const disable = Object.keys(errors).length > 0;
-
+  console.log(errors);
   const loadOptions = async (inputValue: any) => {
     if (inputValue) {
       const url = `/delivery/v1/employee?name=${inputValue}`;
@@ -105,6 +105,7 @@ const UserForm = ({ level }: { level: any }) => {
         </div>
         <div className='w-full'>
           <ControllerInput
+            errors={errors}
             defaultValue={defaultValuesUser.username}
             className='mb-[10px] md:flex md:items-center md:justify-between'
             name='username'
@@ -118,6 +119,7 @@ const UserForm = ({ level }: { level: any }) => {
         </div>
         <div className='w-full'>
           <ControllerInput
+            errors={errors}
             className='mb-[10px] md:flex md:items-center md:justify-between'
             name='password'
             rules={{
@@ -165,6 +167,7 @@ const UserForm = ({ level }: { level: any }) => {
         </div>
         <div className='w-full'>
           <ControllerInput
+            errors={errors}
             className='mb-[10px] md:flex md:items-center md:justify-between'
             name='image'
             rules={{}}

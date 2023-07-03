@@ -1,3 +1,4 @@
+import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
 import '../global.css';
 import { Poppins } from 'next/font/google';
 
@@ -11,7 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }

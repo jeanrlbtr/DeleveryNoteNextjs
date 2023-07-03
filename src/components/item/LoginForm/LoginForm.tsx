@@ -25,7 +25,7 @@ const LoginForm = () => {
 
   const onSubmit = handleSubmit(async (data: Data) => {
     try {
-      const res = await axios.post('https://dev.saptakarsa.com/delivery/auth/login', data, {
+      const res = await axios.post('https://dev.saptakarsa.com/gtw/delivery/auth/login', data, {
         headers: {
           'Content-Type': 'application/json',
         },
