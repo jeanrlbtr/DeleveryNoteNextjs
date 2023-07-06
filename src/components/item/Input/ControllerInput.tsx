@@ -30,14 +30,14 @@ const ControllerInput = ({ control, name, rules, title, className, errors, type,
           return (
             <>
               {type !== 'file' ? (
-                <div className='flex  flex-col text-[red] text-[13px]'>
+                <div className='flex  flex-col '>
                   <Input
                     {...field}
                     placeholder={title}
                     type={type}
                     className='w-[500px]'
                   />
-                  {errors[name] && <span>{errors[name].message}</span>}
+                  {errors[name] && <span className='text-[red]  text-[13px]'>{errors[name].message}</span>}
                 </div>
               ) : (
                 <Input

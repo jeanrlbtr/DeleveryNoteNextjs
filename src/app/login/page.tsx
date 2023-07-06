@@ -5,9 +5,9 @@ import React from 'react';
 const LoginPage = async () => {
   return (
     <div className='h-[100vh] relative'>
-      <div className='w-[100vw] flex justify-center bg-[#2a1246] h-[60px] absolute top-0'>
+      {/* <div className='w-[100vw] flex justify-center bg-[#2a1246] h-[60px] absolute top-0'>
         <p className='text-[35px] font-Poppins text-white '> Saptakarsa Prima</p>
-      </div>
+      </div> */}
       <div className='h-[100vh] w-[100vw] bg-white flex justify-between'>
         <div className='  w-[100vw] md:flex justify-between  bg-[#fff]'>
           <p className='w-[10px]' />

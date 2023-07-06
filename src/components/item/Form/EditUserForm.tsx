@@ -5,8 +5,10 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
-import { API } from '@/lib/api';
 import { useToast } from '../../../components/ui/use-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import ClientFetching from '@/hooks/clientFetching';
+import { Loader } from 'lucide-react';
 
 interface User {
   name: string;
@@ -31,6 +33,8 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
   };
 
   const { toast } = useToast();
+  const axiosAction = ClientFetching();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -38,29 +42,37 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
     control,
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
-
+  const { mutate: editDataUser, isLoading } = useMutation({
+    mutationFn: async (formdata: any) => {
+      const res = await axiosAction.put(`/delivery/v1/user/${defaultValue.id}`, formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res.data;
+    },
+    onSuccess: (res) => {
+      toast({
+        title: res.message,
+        duration: 3000,
+      });
+      return queryClient.invalidateQueries({ queryKey: ['getUser'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
   const editUser = async (data: any) => {
     const formdata = new FormData();
     for (let i in data) {
       if (data[i]) formdata.set(i, data[i]);
     }
-    console.log(formdata);
-    try {
-      const res = await API.put(`/delivery/v1/user/${defaultValue.id}`, formdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      toast({
-        title: res.data.message,
-        duration: 3000,
-      });
-    } catch (error: any) {
-      toast({
-        title: error.message,
-        duration: 3000,
-      });
-    }
+    editDataUser(formdata);
   };
   return (
     <form
@@ -121,7 +133,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
             type='checkbox'
             className='cursor-pointer'
             // {...register('autoUpdate')}
-            onChange={(e) => console.log(e.target.value)}
+            // onChange={(e) => console.log(e.target.value)}
           />
         </div>
       </div>
@@ -168,8 +180,9 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
         <Button
           className='mt-[20px] '
           type='submit'
+          disabled={isLoading}
         >
-          submit
+          {isLoading ? <Loader /> : 'submit'}
         </Button>
       </div>
     </form>

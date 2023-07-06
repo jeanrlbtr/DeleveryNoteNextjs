@@ -26,10 +26,11 @@ const ClientFetching = () => {
             const refresh = await axiosAuth.post('/delivery/auth/login/refresh', { refresh_token });
             axiosAuth.defaults.headers.common['Authorization'] = 'Bearer ' + refresh.data.access_token;
             return axiosAuth(originalRequest);
-          } catch (error) {
-            Promise.reject(error);
+          } catch (error: any) {
+            return Promise.reject(error);
           }
         }
+        throw error;
       }
     );
     return () => {

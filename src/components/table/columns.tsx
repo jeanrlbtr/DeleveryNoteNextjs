@@ -1,8 +1,11 @@
 'use client';
 
-import { Delevery, Invoice, Level, Loading, NoteDetail, Users, History, Items } from '@/lib/types';
+import { Delevery, Invoice, Level, Loading, NoteDetail, Users, History, Items, HistoryItem, Allhistory } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
+import { ChevronRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
+import { Button } from '../ui/button';
 
 const InvoiceColumn: ColumnDef<Invoice>[] = [
   {
@@ -38,47 +41,205 @@ const LoadingColumn: ColumnDef<Loading>[] = [
 
 const detailNoteColumn: ColumnDef<NoteDetail>[] = [
   {
-    header: 'Store',
-    accessorKey: 'store',
+    header: '^',
+    accessorKey: 'id',
+    cell: ({ row }) => {
+      return (
+        <div>
+          <Button
+            className='w-max h-max bg p-0'
+            {...{
+              onClick: () => row.toggleExpanded(),
+              style: { cursor: 'pointer' },
+            }}
+          >
+            {row.getIsExpanded() ? <ChevronDown className='w-[20px] h-[20px]' /> : <ChevronRight className='w-[20px] h-[20px]' />}
+          </Button>
+        </div>
+      );
+    },
   },
   {
     header: 'Sales',
     accessorKey: 'sales',
   },
   {
-    header: 'Nomor SJ',
-    accessorKey: 'no',
+    header: 'Store',
+    accessorKey: 'store',
   },
+
   {
-    header: 'Address',
-    accessorKey: 'recipientAddress',
-  },
-  {
-    header: 'Date',
+    header: 'Date PO',
     accessorKey: 'dateNote',
     cell: ({ row }) => {
       const date = new Date(`${row.getValue('dateNote')}`).toDateString();
       return <div>{date}</div>;
     },
   },
+  {
+    header: 'Date Delevery',
+    accessorKey: 'dateDelivery',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateDelivery')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+
+  {
+    header: 'Attachment',
+    accessorKey: 'attachment',
+    cell: ({ row }) => {
+      const link = `${row.getValue('attachment')}`;
+      return (
+        <a
+          href={link}
+          target='_blank'
+        >
+          attachment
+        </a>
+      );
+    },
+  },
+  {
+    header: 'Sender Name',
+    accessorKey: 'senderName',
+  },
+  {
+    header: 'Sender Address',
+    accessorKey: 'senderAddress',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
+    },
+  },
+  {
+    header: 'Reciepient Address',
+    accessorKey: 'recipientName',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
+    },
+  },
+  {
+    header: 'Reason Changed',
+    accessorKey: 'reasonChanged',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('reasonChanged')}</p>;
+    },
+  },
+  {
+    header: 'Note',
+    accessorKey: 'note',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('note')}</p>;
+    },
+  },
 ];
 
 const historyColumn: ColumnDef<History>[] = [
-  {
-    header: 'Store',
-    accessorKey: 'store',
-  },
   {
     header: 'Sales',
     accessorKey: 'sales',
   },
   {
-    header: 'Nomor Sj',
-    accessorKey: 'no',
+    header: 'Store',
+    accessorKey: 'store',
+  },
+
+  {
+    header: 'Date PO',
+    accessorKey: 'dateNote',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateNote')}`).toDateString();
+      return <div>{date}</div>;
+    },
   },
   {
-    header: 'Address',
-    accessorKey: 'recipientAddress',
+    header: 'Date Delevery',
+    accessorKey: 'dateDelivery',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateDelivery')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+  {
+    header: 'Date History',
+    accessorKey: 'addDate',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('addDate')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+  {
+    header: 'Attachment',
+    accessorKey: 'attachment',
+    cell: ({ row }) => {
+      const link = `${row.getValue('attachment')}`;
+      return (
+        <a
+          href={link}
+          target='_blank'
+        >
+          attachment
+        </a>
+      );
+    },
+  },
+  {
+    header: 'Sender Name',
+    accessorKey: 'senderName',
+  },
+  {
+    header: 'Sender Address',
+    accessorKey: 'senderAddress',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
+    },
+  },
+  {
+    header: 'Reciepient Address',
+    accessorKey: 'recipientName',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
+    },
+  },
+  {
+    header: 'Reason Changed',
+    accessorKey: 'reasonChanged',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('reasonChanged')}</p>;
+    },
+  },
+  {
+    header: 'Note',
+    accessorKey: 'note',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('note')}</p>;
+    },
+  },
+];
+
+const itemColumn: ColumnDef<Items>[] = [
+  {
+    header: '^',
+    accessorKey: 'id',
+    cell: ({ row }) => {
+      return (
+        <div>
+          <Button
+            className='w-max h-max bg p-0'
+            {...{
+              onClick: () => row.toggleExpanded(),
+              style: { cursor: 'pointer' },
+            }}
+          >
+            {row.getIsExpanded() ? <ChevronDown className='w-[20px] h-[20px]' /> : <ChevronRight className='w-[20px] h-[20px]' />}
+          </Button>
+        </div>
+      );
+    },
+  },
+  {
+    header: 'Reason',
+    accessorKey: 'reasonChanged',
   },
   {
     header: 'Date',
@@ -90,14 +251,89 @@ const historyColumn: ColumnDef<History>[] = [
   },
 ];
 
-const itemColumn: ColumnDef<Items>[] = [
+const itemHistoryColumn: ColumnDef<HistoryItem>[] = [
   {
-    header: 'Reason',
-    accessorKey: 'reasonChanged',
+    header: 'Item Id',
+    accessorKey: 'itemId',
   },
   {
-    header: 'Date',
+    header: 'Name',
+    accessorKey: 'name',
+  },
+  {
+    header: 'Type',
+    accessorKey: 'type',
+  },
+  {
+    header: 'Variant',
+    accessorKey: 'variant',
+  },
+  {
+    header: 'Quantity',
+    accessorKey: 'qty',
+  },
+];
+
+const allHistoryColumn: ColumnDef<Allhistory>[] = [
+  {
+    header: 'Sales',
+    accessorKey: 'sales',
+  },
+  {
+    header: 'Store',
+    accessorKey: 'store',
+  },
+
+  {
+    header: 'Date Note',
+    accessorKey: 'dateNote',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateNote')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+  {
+    header: 'Date Delevery',
+    accessorKey: 'dateDelivery',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('dateDelivery')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+  {
+    header: 'Add Date',
     accessorKey: 'addDate',
+    cell: ({ row }) => {
+      const date = new Date(`${row.getValue('addDate')}`).toDateString();
+      return <div>{date}</div>;
+    },
+  },
+  {
+    header: 'Attachment',
+    accessorKey: 'attachment',
+    cell: ({ row }) => {
+      const link = `${row.getValue('addDate')}`;
+      return (
+        <a
+          href={link}
+          target='_blank'
+        >
+          attachment
+        </a>
+      );
+    },
+  },
+  {
+    header: 'Reason Changed',
+    accessorKey: 'reasonChanged',
+    cell: ({ row }) => {
+      return (
+        <input
+          className='bg-[transparent] outline-none'
+          defaultValue={row.getValue('reasonChanged')}
+        />
+      );
+    },
   },
 ];
 
@@ -213,4 +449,15 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
   // },
 ];
 
-export { InvoiceColumn, columnsDelevery, userColumn, LevelColumn, LoadingColumn, itemColumn, historyColumn, detailNoteColumn };
+export {
+  InvoiceColumn,
+  columnsDelevery,
+  userColumn,
+  allHistoryColumn,
+  LevelColumn,
+  LoadingColumn,
+  itemColumn,
+  historyColumn,
+  detailNoteColumn,
+  itemHistoryColumn,
+};

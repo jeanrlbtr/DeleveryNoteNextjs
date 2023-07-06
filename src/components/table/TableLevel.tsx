@@ -7,13 +7,17 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import ClientFetching from '@/hooks/clientFetching';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import TableLoading from './TableLoading';
+import { useToast } from '../ui/use-toast';
 
 const TableLevel = () => {
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, setValue } = useForm();
+  const { register: registerAdd, handleSubmit: handleSubmitAdd } = useForm();
   const axiosFetching = ClientFetching();
+  const queryClient = useQueryClient();
   const { data: levelData, isLoading } = useQuery({
     queryKey: ['getLevel'],
     queryFn: async () => {
@@ -22,6 +26,57 @@ const TableLevel = () => {
     },
   });
 
+  const { mutate: addLevel } = useMutation({
+    mutationFn: async (body: any) => {
+      const res = await axiosFetching.post(`/delivery/v1/level`, body, {
+        headers: {
+          'Content-Type': 'multipart/json',
+        },
+      });
+      return res.data;
+    },
+    onSuccess: (res) => {
+      toast({
+        title: res.message,
+        duration: 3000,
+      });
+      return queryClient.invalidateQueries({ queryKey: ['getLevel'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
+
+  const { mutate: editLevel } = useMutation({
+    mutationFn: async ({ body, id }: any) => {
+      const res = await axiosFetching.put(`/delivery/v1/level/${id}`, body, {
+        headers: {
+          'Content-Type': 'multipart/json',
+        },
+      });
+      return res.data;
+    },
+    onSuccess: (res) => {
+      toast({
+        title: res.message,
+        duration: 3000,
+      });
+      return queryClient.invalidateQueries({ queryKey: ['getLevel'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
   if (isLoading) {
     return <TableLoading />;
   }
@@ -47,19 +102,22 @@ const TableLevel = () => {
             </DialogHeader>
             <div>
               <form
-                onSubmit={handleSubmit((data) => {
+                onSubmit={handleSubmitAdd((data) => {
                   const code = parseInt(`${data.code}`);
-                  //  postLevel({ name: data.name, code });
+                  addLevel({
+                    name: data.name,
+                    code,
+                  });
                 })}
                 className='flex flex-col gap-[20px]'
               >
                 <Input
-                  {...register('name', { required: 'name is required' })}
+                  {...registerAdd('name', { required: 'name is required' })}
                   type='text'
                   placeholder='name'
                 />
                 <Input
-                  {...register('code', { required: 'code is required' })}
+                  {...registerAdd('code', { required: 'code is required' })}
                   type='number'
                   placeholder='code'
                 />
@@ -84,6 +142,7 @@ const TableLevel = () => {
                 onClick={() => {
                   setValue('name', `${row.original.name}`);
                   setValue('code', `${row.original.code}`);
+                  setValue('id', `${row.original.id}`);
                 }}
               >
                 Edit
@@ -97,7 +156,14 @@ const TableLevel = () => {
                 <form
                   onSubmit={handleSubmit((data) => {
                     const code = parseInt(`${data.code}`);
-                    // editLevel({ name: data.name, code });
+                    const body = {
+                      name: data.name,
+                      code,
+                    };
+                    editLevel({
+                      body,
+                      id: data.id,
+                    });
                   })}
                   className='flex flex-col gap-[20px]'
                 >

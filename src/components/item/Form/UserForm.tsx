@@ -8,6 +8,8 @@ import ControllerSelect from '../Input/ControllerSelect';
 import { useToast } from '../../../components/ui/use-toast';
 import AsyncSelect from 'react-select/async';
 import ClientFetching from '@/hooks/clientFetching';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Loader } from 'lucide-react';
 
 interface User {
   id: string;
@@ -20,7 +22,9 @@ interface User {
   isActive: boolean;
 }
 
-const UserForm = ({ level }: { level: any }) => {
+const UserForm = ({ level }: { level: any[] }) => {
+  const queryClient = useQueryClient();
+
   const { toast } = useToast();
   const axiosAction = ClientFetching();
   const defaultValuesUser: User = {
@@ -33,6 +37,7 @@ const UserForm = ({ level }: { level: any }) => {
     levelId: 0,
     image: '',
   };
+
   const {
     handleSubmit,
     control,
@@ -40,31 +45,41 @@ const UserForm = ({ level }: { level: any }) => {
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
 
-  const addUser = async (data: any) => {
-    const body: any = {};
-    for (let i in data) {
-      if (data[i]) body[`${i}`] = data[i];
-    }
-    try {
+  const { mutate: postUser, isLoading } = useMutation({
+    mutationFn: async (body) => {
       const res = await axiosAction.post(`/delivery/v1/user/register`, body, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      return res.data;
+    },
+    onSuccess: (res) => {
       toast({
         title: res.data.message,
         duration: 3000,
       });
-    } catch (error: any) {
-      toast({
-        title: error.message,
-        duration: 3000,
-      });
+      return queryClient.invalidateQueries({ queryKey: ['getUser'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
+
+  const addUser = async (data: any) => {
+    const body: any = {};
+    for (let i in data) {
+      if (data[i]) body[`${i}`] = data[i];
     }
+    postUser(body);
   };
 
   const disable = Object.keys(errors).length > 0;
-  console.log(errors);
   const loadOptions = async (inputValue: any) => {
     if (inputValue) {
       const url = `/delivery/v1/employee?name=${inputValue}`;
@@ -181,9 +196,9 @@ const UserForm = ({ level }: { level: any }) => {
         <Button
           className='mt-[20px]'
           type='submit'
-          disabled={disable}
+          disabled={disable || isLoading}
         >
-          submit
+          {isLoading ? <Loader /> : 'submit'}
         </Button>
       </div>
     </form>

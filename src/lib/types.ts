@@ -11,8 +11,14 @@ export type Delevery = {
 export type NoteDetail = {
   store: string;
   sales: string;
-  sj: string;
+  no: string;
+  senderName: string;
   recipientAddress: string;
+  reasonChanged: string;
+  recipientName: string;
+  attachment: string;
+  note: string;
+  dateDelivery: string;
   dateNote: string;
 };
 
@@ -25,6 +31,31 @@ export type History = {
   addDate: string;
 };
 
+export type Allhistory = {
+  store: string;
+  sales: string;
+  no: string;
+  senderName: string;
+  recipientAddress: string;
+  reasonChanged: string;
+  addDate: string;
+  recipientName: string;
+  attachment: string;
+  note: string;
+  dateDelivery: string;
+  dateNote: string;
+};
+
+export type HistoryItem = {
+  id: string;
+  historyId: string;
+  type: string;
+  name: string;
+  variant: string;
+  qty: number;
+  variantId: number;
+  itemId: 221;
+};
 export type Items = {
   reasonChanged: string;
   addDate: string;

@@ -46,7 +46,7 @@ const TableUser = () => {
               </DialogTrigger>
               <DialogContent className='w-full'>
                 <DialogHeader>
-                  <DialogTitle>Add Level</DialogTitle>
+                  <DialogTitle>Add User</DialogTitle>
                 </DialogHeader>
                 <div className='px-4 py-2 w-full'>
                   <UserForm level={level} />
