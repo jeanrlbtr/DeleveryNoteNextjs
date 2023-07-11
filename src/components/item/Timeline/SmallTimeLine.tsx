@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Timeline = ({ dataItems }: { dataItems: any }) => {
+const SmallTimeLine = ({ dataItems }: { dataItems: any }) => {
   return (
     <div className='py-4 min-w-[400px] max-w-[70vw] overflow-y-auto relative'>
       <div className='max-h-[60vh] flex '>
@@ -74,4 +74,4 @@ const Timeline = ({ dataItems }: { dataItems: any }) => {
   );
 };
 
-export default Timeline;
+export default SmallTimeLine;

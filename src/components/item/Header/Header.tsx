@@ -1,4 +1,3 @@
-// import { Icon } from '@iconify/react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Sidebar from '../Sidebar/Sidebar';
 import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';
@@ -6,11 +5,11 @@ import { BellIcon, TextAlignLeftIcon, TrashIcon } from '@radix-ui/react-icons';
 
 const Header = ({ title }: { title: string }) => {
   return (
-    <div className='max-w-screen  flex justify-between md:px-8 px-4 pt-4 pb-3 shadow'>
+    <div className='max-w-screen bg-[#405189] flex justify-between md:px-8 px-4 pt-4 pb-3 shadow'>
       <div className='flex items-center md:gap-[25px] gap-[15px]'>
         <Sheet>
           <SheetTrigger>
-            <TextAlignLeftIcon className='text-[#525252] w-[25px] h-[25px] cursor-pointer md:w-[30px] md:h-[30px]' />
+            <TextAlignLeftIcon className='text-[#fafafa] w-[25px] h-[25px] cursor-pointer md:w-[30px] md:h-[30px]' />
           </SheetTrigger>
           <SheetContent
             color='white'
@@ -20,14 +19,14 @@ const Header = ({ title }: { title: string }) => {
             <Sidebar />
           </SheetContent>
         </Sheet>
-        <p className='text-[17px] md:text-[23px]  text-[#525252]'>{title}</p>
+        <p className='text-[17px] md:text-[23px]  text-[#fafafa]'>{title}</p>
       </div>
       <div className='flex gap-3 md:gap-7 items-center '>
-        <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#525252]'>jean Butar</p>
+        <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#fafafa]'>jean Butar</p>
         <div className='relative'>
           <Popover>
             <PopoverTrigger>
-              <BellIcon className='md:w-[25px] md:h-[25px] h-[20px] w-[20px] text-[#525252]' />
+              <BellIcon className='md:w-[25px] md:h-[25px] h-[20px] w-[20px] text-[#fafafa]' />
               <div className='rounded-[50%] md:h-5 md:w-5 h-3 w-3 flex items-center justify-center bg-[red] absolute text-[white] md:top-[-7px] top-[-5px] right-[-4px] md:right-[-9px]  md:text-[17px] text-[12px]'>
                 1
               </div>

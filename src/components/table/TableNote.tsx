@@ -30,7 +30,7 @@ const TableNote = () => {
       {(row: any) => {
         return (
           <div
-            className='bg-[green] py-1 px-[10px] text-center cursor-pointer text-white rounded-[6px] text-[14px]'
+            className='bg-[#405189] py-1 px-[10px] text-center cursor-pointer text-white rounded-[6px] text-[14px]'
             onClick={() => push(`/notes/no=${row.original?.no}`)}
           >
             Detail

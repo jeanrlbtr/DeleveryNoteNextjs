@@ -31,10 +31,10 @@ export function DataTable<TData, TValue>({ columns, type, data, action, children
   });
 
   return (
-    <div>
+    <div className=''>
       <div className='flex h-max mb-[30px] items-center'>
         {!type && (
-          <div className='w-[200px] rounded-[5px] border-[1px]  px-1 border-[teal] flex justify-between items-center py-1 '>
+          <div className='w-[200px] rounded-[5px] border-[1px] bg-[#fff] px-1 border-[teal] flex justify-between items-center py-1 '>
             <input
               type='text'
               placeholder='Search'
@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({ columns, type, data, action, children
         )}
         {topTable}
       </div>
-      <Table className=''>
+      <Table className='bg-white rounded-[10px]'>
         <TableHeader>
           {getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

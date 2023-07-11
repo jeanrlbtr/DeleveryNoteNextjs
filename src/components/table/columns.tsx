@@ -47,7 +47,7 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
       return (
         <div>
           <Button
-            className='w-max h-max bg p-0'
+            className='w-max h-max bg p-0 bg-[#eee] text-[#525252] hover:bg-[#cccccc]'
             {...{
               onClick: () => row.toggleExpanded(),
               style: { cursor: 'pointer' },
@@ -101,6 +101,13 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
     },
   },
   {
+    header: 'Reason Changed',
+    accessorKey: 'reasonChanged',
+    cell: ({ row }) => {
+      return <p className='max-w-[200px]'>{row.getValue('reasonChanged')}</p>;
+    },
+  },
+  {
     header: 'Sender Name',
     accessorKey: 'senderName',
   },
@@ -116,13 +123,6 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
     accessorKey: 'recipientName',
     cell: ({ row }) => {
       return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
-    },
-  },
-  {
-    header: 'Reason Changed',
-    accessorKey: 'reasonChanged',
-    cell: ({ row }) => {
-      return <p className='max-w-[200px]'>{row.getValue('reasonChanged')}</p>;
     },
   },
   {

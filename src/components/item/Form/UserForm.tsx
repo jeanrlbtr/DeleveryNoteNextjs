@@ -56,7 +56,7 @@ const UserForm = ({ level }: { level: any[] }) => {
     },
     onSuccess: (res) => {
       toast({
-        title: res.data.message,
+        title: res.message,
         duration: 3000,
       });
       return queryClient.invalidateQueries({ queryKey: ['getUser'] });

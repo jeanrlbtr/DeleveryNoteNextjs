@@ -39,9 +39,11 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
+
   const { mutate: editDataUser, isLoading } = useMutation({
     mutationFn: async (formdata: any) => {
       const res = await axiosAction.put(`/delivery/v1/user/${defaultValue.id}`, formdata, {
@@ -67,6 +69,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
       }
     },
   });
+
   const editUser = async (data: any) => {
     const formdata = new FormData();
     for (let i in data) {
@@ -132,8 +135,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <input
             type='checkbox'
             className='cursor-pointer'
-            // {...register('autoUpdate')}
-            // onChange={(e) => console.log(e.target.value)}
+            {...register('autoUpdate')}
           />
         </div>
       </div>
@@ -143,7 +145,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
           <Select
             disabled={defaultValuesUser.autoUpdate}
             defaultValue={`${defaultValuesUser.levelId}`}
-            onValueChange={(e: any) => register('levelId').onChange(e)}
+            onValueChange={(e: any) => setValue('levelId', e)}
           >
             <SelectTrigger
               className='border-[#eee] py-2'

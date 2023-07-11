@@ -58,20 +58,16 @@ const Sidebar = () => {
               <p className='capitalize  '>Profile</p>
             </div> */}
             <div
-              onClick={() => navigate('users')}
+              onClick={() => navigate('/users')}
               className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
             >
               <User className='w-[25px] h-[25px]' />
               <p className='capitalize'>Users</p>
             </div>
             <div
-              onClick={() => navigate('level')}
+              onClick={() => navigate('/level')}
               className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
             >
-              {/* <Icon
-                icon='icon-park-outline:level'
-                className='w-[25px] h-[25px]'
-              /> */}
               <FileStack />
               <p className='capitalize  '>Level</p>
             </div>

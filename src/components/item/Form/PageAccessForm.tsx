@@ -5,6 +5,9 @@ import { Input } from '../../../components/ui/input';
 import { Button } from '../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 import { useToast } from '../../../components/ui/use-toast';
+import ClientFetching from '@/hooks/clientFetching';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Loader } from 'lucide-react';
 
 interface Inputs {
   feature: string;
@@ -19,10 +22,37 @@ const ModalPageAccess = () => {
       feature: '',
     },
   });
+  const axiosAction = ClientFetching();
+  const queryClient = useQueryClient();
+  const { mutate: postFeature, isLoading } = useMutation({
+    mutationFn: async (body) => {
+      const res = await axiosAction.post(`/delivery/v1/featurer`, body, {
+        headers: {
+          'Content-Type': 'multipart/json',
+        },
+      });
+      return res.data;
+    },
+    onSuccess: (res) => {
+      toast({
+        title: res.message,
+        duration: 3000,
+      });
+      return queryClient.invalidateQueries({ queryKey: ['getFeature'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message || error.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
 
   const handleSubmitFeature = async (data: any) => {
     if (data.method.length > 0 && data.feature) {
-      console.log(data);
+      postFeature(data);
     } else {
       toast({
         title: 'Cannot Post Features',
@@ -104,8 +134,9 @@ const ModalPageAccess = () => {
           <Button
             type='submit'
             className='h-max p-[1px] mt-[5px] text-[17px] bg-[#2e49e4] hover:bg-[#090961]'
+            disabled={isLoading}
           >
-            Apply
+            {isLoading ? <Loader /> : 'Apply'}
           </Button>
         </div>
       </div>

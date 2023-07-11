@@ -8,12 +8,33 @@ import ModalPageAccess from '../item/Form/PageAccessForm';
 import EditUserForm from '../item/Form/EditUserForm';
 import ModalAccess from '../item/Form/AccessForm';
 import ClientFetching from '@/hooks/clientFetching';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import TableLoading from './TableLoading';
+import { Edit, Eraser } from 'lucide-react';
+import { FolderLock } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
 
 const TableUser = () => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [detailUser, setDetailUser] = useState<any>({});
+  const [detailAccess, setDetailAccess] = useState<string>('');
   const fetchingUser = ClientFetching();
+  const [open, setOpen] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [defaultValues, setDefaultValues] = useState({
+    access: [],
+    module: [],
+  });
+  const { data: userFeature, isLoading: isLoadingFeature } = useQuery({
+    queryFn: async () => {
+      const res = await fetchingUser.get(`/delivery/v1/feature`);
+      return res.data;
+    },
+    queryKey: ['getFeature'],
+  });
+
   const { data: level, isLoading: isLoadingLevel } = useQuery({
     queryKey: ['getLevel'],
     queryFn: async () => {
@@ -29,6 +50,33 @@ const TableUser = () => {
       return res.data.data;
     },
   });
+
+  const { mutate: postUser, isLoading } = useMutation({
+    mutationFn: async (id) => {
+      const res = await fetchingUser.delete(`/delivery/v1/user/${id}`, {
+        headers: {
+          'Content-Type': 'multipart/json',
+        },
+      });
+      return res.data;
+    },
+    onSuccess: (res) => {
+      toast({
+        title: res.message,
+        duration: 3000,
+      });
+      return queryClient.invalidateQueries({ queryKey: ['getUser'] });
+    },
+    onError: (error: any) => {
+      if (error.response) {
+        toast({
+          title: error.response.data.message,
+          duration: 3000,
+        });
+      }
+    },
+  });
+
   if (isLoadingLevel || isLoadingUser) {
     return <TableLoading />;
   }
@@ -60,9 +108,6 @@ const TableUser = () => {
                 <div className='bg-[#d65421] text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]'>Add Feature</div>
               </DialogTrigger>
               <DialogContent className='w-full'>
-                <DialogHeader>
-                  <DialogTitle>Add Feature</DialogTitle>
-                </DialogHeader>
                 <div className='px-4 py-2 min-w-[700px] max-w-[800px]'>
                   <p className='text-[24px] text-[#525252] mb-[20px]'>Add Features</p>
                   <ModalPageAccess />
@@ -82,12 +127,10 @@ const TableUser = () => {
             <div>
               <Dialog>
                 <DialogTrigger>
-                  <div
+                  <Edit
+                    className='text-[green]'
                     onClick={() => setDetailUser(row.original)}
-                    className='bg-[green] w-[50px] text-[13px] text-[white] rounded-[6px] px-2 py-1'
-                  >
-                    Edit
-                  </div>
+                  />
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -103,18 +146,72 @@ const TableUser = () => {
               </Dialog>
             </div>
             <div>
-              <Dialog>
+              <Dialog
+                open={open}
+                onOpenChange={async (e) => {
+                  const res = await fetchingUser.get(`/delivery/v1/user/${row.original.id}`);
+                  const userData = res.data.data;
+                  setDetailAccess(res.data.data);
+                  for (let i in userData) {
+                    if (i === 'access') {
+                      setDefaultValues((prev: any) => ({ ...prev, access: userData[i] }));
+                    }
+                    if (i === 'module') {
+                      const arr: any[] = [];
+                      userData[i].forEach((e: any) => {
+                        const valueFeature = `${e.feature}/${e.method}`;
+                        arr.push(valueFeature);
+                        setDefaultValues((prev: any) => ({ ...prev, module: arr }));
+                      });
+                    }
+                  }
+                  setOpen(e);
+                }}
+              >
                 <DialogTrigger>
-                  <div className='bg-[#d65421] text-[13px] text-[white] rounded-[6px] px-2 py-1'>Access</div>
+                  <FolderLock className='text-[#d65421]' />
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>User Access</DialogTitle>
+                    <p className='text-[24px] text-[#525252] mb-[10px]'>User Access</p>
                   </DialogHeader>
-                  <div className='px-4 py-2 min-w-[700px] max-w-[800px]'>
-                    <p className='text-[24px] text-[#525252] mb-[20px]'>User Access</p>
+                  <div className='px-4 py-2 min-w-[700px] max-w-[800px] max-h-[70vh] overflow-y-auto'>
                     <div className='flex gap-[20px]'>
-                      <ModalAccess id={`${row.original.id}`} />
+                      <ModalAccess
+                        defaultValues={defaultValues}
+                        userFeature={userFeature}
+                        UserAccess={detailAccess}
+                      />
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <div>
+              <Dialog
+                open={openDelete}
+                onOpenChange={setOpenDelete}
+              >
+                <DialogTrigger>
+                  <Eraser className='text-[red]' />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <p className='text-[19px] text-[#525252]'>Delete User</p>
+                  </DialogHeader>
+                  <div className='px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto'>
+                    <div className='flex gap-[20px] mb-[10px] text-[#525252]'>Are you sure to delete {row.original.username}?</div>
+                    <div className='w-full flex justify-end mt-[10px]'>
+                      <Button
+                        onClick={() => {
+                          postUser(row.original.id);
+                          setOpenDelete(false);
+                        }}
+                        size={'sm'}
+                        className='bg-[red] text-[14px] hover:bg-[#f34848]'
+                      >
+                        Delete
+                      </Button>
                     </div>
                   </div>
                 </DialogContent>
