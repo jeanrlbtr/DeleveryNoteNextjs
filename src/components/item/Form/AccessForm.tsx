@@ -1,7 +1,6 @@
 import { Button } from '../../../components/ui/button';
 import { useForm } from 'react-hook-form';
-import { useToast } from '../../../components/ui/use-toast';
-import ClientFetching from '@/hooks/clientFetching';
+import MutationFetch from '@/hooks/MutationFetch';
 
 interface Inputs {
   access: string[];
@@ -9,15 +8,14 @@ interface Inputs {
 }
 
 const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: any; userFeature: any; defaultValues: any }) => {
-  const { toast } = useToast();
-  const axiosFetching = ClientFetching();
-
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: {
       access: defaultValues.access,
       module: defaultValues.module,
     },
   });
+
+  const { mutate: postAcces, isLoading } = MutationFetch(['getAccess']);
   const applyAccess = async (data: any) => {
     const newArr: any = [];
     data.module.forEach((e: any) => {
@@ -35,23 +33,17 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
       }
       return acc;
     }, []);
-
-    try {
-      const res = await axiosFetching.post('/delivery/v1/user/access', {
-        userId: UserAccess.id,
-        access: data.access,
-        module: moduleData,
-      });
-      toast({
-        title: res.data.message,
-        duration: 3000,
-      });
-    } catch (error: any) {
-      toast({
-        title: error.data.message,
-        duration: 3000,
-      });
-    }
+    const body = {
+      userId: UserAccess.id,
+      access: data.access,
+      module: moduleData,
+    };
+    postAcces({
+      url: `/delivery/v1/user/access`,
+      body,
+      method: 'post',
+      headers: 'json',
+    });
   };
 
   return (

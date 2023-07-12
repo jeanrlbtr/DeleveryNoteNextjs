@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
-import { useToast } from '../../../components/ui/use-toast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import ClientFetching from '@/hooks/clientFetching';
 import { Loader } from 'lucide-react';
+import MutationFetch from '@/hooks/MutationFetch';
 
 interface User {
   name: string;
@@ -21,7 +19,6 @@ interface User {
 }
 
 const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[] }) => {
-  const [autoUpdate, setAutoUpdate] = useState<string>(defaultValue?.autoUpdate);
   const defaultValuesUser = {
     name: defaultValue?.name,
     username: defaultValue?.username,
@@ -32,51 +29,28 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
     image: '',
   };
 
-  const { toast } = useToast();
-  const axiosAction = ClientFetching();
-  const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
     setValue,
-    control,
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
 
-  const { mutate: editDataUser, isLoading } = useMutation({
-    mutationFn: async (formdata: any) => {
-      const res = await axiosAction.put(`/delivery/v1/user/${defaultValue.id}`, formdata, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return res.data;
-    },
-    onSuccess: (res) => {
-      toast({
-        title: res.message,
-        duration: 3000,
-      });
-      return queryClient.invalidateQueries({ queryKey: ['getUser'] });
-    },
-    onError: (error: any) => {
-      if (error.response) {
-        toast({
-          title: error.response.data.message,
-          duration: 3000,
-        });
-      }
-    },
-  });
+  const { mutate: editDataUser, isLoading } = MutationFetch(['getUser']);
 
   const editUser = async (data: any) => {
     const formdata = new FormData();
     for (let i in data) {
       if (data[i]) formdata.set(i, data[i]);
     }
-    editDataUser(formdata);
+    editDataUser({
+      body: formdata,
+      method: 'put',
+      headers: 'formData',
+      url: `/delivery/v1/user/${defaultValue.id}`,
+    });
   };
+
   return (
     <form
       onSubmit={handleSubmit((data) => {

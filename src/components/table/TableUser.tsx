@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DataTable } from './DataTabel';
 import { userColumn } from './columns';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import UserForm from '../item/Form/UserForm';
+import UserForm from '../item/Form/AddUserForm';
 import ModalPageAccess from '../item/Form/PageAccessForm';
 import EditUserForm from '../item/Form/EditUserForm';
 import ModalAccess from '../item/Form/AccessForm';

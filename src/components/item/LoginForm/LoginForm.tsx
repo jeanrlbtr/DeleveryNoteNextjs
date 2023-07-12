@@ -1,8 +1,10 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { Input } from '../../ui/input';
+import { axiosAuth } from '@/lib/api';
+import { useState } from 'react';
+import { Loader } from 'lucide-react';
 
 interface Data {
   username: string;
@@ -10,6 +12,7 @@ interface Data {
 }
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
   const { push } = useRouter();
   const defaultValueUser: Data = {
     username: '',
@@ -22,10 +25,10 @@ const LoginForm = () => {
   } = useForm({
     defaultValues: defaultValueUser,
   });
-
   const onSubmit = handleSubmit(async (data: Data) => {
+    setLoading(true);
     try {
-      const res = await axios.post('https://dev.saptakarsa.com/gtw/delivery/auth/login', data, {
+      const res = await axiosAuth.post('https://dev.saptakarsa.com/gtw/delivery/auth/login', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -33,7 +36,10 @@ const LoginForm = () => {
       });
       localStorage.setItem('data', res.data);
       push('/');
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   });
 
   const disable = Object.keys(errors).length !== 0;
@@ -76,11 +82,11 @@ const LoginForm = () => {
       <button
         type='submit'
         disabled={disable}
-        className={`font-Poppins mt-[6px] p-[3px] text-[17px] w-[200px] rounded-[5px] mx-auto bg-[#2a1246]  ${
+        className={`font-Poppins mt-[6px] p-[3px] flex justify-center text-[17px] w-[200px] rounded-[5px] mx-auto bg-[#2a1246]  ${
           disable ? 'cursor-not-allowed bg-[#eee] text-[gray]' : 'text-[white]'
         }`}
       >
-        LOGIN
+        {loading ? <Loader /> : 'LOGIN'}
       </button>
     </form>
   );

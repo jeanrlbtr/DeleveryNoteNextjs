@@ -1,15 +1,14 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { Button } from '../../../components/ui/button';
+import { Button } from '../../ui/button';
 import ControllerInput from '../Input/ControllerInput';
 import ControllerCheck from '../Input/ControllerCheck';
 import ControllerSelect from '../Input/ControllerSelect';
-import { useToast } from '../../../components/ui/use-toast';
 import AsyncSelect from 'react-select/async';
 import ClientFetching from '@/hooks/clientFetching';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader } from 'lucide-react';
+import MutationFetch from '@/hooks/MutationFetch';
 
 interface User {
   id: string;
@@ -23,9 +22,6 @@ interface User {
 }
 
 const UserForm = ({ level }: { level: any[] }) => {
-  const queryClient = useQueryClient();
-
-  const { toast } = useToast();
   const axiosAction = ClientFetching();
   const defaultValuesUser: User = {
     id: '',
@@ -45,41 +41,23 @@ const UserForm = ({ level }: { level: any[] }) => {
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
 
-  const { mutate: postUser, isLoading } = useMutation({
-    mutationFn: async (body) => {
-      const res = await axiosAction.post(`/delivery/v1/user/register`, body, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return res.data;
-    },
-    onSuccess: (res) => {
-      toast({
-        title: res.message,
-        duration: 3000,
-      });
-      return queryClient.invalidateQueries({ queryKey: ['getUser'] });
-    },
-    onError: (error: any) => {
-      if (error.response) {
-        toast({
-          title: error.response.data.message,
-          duration: 3000,
-        });
-      }
-    },
-  });
+  const { mutate: postUser, isLoading } = MutationFetch(['getUser']);
 
   const addUser = async (data: any) => {
     const body: any = {};
     for (let i in data) {
       if (data[i]) body[`${i}`] = data[i];
     }
-    postUser(body);
+    postUser({
+      body,
+      headers: 'formData',
+      url: `/delivery/v1/user/register`,
+      method: 'post',
+    });
   };
 
   const disable = Object.keys(errors).length > 0;
+
   const loadOptions = async (inputValue: any) => {
     if (inputValue) {
       const url = `/delivery/v1/employee?name=${inputValue}`;
