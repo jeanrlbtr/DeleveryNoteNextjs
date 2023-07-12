@@ -77,6 +77,10 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
     },
   },
   {
+    header: 'Status',
+    accessorKey: 'status',
+  },
+  {
     header: 'Date Delevery',
     accessorKey: 'dateDelivery',
     cell: ({ row }) => {

@@ -24,7 +24,7 @@ const TableDetailNote = ({ param }: { param: string }) => {
     <div className='pb-[50px]'>
       <div className=' flex gap-[15px]'>
         <Button className='bg-[#405189] hover:bg-[#6862d4]'>Update Status</Button>
-        <Button className='bg-[#405189] hover:bg-[#6862d4]'>Print</Button>
+        {/* <Button className='bg-[#405189] hover:bg-[#6862d4]'>Print</Button> */}
       </div>
       <div className='mt-[40px] h-max flex gap-[20px]'>
         <div className=' bg-white shadow-md h-max w-[100vw] md:w-[75vw] rounded-[20px]'>
