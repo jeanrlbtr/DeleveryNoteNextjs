@@ -52,7 +52,7 @@ export function DataTableDetail<TData, TValue>({ columns, type, data, action, ch
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead
-                    className='text-[17px] text-[black] '
+                    className='text-[17px] font-[400] text-[#474747]'
                     key={header.id}
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}

@@ -16,6 +16,7 @@ interface Method {
   get: any;
   put: any;
   delete: any;
+  patch: any;
 }
 
 const apiCall = ({ url, method, body, headers }: Params) => {
@@ -51,6 +52,7 @@ const apiCall = ({ url, method, body, headers }: Params) => {
     get: axiosAuth.get,
     put: axiosAuth.put,
     delete: axiosAuth.delete,
+    patch: axiosAuth.patch,
   };
 
   const HEADERS = {

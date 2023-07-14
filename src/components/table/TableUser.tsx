@@ -200,7 +200,7 @@ const TableUser = () => {
                     <p className='text-[19px] text-[#525252]'>Delete User</p>
                   </DialogHeader>
                   <div className='px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto'>
-                    <div className='flex gap-[20px] mb-[10px] text-[#525252]'>Are you sure to delete {row.original.username}?</div>
+                    <div className='flex gap-[20px] mb-[10px] text-[#525252]'>Are you sure to delete {row.original.name}?</div>
                     <div className='w-full flex justify-end mt-[10px]'>
                       <Button
                         onClick={() => {

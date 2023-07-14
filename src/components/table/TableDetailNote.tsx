@@ -1,17 +1,21 @@
 import ClientFetching from '@/hooks/clientFetching';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { detailNoteColumn } from './columns';
 import { Button } from '../ui/button';
 import { DataTableDetail } from './DataTableDetail';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Timeline } from '../item';
+import { Timeline, UpdateStatusPO } from '../item';
 import { ArrowUpRightFromCircle } from 'lucide-react';
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({ weight: ['700', '300', '400', '500'], subsets: ['cyrillic'] });
 
 const TableDetailNote = ({ param }: { param: string }) => {
   const axiosFetching = ClientFetching();
+  const [open, setOpen] = useState<boolean>(false);
   const { data, isLoading } = useQuery({
-    queryKey: ['getDetailNotes'],
+    queryKey: ['getDetailNote'],
     queryFn: async () => {
       const res = await axiosFetching.get(`/delivery/v1/note?no=${param}`);
       return res.data.data;
@@ -20,17 +24,53 @@ const TableDetailNote = ({ param }: { param: string }) => {
   if (isLoading) {
     return <div>Loading please wait ....</div>;
   }
+
+  const dateDelivery = new Date(data.dateDelivery).toDateString();
   return (
     <div className='pb-[50px]'>
-      <div className=' flex gap-[15px]'>
-        <Button className='bg-[#405189] hover:bg-[#6862d4]'>Update Status</Button>
-        {/* <Button className='bg-[#405189] hover:bg-[#6862d4]'>Print</Button> */}
+      <Dialog
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <DialogContent>
+          <UpdateStatusPO no={data.no} />
+        </DialogContent>
+      </Dialog>
+      <div className=' mb-[30px]'>
+        <div>
+          <p className='text-[#525252] text-[27px] font-[500]'>Ordinary Purchase Order</p>
+          <p className='text-[15px]'>{dateDelivery}</p>
+        </div>
+        <div className={`flex justify-between mt-[40px] ${roboto.className}`}>
+          <div>
+            <p className='text-[19px] font-[500] text-black'>Status:</p>
+            <p className={`font-[500] text-[green]`}>{data.status}</p>
+          </div>
+          <div>
+            <p className='text-[19px] text-black'>Sender Address:</p>
+            <p className='border-[1px] rounded-[5px] p-1 text-[#242424] text-[16px]  w-[300px]'>{data.senderAddress}</p>
+          </div>
+          <div>
+            <p className='text-[19px] text-black'>Recieptent Address:</p>
+            <p className='border-[1px] rounded-[5px] p-1 text-[#242424] text-[16px]  w-[300px]'>{data.recipientAddress}</p>
+          </div>
+        </div>
       </div>
-      <div className='mt-[40px] h-max flex gap-[20px]'>
-        <div className=' bg-white shadow-md h-max w-[100vw] md:w-[75vw] rounded-[20px]'>
-          <h1 className='ml-[10px] mt-[10px] text-[24px] text-[#202020]'>Purchase Order</h1>
+      <div className='flex gap-[13px]'>
+        <Button
+          onClick={() => setOpen(true)}
+          className='bg-[#405189] text-[15px] text-white hover:bg-[#6862d4] z-0'
+          disabled={data.status === 'FINISH'}
+        >
+          Update Status
+        </Button>
+        <Button className='bg-[#405189] hover:bg-[#6862d4]'>Print</Button>
+      </div>
+      <div className='bg-white rounded-[10px] py-[20px] mt-[40px] '>
+        <div className=' bg-white shadow-md h-max w-[100vw] md:w-[100%] '>
+          <h1 className='ml-[10px] mt-[10px] font-[500] text-[24px] text-[#474747]'>Purchase Order</h1>
           <div className='overflow-x-auto h-full'>
-            <div className='w-max'>
+            <div className='mt-[20px] w-full'>
               <DataTableDetail
                 type={'detail'}
                 data={[data]}
@@ -46,24 +86,25 @@ const TableDetailNote = ({ param }: { param: string }) => {
                           return (
                             <div
                               key={index}
-                              className={``}
+                              className={`relative`}
                             >
-                              <li className={`p-3 mt-[15px] text-[#3d3d3d]  border-[1px] flex gap-[12px] h-max w-[300px]  rounded-[5px] `}>
-                                <div className='w-[8px]  bg-[#405189] rounded-[4px]' />
+                              <li className={`p-[18px] text-[#272727]  border-l-[2px] flex gap-[40px] h-max w-[400px] border-[#c4c4c4]`}>
+                                <div
+                                  className={`${
+                                    data.status == 'FINISH' ? 'bg-[green] text-white ' : 'bg-[#fff] text-black border-[2px] border-[#405189]'
+                                  } w-[15px]  absolute h-[15px] top-0 left-[-6px] rounded-full`}
+                                />
+                                <div>
+                                  <p>{date}</p>
+                                  <p>{time}</p>
+                                </div>
                                 <div className='flex flex-col gap-[5px]'>
-                                  <p
-                                    className={`${
-                                      data.status == 'FINISH' ? 'bg-[green] text-white' : 'bg-[yellow] text-black'
-                                    } px-[4px] w-max rounded-[4px] `}
-                                  >
+                                  <p className={`w-max text-[#3d3d3d] text-[17px] rounded-[4px] `}>
                                     {data.status}
+                                    <span className='text-[14px] ml-[5px] text-[#525252]'>({data.updatedBy})</span>
                                   </p>
                                   <p>
-                                    UpdatedBy :
-                                    {data.updatedBy && <span className='ml-[2px] font-[500] text-[black] capitalize'>{data.updatedBy}</span>}
-                                  </p>
-                                  <p>
-                                    Note :{data.note && <span className='border-[1px] text-[black] rounded-[5px] ml-[5px] px-2'>{data.note}</span>}
+                                    Note :{data.note && <span className='border-[1px] text-[#3d3d3d] ml-[5px] rounded-[4px] px-2'>{data.note}</span>}
                                   </p>
                                 </div>
                               </li>
@@ -78,17 +119,22 @@ const TableDetailNote = ({ param }: { param: string }) => {
             </div>
           </div>
         </div>
-        <div className='min-w-[200px] w-full max-w-[400px] md:h-[65vh] overflow-y-auto bg-white shadow-md rounded-[15px] px-[10px] pb-[10px]'>
-          <p className=' mt-[10px] text-[24px] text-[#202020]'>Items</p>
+        <div className='mt-[40px] min-w-[200px] w-full max-w-[400px] max-h-[230px]  overflow-y-auto bg-white shadow-md px-[10px] pb-[10px]'>
+          <h1 className='ml-[10px] mt-[10px] font-[500] text-[24px] mb-[10px]  text-[#474747]'>Items</h1>
           {data.items.map((item: any, index: number) => {
             return (
               <div
                 key={index}
-                className='mt-[10px] gap-[12px] flex items-center bg-[#2a47ca11] p-2 rounded-[10px]'
+                className='p-[10px] hover:bg-[#2a47ca11] border-t-[1px]'
               >
                 <div className='w-full '>
                   <div className='flex w-full justify-between items-center'>
-                    <p className='text-black text-[20px]'>Vetto (putih)</p>
+                    <p className='text-[#333333] text-[20px]'>
+                      {item.name}{' '}
+                      <span className={`ml-[4px] text-[15px] ${item.status !== 'FINISH' ? 'text-[#b88c3b]' : 'text-[green]'}`}>
+                        ({item.status || 'Process'})
+                      </span>
+                    </p>
                     <Dialog>
                       <DialogTrigger>
                         <ArrowUpRightFromCircle className='w-[15px] h-[15px] cursor-pointer text-[#405189]' />
@@ -104,8 +150,10 @@ const TableDetailNote = ({ param }: { param: string }) => {
                     </Dialog>
                   </div>
                   <div className='flex mt-[2px]  justify-between text-[14px] w-full'>
-                    <p className='text-[#626262] '>Kursi</p>
-                    <p className='text-black'>Quantity : 10</p>
+                    <p className='text-[#626262] '>
+                      {item.type} <span className='ml-[2px]'>({item.variant})</span>
+                    </p>
+                    <p className='text-black'>Quantity : {item.qty}</p>
                   </div>
                 </div>
               </div>

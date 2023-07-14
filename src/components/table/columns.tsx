@@ -67,7 +67,6 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
     header: 'Store',
     accessorKey: 'store',
   },
-
   {
     header: 'Date PO',
     accessorKey: 'dateNote',
@@ -76,19 +75,6 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
       return <div>{date}</div>;
     },
   },
-  {
-    header: 'Status',
-    accessorKey: 'status',
-  },
-  {
-    header: 'Date Delevery',
-    accessorKey: 'dateDelivery',
-    cell: ({ row }) => {
-      const date = new Date(`${row.getValue('dateDelivery')}`).toDateString();
-      return <div>{date}</div>;
-    },
-  },
-
   {
     header: 'Attachment',
     accessorKey: 'attachment',
@@ -105,29 +91,12 @@ const detailNoteColumn: ColumnDef<NoteDetail>[] = [
     },
   },
   {
-    header: 'Reason Changed',
-    accessorKey: 'reasonChanged',
-    cell: ({ row }) => {
-      return <p className='max-w-[200px]'>{row.getValue('reasonChanged')}</p>;
-    },
-  },
-  {
     header: 'Sender Name',
     accessorKey: 'senderName',
   },
   {
-    header: 'Sender Address',
-    accessorKey: 'senderAddress',
-    cell: ({ row }) => {
-      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
-    },
-  },
-  {
-    header: 'Reciepient Address',
+    header: 'Recieptent Name',
     accessorKey: 'recipientName',
-    cell: ({ row }) => {
-      return <p className='max-w-[200px]'>{row.getValue('senderAddress')}</p>;
-    },
   },
   {
     header: 'Note',
@@ -147,7 +116,6 @@ const historyColumn: ColumnDef<History>[] = [
     header: 'Store',
     accessorKey: 'store',
   },
-
   {
     header: 'Date PO',
     accessorKey: 'dateNote',
@@ -436,21 +404,23 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
       return <div>{date}</div>;
     },
   },
-  // {
-  //   header: 'Status',
-  //   accessorKey: 'status',
-  //   cell: ({ row }) => {
-  //     return (
-  //       <div>
-  //         {row.getValue('status') ? (
-  //           <p className='border-[orange] rounded-[5px] border-[1px] w-max px-1'>Unprocess</p>
-  //         ) : (
-  //           <p className='border-[green] rounded-[5px] border-[1px] w-max px-1'>OnProcess</p>
-  //         )}
-  //       </div>
-  //     );
-  //   },
-  // },
+  {
+    header: 'Status',
+    accessorKey: 'status',
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.getValue('status') !== 'FINISH' ? (
+            <p className='border-[orange]  lowercase rounded-[5px] border-[1px] w-max px-1'>{row.getValue('status')}</p>
+          ) : (
+            <p className='border-[green] bg-[#0080002d] lowercase text-[green] font-[600] rounded-[8px] border-[1px] w-max px-3'>
+              {row.getValue('status')}
+            </p>
+          )}
+        </div>
+      );
+    },
+  },
 ];
 
 export {

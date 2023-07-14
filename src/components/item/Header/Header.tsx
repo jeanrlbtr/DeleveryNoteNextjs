@@ -19,7 +19,7 @@ const Header = ({ title }: { title: string }) => {
             <Sidebar />
           </SheetContent>
         </Sheet>
-        <p className='text-[17px] md:text-[23px]  text-[#fafafa]'>{title}</p>
+        <p className='text-[17px] md:text-[25px] font-[600] text-[#fff]'>{title}</p>
       </div>
       <div className='flex gap-3 md:gap-7 items-center '>
         <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#fafafa]'>jean Butar</p>
