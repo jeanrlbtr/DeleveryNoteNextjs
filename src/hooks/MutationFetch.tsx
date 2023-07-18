@@ -80,7 +80,7 @@ const MutationFetch = (key: string[]) => {
     },
     onSuccess: (res) => {
       toast({
-        title: res.message,
+        title: res.message || 'Success Update',
         duration: 3000,
       });
       return queryClient.invalidateQueries({ queryKey: key });

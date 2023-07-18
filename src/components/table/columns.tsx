@@ -411,11 +411,9 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
       return (
         <div>
           {row.getValue('status') !== 'FINISH' ? (
-            <p className='border-[orange]  lowercase rounded-[5px] border-[1px] w-max px-1'>{row.getValue('status')}</p>
+            <p className='border-[orange]  lowercase font-[600] text-[#ca8b37] rounded-[8px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
           ) : (
-            <p className='border-[green] bg-[#0080002d] lowercase text-[green] font-[600] rounded-[8px] border-[1px] w-max px-3'>
-              {row.getValue('status')}
-            </p>
+            <p className='border-[green]  lowercase text-[green] font-[600] rounded-[8px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
           )}
         </div>
       );

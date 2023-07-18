@@ -1,5 +1,6 @@
+'use client';
+
 import { Container } from '@/components/item';
-import Image from 'next/image';
 
 export default function Home() {
   return (

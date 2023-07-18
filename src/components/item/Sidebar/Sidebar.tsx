@@ -1,6 +1,6 @@
 'use client';
 
-import { TruckIcon, User, LogOut, FileStack } from 'lucide-react';
+import { TruckIcon, User, LogOut, FileStack, PackageCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -36,6 +36,13 @@ const Sidebar = () => {
             >
               <TruckIcon className='w-[25px] h-[25px]' />
               <p className='capitalize'>purchase order</p>
+            </div>
+            <div
+              onClick={() => navigate('/item')}
+              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
+            >
+              <PackageCheck />
+              <p className='capitalize'>Items Check</p>
             </div>
             {/* <div
               onClick={() => navigate('approve')}

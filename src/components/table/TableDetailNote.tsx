@@ -41,10 +41,10 @@ const TableDetailNote = ({ param }: { param: string }) => {
           <p className='text-[#525252] text-[27px] font-[500]'>Ordinary Purchase Order</p>
           <p className='text-[15px]'>{dateDelivery}</p>
         </div>
-        <div className={`flex justify-between mt-[40px] ${roboto.className}`}>
+        <div className={`flex justify-between mt-[40px]`}>
           <div>
             <p className='text-[19px] font-[500] text-black'>Status:</p>
-            <p className={`font-[500] text-[green]`}>{data.status}</p>
+            <p className={`font-[600]  border-[green] border-[1px] rounded-[5px] px-2 text-[green]`}>{data.status}</p>
           </div>
           <div>
             <p className='text-[19px] text-black'>Sender Address:</p>
@@ -101,7 +101,7 @@ const TableDetailNote = ({ param }: { param: string }) => {
                                 <div className='flex flex-col gap-[5px]'>
                                   <p className={`w-max text-[#3d3d3d] text-[17px] rounded-[4px] `}>
                                     {data.status}
-                                    <span className='text-[14px] ml-[5px] text-[#525252]'>({data.updatedBy})</span>
+                                    <span className='text-[14px] ml-[5px] text-[#525252]'>({data.user === null ? 'System' : data.user.name})</span>
                                   </p>
                                   <p>
                                     Note :{data.note && <span className='border-[1px] text-[#3d3d3d] ml-[5px] rounded-[4px] px-2'>{data.note}</span>}
@@ -132,7 +132,7 @@ const TableDetailNote = ({ param }: { param: string }) => {
                     <p className='text-[#333333] text-[20px]'>
                       {item.name}{' '}
                       <span className={`ml-[4px] text-[15px] ${item.status !== 'FINISH' ? 'text-[#b88c3b]' : 'text-[green]'}`}>
-                        ({item.status || 'Process'})
+                        ({item.status || 'Unprocess'})
                       </span>
                     </p>
                     <Dialog>
@@ -149,7 +149,7 @@ const TableDetailNote = ({ param }: { param: string }) => {
                       </DialogContent>
                     </Dialog>
                   </div>
-                  <div className='flex mt-[2px]  justify-between text-[14px] w-full'>
+                  <div className='flex mt-[2px] justify-between text-[14px] w-full'>
                     <p className='text-[#626262] '>
                       {item.type} <span className='ml-[2px]'>({item.variant})</span>
                     </p>

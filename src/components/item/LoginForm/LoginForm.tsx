@@ -34,7 +34,7 @@ const LoginForm = () => {
         },
         withCredentials: true,
       });
-      localStorage.setItem('data', res.data);
+      localStorage.setItem('data', res.data.data);
       push('/');
     } catch (error) {
     } finally {
