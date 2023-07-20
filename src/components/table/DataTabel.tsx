@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/react';
 import React from 'react';
+import Image from 'next/image';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -13,9 +14,18 @@ interface DataTableProps<TData, TValue> {
   children?: Function;
   topTable?: any;
   type?: any;
+  isLoading?: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, type, data, action, children = Function, topTable }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  isLoading = false,
+  columns,
+  type,
+  data,
+  action,
+  children = Function,
+  topTable,
+}: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
 
   const { getHeaderGroups, getRowModel, previousPage, getCanNextPage, getCanPreviousPage, nextPage } = useReactTable({
@@ -68,28 +78,41 @@ export function DataTable<TData, TValue>({ columns, type, data, action, children
           ))}
         </TableHeader>
         <TableBody>
-          {getRowModel().rows?.length ? (
-            getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                ))}
-                {action && <TableCell>{children(row)}</TableCell>}
+          {!isLoading ? (
+            getRowModel().rows?.length ? (
+              getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                  ))}
+                  {action && <TableCell>{children(row)}</TableCell>}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  No results.
+                </TableCell>
               </TableRow>
-            ))
+            )
           ) : (
             <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                className='h-24 text-center'
-              >
-                No results.
-              </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
-      {!type && (
+      {isLoading && (
+        <div className='flex relative justify-center w-full mt-[40px]'>
+          <div className='transform translate-x-1/2 translate-y-1/2 '>
+            <div className='border-t-transparent border-solid animate-spin  rounded-full border-blue-400 border-8 h-36 w-36'></div>
+          </div>
+        </div>
+      )}
+      {!isLoading && (
         <div className='flex items-center justify-end space-x-2 py-4'>
           <Button
             variant='outline'

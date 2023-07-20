@@ -365,23 +365,14 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
   },
 
   {
-    header: 'Name',
+    header: 'Sales',
     accessorKey: 'sales',
   },
   {
-    header: 'Address',
+    header: 'Recipient Address',
     accessorKey: 'recipientAddress',
-    size: 150,
     cell: ({ row }) => {
-      return (
-        <div className='w-max '>
-          <input
-            value={row.getValue('recipientAddress')}
-            readOnly
-            className='w-[150px] outline-none'
-          />
-        </div>
-      );
+      return <p className='w-[200px]'>{row.getValue('recipientAddress')}</p>;
     },
   },
   {
@@ -411,9 +402,11 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
       return (
         <div>
           {row.getValue('status') !== 'FINISH' ? (
-            <p className='border-[orange]  lowercase font-[600] text-[#ca8b37] rounded-[8px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
+            <p className='border-[orange]  lowercase font-[600] text-[#ca8b37] rounded-[4px] border-[1px] w-max px-3'>
+              {row.getValue('status') || 'Unprocessed'}
+            </p>
           ) : (
-            <p className='border-[green]  lowercase text-[green] font-[600] rounded-[8px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
+            <p className='border-[green]  lowercase text-[green] font-[600] rounded-[4px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
           )}
         </div>
       );

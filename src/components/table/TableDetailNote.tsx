@@ -44,7 +44,13 @@ const TableDetailNote = ({ param }: { param: string }) => {
         <div className={`flex justify-between mt-[40px]`}>
           <div>
             <p className='text-[19px] font-[500] text-black'>Status:</p>
-            <p className={`font-[600]  border-[green] border-[1px] rounded-[5px] px-2 text-[green]`}>{data.status}</p>
+            <p
+              className={`font-[600] ${
+                data.status === 'FINISH' ? 'text-[green] border-[green]' : 'text-[#f58123] border-[#f58123]'
+              }  border-[1px] rounded-[5px] px-2 `}
+            >
+              {data.status || 'Unprocessed'}
+            </p>
           </div>
           <div>
             <p className='text-[19px] text-black'>Sender Address:</p>

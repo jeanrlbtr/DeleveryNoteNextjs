@@ -94,7 +94,7 @@ const TableLevel = () => {
           }}
         >
           <DialogTrigger>
-            <div className='ml-6 bg-[#140e27] text-white px-3 py-1 rounded-[6px] text-[16px]'>Add Level</div>
+            <div className='ml-6 bg-[#405189] text-white px-3 py-1 rounded-[6px] text-[16px]'>Add Level</div>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

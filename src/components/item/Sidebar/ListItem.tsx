@@ -29,10 +29,10 @@ const ListItem = () => {
     enabled: true,
     queryKey: ['getAllItems', page, statusQuery],
   });
-
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+
   if (isError) {
     return <div>Erorr 404</div>;
   }

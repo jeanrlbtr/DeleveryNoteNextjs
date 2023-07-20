@@ -6,6 +6,7 @@ const TableLoading = () => {
   return (
     <DataTable
       columns={LoadingColumn}
+      type={'loading'}
       data={[
         {
           loading: 'loading',
