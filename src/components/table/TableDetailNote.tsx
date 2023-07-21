@@ -94,22 +94,24 @@ const TableDetailNote = ({ param }: { param: string }) => {
                               key={index}
                               className={`relative`}
                             >
-                              <li className={`p-[18px] text-[#272727]  border-l-[2px] flex gap-[40px] h-max w-[400px] border-[#c4c4c4]`}>
+                              <li
+                                className={`p-[18px] text-[#272727]  border-l-[2px] flex gap-[40px] justify-between h-max w-[600px] border-[#c4c4c4]`}
+                              >
                                 <div
                                   className={`${
                                     data.status == 'FINISH' ? 'bg-[green] text-white ' : 'bg-[#fff] text-black border-[2px] border-[#405189]'
                                   } w-[15px]  absolute h-[15px] top-0 left-[-6px] rounded-full`}
                                 />
-                                <div>
+                                <div className=''>
                                   <p>{date}</p>
                                   <p>{time}</p>
                                 </div>
-                                <div className='flex flex-col gap-[5px]'>
+                                <div className='flex flex-col gap-[5px] w-[400px]'>
                                   <p className={`w-max text-[#3d3d3d] text-[17px] rounded-[4px] `}>
                                     {data.status}
                                     <span className='text-[14px] ml-[5px] text-[#525252]'>({data.user === null ? 'System' : data.user.name})</span>
                                   </p>
-                                  <p>
+                                  <p className=''>
                                     Note :{data.note && <span className='border-[1px] text-[#3d3d3d] ml-[5px] rounded-[4px] px-2'>{data.note}</span>}
                                   </p>
                                 </div>
@@ -148,10 +150,10 @@ const TableDetailNote = ({ param }: { param: string }) => {
                       <DialogContent>
                         <DialogHeader>
                           <DialogTitle>
-                            <p className='text-[30px] text-[#525252] font-[500]'>Timeline Items</p>
+                            <p className='text-[30px] text-[#525252] font-[500]'>Timeline Items ({item.name})</p>
                           </DialogTitle>
                         </DialogHeader>
-                        <Timeline dataItems={{}} />
+                        <Timeline dataItems={item.itemProgress} />
                       </DialogContent>
                     </Dialog>
                   </div>
@@ -167,90 +169,6 @@ const TableDetailNote = ({ param }: { param: string }) => {
           })}
         </div>
       </div>
-      {/* <div className='mt-[40px] max-w-[100vw]  bg-[#fafafa] rounded-[5px]'>
-        <h1 className='ml-[10px] text-[24px] text-[#525252]'>History</h1>
-        <div className='overflow-x-auto'>
-          <div className='w-max'>
-            <DataTableDetail
-              type={'detail'}
-              data={data.history}
-              columns={historyColumn}
-            >
-              {(row: any) => {
-                return (
-                  <div>
-                    {row.getIsExpanded() ? (
-                      <div className='overflow-x-scroll'>
-                        <DataTableDetail
-                          data={[row.original]}
-                          className='w-max'
-                          columns={allHistoryColumn}
-                          action={true}
-                        >
-                          {(row: any) => {
-                            return (
-                              <Button
-                                size={'sm'}
-                                className='bg-[green]'
-                              >
-                                Change Field
-                              </Button>
-                            );
-                          }}
-                        </DataTableDetail>
-                      </div>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                );
-              }}
-            </DataTableDetail>
-          </div>
-        </div>
-      </div> */}
-      {/* <div className='mt-[40px] bg-[#fafafa] rounded-[5px]'>
-        <h1 className='ml-[10px] text-[24px] text-[#525252]'>Items</h1>
-        <DataTableDetail
-          type={'detail'}
-          data={data.items}
-          columns={itemColumn}
-        >
-          {(row: any) => {
-            return (
-              <div className=''>
-                {row.getIsExpanded() ? (
-                  <DataTableDetail
-                    data={row.original.historyItems}
-                    columns={itemHistoryColumn}
-                    action={true}
-                  >
-                    {(row: any) => {
-                      return (
-                        <Dialog>
-                          <DialogTrigger>
-                            <div className='bg-[green] px-[9px] text-white py-[2px] rounded-[5px]'>Progress</div>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>
-                                <p className='text-[30px] text-[#525252] font-[500]'>Timeline Items</p>
-                              </DialogTitle>
-                            </DialogHeader>
-                            <Timeline dataItems={row.original} />
-                          </DialogContent>
-                        </Dialog>
-                      );
-                    }}
-                  </DataTableDetail>
-                ) : (
-                  ''
-                )}
-              </div>
-            );
-          }}
-        </DataTableDetail>
-      </div> */}
     </div>
   );
 };

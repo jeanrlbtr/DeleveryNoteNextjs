@@ -146,6 +146,7 @@ const ListItem = () => {
                         <p className='text-[18px] text-[#525252] font-[500]'>{purchaseOrder.no}</p>
                       </div>
                       {purchaseOrder.items.map((itemDetail: any, index: number) => {
+                        const updatedBy = itemDetail.itemProgress.length - 1;
                         return (
                           <div
                             key={index}
@@ -154,7 +155,7 @@ const ListItem = () => {
                             <div className='w-full '>
                               <div className='flex w-full justify-between items-center'>
                                 <p className='text-[#333333] text-[20px]'>
-                                  {itemDetail.name}{' '}
+                                  {itemDetail.name}
                                   <span className={`ml-[4px] text-[15px] ${itemDetail.status !== 'FINISH' ? 'text-[#b88c3b]' : 'text-[green]'}`}>
                                     ({itemDetail.status || 'UnProcess'})
                                   </span>
@@ -170,7 +171,7 @@ const ListItem = () => {
                                           <p className='text-[20px] text-[#525252] font-[500]'>Timeline Items</p>
                                         </DialogTitle>
                                       </DialogHeader>
-                                      <Timeline dataItems={{}} />
+                                      <Timeline dataItems={itemDetail.itemProgress} />
                                     </DialogContent>
                                   </Dialog>
                                 </div>
@@ -182,7 +183,8 @@ const ListItem = () => {
                                 <p className='text-black'>Quantity : {itemDetail.qty}</p>
                               </div>
                             </div>
-                            <div className='flex justify-end mt-[6px]'>
+                            <div className='flex justify-between mt-[6px]'>
+                              <p className='text-[#626262] text-[14px]'>{itemDetail.itemProgress[updatedBy].user.name}</p>
                               <Dialog>
                                 <DialogTrigger disabled={itemDetail.status === 'FINISH'}>
                                   <div
