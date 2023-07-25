@@ -1,3 +1,4 @@
+'use client';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Sidebar from '../Sidebar/Sidebar';
 import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';

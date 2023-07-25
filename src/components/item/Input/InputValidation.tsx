@@ -14,7 +14,6 @@ interface InputProps {
 }
 
 const InputValidation = ({ control, name, rules, title, className, errors, type, ...props }: InputProps) => {
-  console.log(errors);
   return (
     <div>
       <Controller

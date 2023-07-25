@@ -140,69 +140,72 @@ const ListItem = () => {
                   return (
                     <div
                       key={index}
-                      className={`w-full h-max p-2 rounded-[5px] bg-white mt-[30px] `}
+                      className={`w-full h-max p-2 rounded-[5px] bg-white mt-[30px]`}
                     >
                       <div className={`flex justify-between items-center  ${roboto.className}`}>
                         <p className='text-[18px] text-[#525252] font-[500]'>{purchaseOrder.no}</p>
                       </div>
-                      {purchaseOrder.items.map((itemDetail: any, index: number) => {
-                        const updatedBy = itemDetail.itemProgress.length - 1;
-                        return (
-                          <div
-                            key={index}
-                            className={`p-[10px] ${index === 0 && 'mt-[10px]'}  hover:bg-[#2a47ca11] border-t-[1px]`}
-                          >
-                            <div className='w-full '>
-                              <div className='flex w-full justify-between items-center'>
-                                <p className='text-[#333333] text-[20px]'>
-                                  {itemDetail.name}
-                                  <span className={`ml-[4px] text-[15px] ${itemDetail.status !== 'FINISH' ? 'text-[#b88c3b]' : 'text-[green]'}`}>
-                                    ({itemDetail.status || 'UnProcess'})
-                                  </span>
-                                </p>
-                                <div className='flex items-center flex-row-reverse gap-[12px]'>
-                                  <Dialog>
-                                    <DialogTrigger>
-                                      <Clock3 className='w-[20px] h-[20px] cursor-pointer text-[#405189]' />
-                                    </DialogTrigger>
-                                    <DialogContent className='rounded-[10px]'>
-                                      <DialogHeader>
-                                        <DialogTitle>
-                                          <p className='text-[20px] text-[#525252] font-[500]'>Timeline Items</p>
-                                        </DialogTitle>
-                                      </DialogHeader>
-                                      <Timeline dataItems={itemDetail.itemProgress} />
-                                    </DialogContent>
-                                  </Dialog>
+                      {purchaseOrder.items &&
+                        purchaseOrder.items.map((itemDetail: any, index: number) => {
+                          const updatedBy = itemDetail.itemProgress.length - 1;
+                          return (
+                            <div
+                              key={index}
+                              className={`p-[10px] ${index === 0 && 'mt-[10px]'}  hover:bg-[#2a47ca11] border-t-[1px]`}
+                            >
+                              <div className='w-full '>
+                                <div className='flex w-full justify-between items-center'>
+                                  <p className='text-[#333333] text-[20px]'>
+                                    {itemDetail.name}
+                                    <span className={`ml-[4px] text-[15px] ${itemDetail.status !== 'FINISH' ? 'text-[#b88c3b]' : 'text-[green]'}`}>
+                                      ({itemDetail.status || 'UnProcess'})
+                                    </span>
+                                  </p>
+                                  <div className='flex items-center flex-row-reverse gap-[12px]'>
+                                    <Dialog>
+                                      <DialogTrigger>
+                                        <Clock3 className='w-[20px] h-[20px] cursor-pointer text-[#405189]' />
+                                      </DialogTrigger>
+                                      <DialogContent className='rounded-[10px]'>
+                                        <DialogHeader>
+                                          <DialogTitle>
+                                            <p className='text-[20px] text-[#525252] font-[500]'>Timeline Items</p>
+                                          </DialogTitle>
+                                        </DialogHeader>
+                                        <Timeline dataItems={itemDetail.itemProgress} />
+                                      </DialogContent>
+                                    </Dialog>
+                                  </div>
+                                </div>
+                                <div className='flex mt-[2px]  justify-between text-[14px] w-full'>
+                                  <p className='text-[#626262]'>
+                                    {itemDetail.type} <span className='ml-[2px]'>({itemDetail.variant})</span>
+                                  </p>
+                                  <p className='text-black'>Quantity : {itemDetail.qty}</p>
                                 </div>
                               </div>
-                              <div className='flex mt-[2px]  justify-between text-[14px] w-full'>
-                                <p className='text-[#626262]'>
-                                  {itemDetail.type} <span className='ml-[2px]'>({itemDetail.variant})</span>
+                              <div className='flex justify-between mt-[6px]'>
+                                <p className='text-[#626262] text-[14px]'>
+                                  {itemDetail.itemProgress[updatedBy] && itemDetail.itemProgress[updatedBy].user.name}
                                 </p>
-                                <p className='text-black'>Quantity : {itemDetail.qty}</p>
+                                <Dialog>
+                                  <DialogTrigger disabled={itemDetail.status === 'FINISH'}>
+                                    <div
+                                      className={`text-[14px] ${roboto.className} ${
+                                        itemDetail.status === 'FINISH' && 'bg-[#a8a8a8] cursor-not-allowed'
+                                      }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
+                                    >
+                                      Update Process
+                                    </div>
+                                  </DialogTrigger>
+                                  <DialogContent className='rounded-[10px]'>
+                                    <UpdateItems id={itemDetail.id} />
+                                  </DialogContent>
+                                </Dialog>
                               </div>
                             </div>
-                            <div className='flex justify-between mt-[6px]'>
-                              <p className='text-[#626262] text-[14px]'>{itemDetail.itemProgress[updatedBy].user.name}</p>
-                              <Dialog>
-                                <DialogTrigger disabled={itemDetail.status === 'FINISH'}>
-                                  <div
-                                    className={`text-[14px] ${roboto.className} ${
-                                      itemDetail.status === 'FINISH' && 'bg-[#a8a8a8] cursor-not-allowed'
-                                    }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
-                                  >
-                                    Update Process
-                                  </div>
-                                </DialogTrigger>
-                                <DialogContent className='rounded-[10px]'>
-                                  <UpdateItems id={itemDetail.id} />
-                                </DialogContent>
-                              </Dialog>
-                            </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
                     </div>
                   );
                 })}
