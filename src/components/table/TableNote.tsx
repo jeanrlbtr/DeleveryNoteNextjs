@@ -23,23 +23,23 @@ const TableNote = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [statusValue, setStatusValue] = useState<string>('');
   const [selectValue, setSelectValue] = useState<string>('all');
+  const [page, setPage] = useState<number>(1);
   const { push } = useRouter();
   const axiosFetching = ClientFetching();
   const debounceValue = useDebounce(searchValue, 1000);
   const { data: dataNote, isLoading } = useQuery({
-    queryKey: ['getNote', debounceValue, statusValue],
+    queryKey: ['getNote', debounceValue, statusValue, page],
     queryFn: async () => {
       const url =
         selectValue != 'status' && selectValue != 'all' && debounceValue
-          ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=1&limit=100`
+          ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=${page}&limit=100`
           : selectValue === 'status'
-          ? `/delivery/v1/notes?k=${selectValue}&v=${statusValue}&page=1&limit=100`
-          : '/delivery/v1/notes?page=1&limit=100';
+          ? `/delivery/v1/notes?k=${selectValue}&v=${statusValue}&page=${page}&limit=100`
+          : `/delivery/v1/notes?page=${page}&limit=100`;
       const res = await axiosFetching.get(url);
-      return res.data.data.notes;
+      return res.data.data;
     },
   });
-
   return (
     <div>
       <div className='flex justify-between items-center'>
@@ -107,9 +107,17 @@ const TableNote = () => {
         </div>
       </div>
       <DataTable
-        type={'note'}
+        type='note'
         columns={columnsDelevery}
-        data={dataNote || []}
+        disabledNext={dataNote?.currentPage === 1 || dataNote?.count === 0}
+        disabledPrev={dataNote?.currentPage === dataNote?.totalPages || dataNote?.count === 0}
+        nextPage={() => {
+          dataNote?.currentPage !== dataNote?.totalPages && setPage(dataNote?.currentPage + 1);
+        }}
+        previousPage={() => {
+          if (dataNote?.currentPage !== 1) setPage(dataNote?.currentPage - 1);
+        }}
+        data={dataNote?.notes || []}
         action={true}
         isLoading={isLoading}
       >

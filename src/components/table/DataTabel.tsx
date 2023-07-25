@@ -5,7 +5,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/react';
 import React from 'react';
-import Image from 'next/image';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -15,6 +14,10 @@ interface DataTableProps<TData, TValue> {
   topTable?: any;
   type?: any;
   isLoading?: boolean;
+  nextPage?: Function;
+  previousPage?: Function;
+  disabledNext?: boolean;
+  disabledPrev?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -25,10 +28,14 @@ export function DataTable<TData, TValue>({
   action,
   children = Function,
   topTable,
+  nextPage = Function,
+  previousPage = Function,
+  disabledNext,
+  disabledPrev,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
 
-  const { getHeaderGroups, getRowModel, previousPage, getCanNextPage, getCanPreviousPage, nextPage } = useReactTable({
+  const { getHeaderGroups, getRowModel } = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -62,49 +69,51 @@ export function DataTable<TData, TValue>({
         )}
         {topTable}
       </div>
-      <Table className='bg-white rounded-[10px]'>
-        <TableHeader>
-          {getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                );
-              })}
-              {action && <TableHead>Action</TableHead>}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {!isLoading ? (
-            getRowModel().rows?.length ? (
-              getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                  ))}
-                  {action && <TableCell>{children(row)}</TableCell>}
+      <div className='max-h-[60vh] overflow-y-auto '>
+        <Table className='bg-white  rounded-[10px]  relative'>
+          <TableHeader className='sticky top-0'>
+            {getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
+                  );
+                })}
+                {action && <TableHead>Action</TableHead>}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {!isLoading ? (
+              getRowModel().rows?.length ? (
+                getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    ))}
+                    {action && <TableCell>{children(row)}</TableCell>}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className='h-24 text-center'
+                  >
+                    No results.
+                  </TableCell>
                 </TableRow>
-              ))
+              )
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className='h-24 text-center'
-                >
-                  No results.
-                </TableCell>
+                <TableCell></TableCell>
               </TableRow>
-            )
-          ) : (
-            <TableRow>
-              <TableCell></TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            )}
+          </TableBody>
+        </Table>
+      </div>
       {isLoading && (
         <div className='flex relative justify-center w-full mt-[40px]'>
           <div className='transform translate-x-1/2 translate-y-1/2 '>
@@ -118,7 +127,7 @@ export function DataTable<TData, TValue>({
             variant='outline'
             size='sm'
             onClick={() => previousPage()}
-            disabled={!getCanPreviousPage()}
+            disabled={disabledPrev}
           >
             Previous
           </Button>
@@ -126,7 +135,7 @@ export function DataTable<TData, TValue>({
             variant='outline'
             size='sm'
             onClick={() => nextPage()}
-            disabled={!getCanNextPage()}
+            disabled={disabledNext}
           >
             Next
           </Button>

@@ -15,7 +15,6 @@ const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
 const status = ['ALL', 'PROCESS', 'CANCELED', 'UNCOMPLETED', 'FINISH', ' UNPROCESSED'];
 
 const ListItem = () => {
-  const [open, setOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [statusQuery, setStatusQuery] = useState<string>('ALL');
   const [purchaseOrder, setPurchaseOrder] = useState<string>('all');

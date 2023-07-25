@@ -401,12 +401,18 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
     cell: ({ row }) => {
       return (
         <div>
-          {row.getValue('status') !== 'FINISH' ? (
-            <p className='border-[orange]  lowercase font-[600] text-[#ca8b37] rounded-[4px] border-[1px] w-max px-3'>
-              {row.getValue('status') || 'Unprocessed'}
-            </p>
-          ) : (
+          {row.getValue('status') === 'PROCESS' ? (
+            <p className='border-[orange]  lowercase font-[600] text-[#ca8b37] rounded-[4px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
+          ) : row.getValue('status') === 'FINISH' ? (
             <p className='border-[green]  lowercase text-[green] font-[600] rounded-[4px] border-[1px] w-max px-3'>{row.getValue('status')}</p>
+          ) : (
+            <p
+              className={`${
+                row.getValue('status') ? 'border-[red]' : 'border-[orange]'
+              }   lowercase text-[red] font-[600] rounded-[4px] border-[1px] w-max px-3`}
+            >
+              {row.getValue('status') || <span className='text-[#ca8b37]'>Unprocessed</span>}
+            </p>
           )}
         </div>
       );
