@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 const poppins = Poppins({ weight: ['300', '400', '500', '600'], subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Delevery Note',
+  title: 'Delivery Note',
   description: 'see all notes for the delevery ',
 };
 

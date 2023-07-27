@@ -83,3 +83,9 @@ export type Level = {
   code: number;
   name: string;
 };
+
+export type RankItem = {
+  name: string;
+  variant: string;
+  total: number;
+};

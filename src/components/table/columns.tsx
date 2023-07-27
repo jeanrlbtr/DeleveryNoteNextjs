@@ -1,6 +1,6 @@
 'use client';
 
-import { Delevery, Invoice, Level, Loading, NoteDetail, Users, History, Items, HistoryItem, Allhistory } from '@/lib/types';
+import { Delevery, Invoice, Level, Loading, NoteDetail, Users, History, Items, HistoryItem, Allhistory, RankItem } from '@/lib/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronRight } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
@@ -420,8 +420,23 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
   },
 ];
 
+const rankColumn: ColumnDef<RankItem>[] = [
+  {
+    header: 'Name',
+    accessorKey: 'name',
+  },
+  {
+    header: 'Variant',
+    accessorKey: 'variant',
+  },
+  {
+    header: 'Total',
+    accessorKey: 'total',
+  },
+];
 export {
   InvoiceColumn,
+  rankColumn,
   columnsDelevery,
   userColumn,
   allHistoryColumn,

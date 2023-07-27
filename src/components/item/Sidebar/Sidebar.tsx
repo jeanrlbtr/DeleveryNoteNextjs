@@ -1,5 +1,6 @@
 'use client';
 
+import { LayoutPanelLeft } from 'lucide-react';
 import { TruckIcon, User, LogOut, FileStack, PackageCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -31,6 +32,22 @@ const Sidebar = () => {
         <div className='mt-12 flex flex-col h-[250px] md:h-[300px] justify-between w-max mx-auto'>
           <div className='flex flex-col gap-[15px]'>
             <div
+              onClick={() => navigate('/')}
+              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
+            >
+              <LayoutPanelLeft className='w-[25px] h-[25px]' />
+              <p className='capitalize'>Dashboard</p>
+            </div>
+            <div
+              onClick={() => navigate('/level')}
+              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
+            >
+              <FileStack />
+              <p className='capitalize  '>Level</p>
+            </div>
+          </div>
+          <div className='flex flex-col gap-[15px]'>
+            <div
               onClick={() => navigate('/notes')}
               className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
             >
@@ -44,39 +61,12 @@ const Sidebar = () => {
               <PackageCheck />
               <p className='capitalize'>Items Check</p>
             </div>
-            {/* <div
-              onClick={() => navigate('approve')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <Icon
-                icon='ic:round-edit-note'
-                className='w-[25px] h-[25px]'
-              />
-              <p className='capitalize'>Approve</p>
-            </div>
-            <div
-              onClick={() => navigate('profile')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <Icon
-                icon='iconamoon:profile-light'
-                className='w-[25px] h-[25px]'
-              />
-              <p className='capitalize  '>Profile</p>
-            </div> */}
             <div
               onClick={() => navigate('/users')}
               className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
             >
               <User className='w-[25px] h-[25px]' />
               <p className='capitalize'>Users</p>
-            </div>
-            <div
-              onClick={() => navigate('/level')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <FileStack />
-              <p className='capitalize  '>Level</p>
             </div>
           </div>
           <div

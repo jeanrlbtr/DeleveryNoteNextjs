@@ -31,10 +31,10 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
   }, []);
   return (
     <div className='h-full relative'>
-      <div className='sticky top-0'>
+      <div className='sticky top-0 z-[9]'>
         <Header title={title} />
       </div>
-      <div className='w-[97%] mt-[40px] mx-auto'>{children}</div>
+      <div className='w-[97%] mt-[40px]  mx-auto'>{children}</div>
     </div>
   );
 };

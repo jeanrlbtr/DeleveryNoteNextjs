@@ -24,7 +24,7 @@ const Header = ({ title }: { title: string }) => {
       </div>
       <div className='flex gap-3 md:gap-7 items-center '>
         <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#fafafa]'>jean Butar</p>
-        <div className='relative'>
+        {/* <div className='relative'>
           <Popover>
             <PopoverTrigger>
               <BellIcon className='md:w-[25px] md:h-[25px] h-[20px] w-[20px] text-[#fafafa]' />
@@ -42,7 +42,7 @@ const Header = ({ title }: { title: string }) => {
               </div>
             </PopoverContent>
           </Popover>
-        </div>
+        </div> */}
       </div>
     </div>
   );

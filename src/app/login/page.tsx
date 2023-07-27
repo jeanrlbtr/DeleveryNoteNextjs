@@ -1,8 +1,9 @@
+'use client';
 import { LoginForm } from '@/components/item';
 import Image from 'next/image';
 import React from 'react';
 
-const LoginPage = async () => {
+const LoginPage = () => {
   return (
     <div className='h-[100vh] relative'>
       {/* <div className='w-[100vw] flex justify-center bg-[#2a1246] h-[60px] absolute top-0'>
