@@ -69,11 +69,14 @@ export function DataTable<TData, TValue>({
         )}
         {topTable}
       </div>
-      <div className='max-h-[60vh] overflow-y-auto '>
-        <Table className='bg-white  rounded-[10px]  relative'>
-          <TableHeader className='sticky top-0'>
+      <div className='max-h-[60vh] overflow-y-auto relative '>
+        <Table className='bg-white  rounded-[10px]'>
+          <TableHeader>
             {getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow
+                key={headerGroup.id}
+                className='sticky top-0'
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>

@@ -5,4 +5,5 @@ import Timeline from './modal/ModalTimeline';
 import UpdateStatusPO from './Form/UpdateStatusPO';
 import ListItem from './Sidebar/ListItem';
 import Chart from './Chart/Chart';
-export { LoginForm, UpdateStatusPO, Header, Container, Timeline, ListItem, Chart };
+import Loading from './Loading/Loading';
+export { LoginForm, UpdateStatusPO, Header, Container, Timeline, ListItem, Chart, Loading };

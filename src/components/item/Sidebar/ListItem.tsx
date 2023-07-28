@@ -23,32 +23,29 @@ const ListItem = () => {
     queryFn: async () => {
       const url = statusQuery !== 'ALL' ? `/delivery/v1/note/items?k=status&v=${statusQuery}&page=${page}` : `/delivery/v1/note/items?page=${page}`;
       const res = await axiosFetching.get(url);
-      return res.data.data;
+      return res.data?.data;
     },
     enabled: true,
     queryKey: ['getAllItems', page, statusQuery],
   });
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
 
   if (isError) {
     return <div>Erorr 404</div>;
   }
 
-  const noPo = data.items.find((item: any) => item.no === purchaseOrder);
+  const noPo = data?.items.find((item: any) => item.no === purchaseOrder);
 
   return (
     <div className=' lg:w-full lg:flex lg:gap-[12px]'>
       <div className='w-[400px] hidden lg:flex lg:flex-col bg-[white] h-[70vh] overflow-y-auto rounded-[5px] px-3'>
         <p className='text-[22px] text-[#525252] pl-2'>Purchase Order</p>
         <div className=' mt-[25px]'>
-          {data.items.map((purchaseOrder: any, index: number) => {
+          {data?.items.map((purchaseOrder: any, index: number) => {
             return (
               <div
                 key={index}
                 onClick={() => setPurchaseOrder(purchaseOrder.no)}
-                className={` ${
+                className={`${
                   noPo && purchaseOrder.no === noPo.no ? 'bg-[#0040ff3d] text-[#324cc0]' : 'hover:bg-[#0040ff1a]'
                 } w-full flex justify-between items-center mt-[2px] pl-2 py-2 rounded-[6px] text-[#3e3e3e]`}
               >
@@ -75,7 +72,7 @@ const ListItem = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value='all'>All Purchase Order</SelectItem>
-            {data.items.map((purchaseOrder: any, index: number) => {
+            {data?.items.map((purchaseOrder: any, index: number) => {
               return (
                 <SelectItem
                   value={purchaseOrder.no}
@@ -134,8 +131,8 @@ const ListItem = () => {
           </div>
           {purchaseOrder === 'all' ? (
             <div className='w-full'>
-              {data.items.length > 0 &&
-                data.items.map((purchaseOrder: any, index: number) => {
+              {data?.items.length > 0 &&
+                data?.items.map((purchaseOrder: any, index: number) => {
                   return (
                     <div
                       key={index}
@@ -282,9 +279,9 @@ const ListItem = () => {
             variant='outline'
             size='sm'
             className='text-[#525252]'
-            disabled={data.currentPage === 1 || data.count === 0}
+            disabled={data?.currentPage === 1 || data?.count === 0}
             onClick={() => {
-              if (data.currentPage !== 1) setPage(data.currentPage - 1);
+              if (data?.currentPage !== 1) setPage(data?.currentPage - 1);
             }}
           >
             Previous
@@ -293,9 +290,9 @@ const ListItem = () => {
             variant='outline'
             size='sm'
             className='text-[#525252]'
-            disabled={data.currentPage === data.totalPages || data.count === 0}
+            disabled={data?.currentPage === data?.totalPages || data?.count === 0}
             onClick={() => {
-              if (data.currentPage !== data.totalPages) setPage(data.currentPage + 1);
+              if (data?.currentPage !== data?.totalPages) setPage(data?.currentPage + 1);
             }}
           >
             Next
