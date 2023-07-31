@@ -2,16 +2,16 @@
 
 import React from 'react';
 import Header from '../Header/Header';
-import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { getCookie } from 'cookies-next';
 import { useToast } from '@/components/ui/use-toast';
 
 const Container = ({ title, children }: { title: string; children: React.ReactNode }) => {
   const { toast } = useToast();
   const token = getCookie('access_token');
-  const dataUser: any = localStorage.getItem('data');
 
   React.useEffect(() => {
+    const dataUser: any = localStorage.getItem('data');
     const jsonParse = JSON?.parse(dataUser);
     const event = [];
     for (let i = 0; i < jsonParse.module.length; i++) {
@@ -46,7 +46,7 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
       <div className='sticky top-0 z-[9]'>
         <Header title={title} />
       </div>
-      <div className='w-[97%] mt-[40px]  mx-auto'>{children}</div>
+      <div className='w-[97%] mt-[20px]  mx-auto'>{children}</div>
     </div>
   );
 };

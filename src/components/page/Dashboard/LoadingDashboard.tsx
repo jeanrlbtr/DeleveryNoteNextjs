@@ -1,7 +1,8 @@
-import { Loading } from '@/components/item';
 import { DataTable } from '@/components/table/DataTabel';
 import { rankColumn } from '@/components/table/columns';
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FileX2 } from 'lucide-react';
+import { CircleEllipsis, FileCheck2 } from 'lucide-react';
 import React from 'react';
 
 const LoadingDashboard = () => {
@@ -25,11 +26,10 @@ const LoadingDashboard = () => {
                 <p>Loading Please Wait .....</p>
               </div>
             </div>
-            <div>
-              <div className=' mb-[15px] flex justify-between items-center'>
-                <p className='text-[20px] text-[#525252]'>Total Status PO</p>
+            <div className='bg-white rounded-[10px] px-[20px] py-[15px]'>
+              <div className=' mb-[20px]  flex  justify-between items-center'>
                 <Select defaultValue='year'>
-                  <SelectTrigger className='w-[150px] bg-white'>
+                  <SelectTrigger className='w-[200px] bg-white'>
                     <SelectValue placeholder='Loading...' />
                   </SelectTrigger>
                 </Select>
@@ -38,10 +38,16 @@ const LoadingDashboard = () => {
                 {arr.map((data: any, index: number) => {
                   return (
                     <div
-                      className='p-2 flex flex-col items-center justify-center w-full bg-white h-[90px] rounded-[7px]'
+                      className={`w-full p-2 flex flex-col items-center justify-center gap-[5px]   shadow-md h-[90px] rounded-[7px]  `}
                       key={index}
                     >
-                      <p className='text-center text-[23px] text-[#464646]'>{data}</p>
+                      <p className={`w-max font-[600]  text-[#818181]`}>...</p>
+                      <div className='flex gap-[10px] items-center w-max'>
+                        {index == 1 && <CircleEllipsis className='text-[#6fa12c] w-[20px] h-[20px]' />}
+                        {index == 2 && <FileCheck2 className='text-[#6fa12c] w-[20px] h-[20px]' />}
+                        {index == 3 && <FileX2 className='text-[#e63e3e] w-[20px] h-[20px]' />}
+                        <p className={`text-center text-[23px]  text-[#a3a3a3] `}>{data}</p>
+                      </div>
                     </div>
                   );
                 })}

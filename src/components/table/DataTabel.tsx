@@ -34,7 +34,6 @@ export function DataTable<TData, TValue>({
   disabledPrev,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
-
   const { getHeaderGroups, getRowModel } = useReactTable({
     data,
     columns,
@@ -49,8 +48,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className=''>
-      <div className='flex h-max mb-[30px] items-center'>
-        {!type && (
+      {!type && (
+        <div className='flex h-max mb-[30px] items-center'>
           <div className='w-[200px] rounded-[5px] border-[1px] bg-[#fff] px-1 border-[teal] flex justify-between items-center py-1 '>
             <input
               type='text'
@@ -66,17 +65,14 @@ export function DataTable<TData, TValue>({
               />
             </div>
           </div>
-        )}
-        {topTable}
-      </div>
-      <div className='max-h-[60vh] overflow-y-auto relative '>
-        <Table className='bg-white  rounded-[10px]'>
+          {topTable}
+        </div>
+      )}
+      <div className={`${isLoading && 'h-[60vh]'} max-h-[60vh] border-[1px] rounded-sm overflow-y-auto relative`}>
+        <Table className='bg-white '>
           <TableHeader>
             {getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className='sticky top-0'
-              >
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -84,7 +80,7 @@ export function DataTable<TData, TValue>({
                     </TableHead>
                   );
                 })}
-                {action && <TableHead>Action</TableHead>}
+                {action && !isLoading ? <TableHead>Action</TableHead> : ''}
               </TableRow>
             ))}
           </TableHeader>
@@ -111,19 +107,21 @@ export function DataTable<TData, TValue>({
               )
             ) : (
               <TableRow>
-                <TableCell></TableCell>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-max'
+                >
+                  <div className='flex relative justify-center h-[30vh] w-full'>
+                    <div className='transform translate-x-1/2 translate-y-1/4 '>
+                      <div className='border-t-transparent border-solid animate-spin  rounded-full border-blue-400 border-8 h-28 w-28'></div>
+                    </div>
+                  </div>
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </div>
-      {isLoading && (
-        <div className='flex relative justify-center w-full mt-[40px]'>
-          <div className='transform translate-x-1/2 translate-y-1/2 '>
-            <div className='border-t-transparent border-solid animate-spin  rounded-full border-blue-400 border-8 h-36 w-36'></div>
-          </div>
-        </div>
-      )}
       {!isLoading && (
         <div className='flex items-center justify-end space-x-2 py-4'>
           <Button
