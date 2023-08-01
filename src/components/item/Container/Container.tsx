@@ -46,7 +46,7 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
       <div className='sticky top-0 z-[9]'>
         <Header title={title} />
       </div>
-      <div className='w-[97%] mt-[20px]  mx-auto'>{children}</div>
+      <div className='p-[20px]  mx-auto'>{children}</div>
     </div>
   );
 };

@@ -1,17 +1,16 @@
 'use client';
 
-import { Container, ListItem } from '@/components/item';
+import { Container } from '@/components/item';
+import { ItemPo } from '@/components/page';
 import React from 'react';
 
 const page = () => {
   return (
-    <div className='relative'>
-      <Container title='Items'>
-        <div className='w-full '>
-          <ListItem />
-        </div>
-      </Container>
-    </div>
+    <Container title='Items Purchase Order'>
+      <div className='w-full '>
+        <ItemPo />
+      </div>
+    </Container>
   );
 };
 

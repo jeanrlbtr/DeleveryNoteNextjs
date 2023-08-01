@@ -1,17 +1,17 @@
 import ClientFetching from '@/hooks/clientFetching';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { detailNoteColumn } from './columns';
-import { Button } from '../ui/button';
-import { DataTableDetail } from './DataTableDetail';
+import { detailNoteColumn } from '@/components/table/columns';
+import { Button } from '@/components/ui/button';
+import { DataTableDetail } from '@/components/table/DataTableDetail';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Timeline, UpdateStatusPO } from '../item';
+import { Timeline, UpdateStatusPO } from '@/components/item';
 import { ArrowUpRightFromCircle } from 'lucide-react';
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({ weight: ['700', '300', '400', '500'], subsets: ['cyrillic'] });
 
-const TableDetailNote = ({ param }: { param: string }) => {
+const DetailPO = ({ param }: { param: string }) => {
   const axiosFetching = ClientFetching();
   const [open, setOpen] = useState<boolean>(false);
   const { data, isLoading } = useQuery({
@@ -173,4 +173,4 @@ const TableDetailNote = ({ param }: { param: string }) => {
   );
 };
 
-export default TableDetailNote;
+export default DetailPO;

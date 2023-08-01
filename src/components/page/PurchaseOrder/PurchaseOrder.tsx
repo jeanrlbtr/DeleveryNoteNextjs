@@ -1,16 +1,16 @@
 'use client';
 
 import ClientFetching from '@/hooks/clientFetching';
-import { DataTable } from './DataTabel';
-import { columnsDelevery } from './columns';
+import { DataTable } from '@/components/table/DataTabel';
+import { columnsDelevery } from '@/components/table/columns';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 
-const TableNote = () => {
+const PurchaseOrder = () => {
   const filter = [
     { query: 'salesSearch', title: 'Sales' },
     { query: 'noSearch', title: 'No SJ' },
@@ -47,21 +47,26 @@ const TableNote = () => {
   ];
   const [searchValue, setSearchValue] = useState<string>('');
   const [statusValue, setStatusValue] = useState<string>('');
+  const [limitValue, setLimitValue] = useState<string>('10');
   const [selectValue, setSelectValue] = useState<string>('all');
   const [page, setPage] = useState<number>(1);
+
   const { push } = useRouter();
   const axiosFetching = ClientFetching();
   const debounceValue = useDebounce(searchValue, 1000);
+
   const { data: dataNote, isLoading } = useQuery({
-    queryKey: ['getNote', debounceValue, statusValue, page],
+    queryKey: ['getNote', debounceValue, statusValue, page, limitValue],
     queryFn: async () => {
       const statusUrl =
         statusValue && statusValue != 'ALL'
-          ? `/delivery/v1/notes?k=status&v=${statusValue}&page=${page}&limit=100`
-          : `/delivery/v1/notes?page=${page}&limit=100`;
+          ? `/delivery/v1/notes?k=status&v=${statusValue}&page=${page}&limit=${limitValue}`
+          : `/delivery/v1/notes?page=${page}&limit=${limitValue}`;
 
       const url =
-        selectValue && debounceValue.length > 1 ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=${page}&limit=100` : statusUrl;
+        selectValue && debounceValue.length > 1
+          ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=${page}&limit=${limitValue}`
+          : statusUrl;
       const res = await axiosFetching.get(url);
 
       return res.data.data;
@@ -142,6 +147,8 @@ const TableNote = () => {
           data={dataNote?.notes || []}
           action={true}
           isLoading={isLoading}
+          limit={limitValue}
+          onChange={(e: string) => setLimitValue(e)}
         >
           {(row: any) => {
             return (
@@ -159,4 +166,4 @@ const TableNote = () => {
   );
 };
 
-export default TableNote;
+export default PurchaseOrder;

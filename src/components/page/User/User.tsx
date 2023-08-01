@@ -1,21 +1,21 @@
 'use client';
 import React, { useState } from 'react';
-import { DataTable } from './DataTabel';
-import { userColumn } from './columns';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import UserForm from '../item/Form/AddUserForm';
-import ModalPageAccess from '../item/Form/PageAccessForm';
-import EditUserForm from '../item/Form/EditUserForm';
-import ModalAccess from '../item/Form/AccessForm';
+import { DataTable } from '@/components/table/DataTabel';
+import { userColumn } from '@/components/table/columns';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import UserForm from '@/components/item/Form/AddUserForm';
+import ModalPageAccess from '@/components/item/Form/PageAccessForm';
+import EditUserForm from '@/components/item/Form/EditUserForm';
+import ModalAccess from '@/components/item/Form/AccessForm';
 import ClientFetching from '@/hooks/clientFetching';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import TableLoading from './TableLoading';
+import TableLoading from '@/components/table/TableLoading';
 import { Edit, Eraser } from 'lucide-react';
 import { FolderLock } from 'lucide-react';
-import { Button } from '../ui/button';
-import { useToast } from '../ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
-const TableUser = () => {
+const User = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [detailUser, setDetailUser] = useState<any>({});
@@ -224,4 +224,4 @@ const TableUser = () => {
   );
 };
 
-export default TableUser;
+export default User;

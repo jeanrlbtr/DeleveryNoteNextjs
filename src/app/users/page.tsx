@@ -1,13 +1,13 @@
 'use client';
 import { Container } from '@/components/item';
-import TableUser from '@/components/table/TableUser';
+import User from '@/components/page/User/User';
 
-const LevelPage = () => {
+const UserPage = () => {
   return (
     <Container title='Users'>
-      <TableUser></TableUser>
+      <User />
     </Container>
   );
 };
 
-export default LevelPage;
+export default UserPage;

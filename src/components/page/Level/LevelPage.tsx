@@ -1,17 +1,17 @@
 'use client';
 import React, { useState } from 'react';
-import { DataTable } from './DataTabel';
-import { LevelColumn } from './columns';
+import { DataTable } from '@/components/table/DataTabel';
+import { LevelColumn } from '@/components/table/columns';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import ClientFetching from '@/hooks/clientFetching';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import TableLoading from './TableLoading';
-import { useToast } from '../ui/use-toast';
+import TableLoading from '@/components/table/TableLoading';
+import { useToast } from '@/components/ui/use-toast';
 
-const TableLevel = () => {
+const LevelPage = () => {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, setValue } = useForm();
@@ -77,13 +77,10 @@ const TableLevel = () => {
       }
     },
   });
-  if (isLoading) {
-    return <TableLoading />;
-  }
 
   return (
     <DataTable
-      data={levelData}
+      data={levelData || false}
       columns={LevelColumn}
       action={true}
       topTable={
@@ -193,4 +190,4 @@ const TableLevel = () => {
   );
 };
 
-export default TableLevel;
+export default LevelPage;

@@ -5,6 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@iconify/react';
 import React from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { SelectLimit } from '../item';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -18,6 +20,8 @@ interface DataTableProps<TData, TValue> {
   previousPage?: Function;
   disabledNext?: boolean;
   disabledPrev?: boolean;
+  limit?: string;
+  onChange?: Function;
 }
 
 export function DataTable<TData, TValue>({
@@ -32,6 +36,8 @@ export function DataTable<TData, TValue>({
   previousPage = Function,
   disabledNext,
   disabledPrev,
+  limit,
+  onChange = Function,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = React.useState('');
   const { getHeaderGroups, getRowModel } = useReactTable({
@@ -122,26 +128,31 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {!isLoading && (
-        <div className='flex items-center justify-end space-x-2 py-4'>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => previousPage()}
-            disabled={disabledPrev}
-          >
-            Previous
-          </Button>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => nextPage()}
-            disabled={disabledNext}
-          >
-            Next
-          </Button>
-        </div>
-      )}
+
+      <div className='flex items-center justify-end space-x-2 py-4'>
+        {limit && (
+          <SelectLimit
+            onValueChange={onChange}
+            limit={limit}
+          />
+        )}
+        <Button
+          variant='outline'
+          size='sm'
+          onClick={() => previousPage()}
+          disabled={disabledPrev}
+        >
+          Previous
+        </Button>
+        <Button
+          variant='outline'
+          size='sm'
+          onClick={() => nextPage()}
+          disabled={disabledNext}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

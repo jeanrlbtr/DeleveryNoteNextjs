@@ -6,15 +6,17 @@ import ClientFetching from '@/hooks/clientFetching';
 import { useQuery } from '@tanstack/react-query';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Clock3 } from 'lucide-react';
-import Timeline from '../modal/ModalTimeline';
+import { Timeline } from '@/components/item';
 
-import UpdateItems from '../Form/UpdateStatusItems';
+import UpdateItems from '@/components/item/Form/UpdateStatusItems';
 import { Button } from '@/components/ui/button';
+import LoadingItemPo from './LoadingItemPo';
+import Image from 'next/image';
 
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
 const status = ['ALL', 'PROCESS', 'CANCELED', 'FINISH', ' UNPROCESSED'];
 
-const ListItem = () => {
+const I = () => {
   const status1 = [
     {
       name: 'view All',
@@ -124,7 +126,8 @@ const ListItem = () => {
         <div className='lg:h-[65vh] lg:bg-white lg:rounded-[5px] lg:overflow-y-auto'>
           {purchaseOrder === 'all' ? (
             <div className='w-full'>
-              {data?.items.length > 0 &&
+              {isLoading && <LoadingItemPo />}
+              {data?.items.length > 0 ? (
                 data?.items.map((purchaseOrder: any, index: number) => {
                   return (
                     <div
@@ -197,7 +200,21 @@ const ListItem = () => {
                         })}
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <div className='w-full flex justify-center'>
+                  {!isLoading && (
+                    <div className='overflow-hidden relative w-[350px] h-[400px]'>
+                      <Image
+                        src={'/animate.gif'}
+                        fill
+                        alt=''
+                        className='object-contain'
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             <div>
@@ -296,4 +313,4 @@ const ListItem = () => {
   );
 };
 
-export default ListItem;
+export default I;

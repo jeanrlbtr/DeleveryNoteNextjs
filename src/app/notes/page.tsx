@@ -1,11 +1,11 @@
 'use client';
 
 import { Container } from '@/components/item';
-import TableNote from '@/components/table/TableNote';
+import { PurchaseOrder } from '@/components/page';
 function DeleveryNote() {
   return (
     <Container title='Purchase Order'>
-      <TableNote />
+      <PurchaseOrder />
     </Container>
   );
 }

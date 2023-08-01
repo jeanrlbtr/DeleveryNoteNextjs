@@ -1,7 +1,7 @@
 'use client';
 
 import { Container } from '@/components/item';
-import { TableDetailNote } from '@/components/table';
+import { DetailPO } from '@/components/page';
 
 const DetailNote = async ({ params }: { params: any }) => {
   const param: string = params.notes?.join('/');
@@ -10,7 +10,7 @@ const DetailNote = async ({ params }: { params: any }) => {
 
   return (
     <Container title={`${newParam.join('')}`}>
-      <TableDetailNote param={newParam.join('')} />
+      <DetailPO param={newParam.join('')} />
     </Container>
   );
 };
