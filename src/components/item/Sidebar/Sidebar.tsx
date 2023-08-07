@@ -1,6 +1,5 @@
 'use client';
 
-import ClientFetching from '@/hooks/clientFetching';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { LayoutPanelLeft } from 'lucide-react';
 import { TruckIcon, User, LogOut, FileStack, PackageCheck } from 'lucide-react';
@@ -10,18 +9,22 @@ import React from 'react';
 
 const Sidebar = ({ name }: { name: string }) => {
   const route = useRouter();
+  const data: string = getCookie('data')?.toString() || '';
   const navigate = (url?: any) => {
     route.push(url);
   };
-  const axiosFetch = ClientFetching();
-  const token = getCookie('access_token');
   const logout = async () => {
     try {
-      // const res = await axiosFetch.delete('/delivery/auth/logout');
       deleteCookie('access_token', { path: '/', domain: '.saptakarsa.com' });
       deleteCookie('refresh_token', { path: '/', domain: '.saptakarsa.com' });
+      deleteCookie('delete', { path: '/', domain: '.saptakarsa.com' });
       navigate('/login');
     } catch (error) {}
+  };
+  const checkAccess = (name: string): boolean => {
+    const pageAccess: string[] = JSON.parse(data)?.access;
+    if (pageAccess.includes(name)) return true;
+    return false;
   };
   return (
     <div className='min-h-[100vh] z-10'>
@@ -34,50 +37,59 @@ const Sidebar = ({ name }: { name: string }) => {
             className='object-cover'
           />
         </div>
-        <div className='mt-4 '>
+        <div className='mt-4'>
           <p className='capitalize mx-auto w-max font-Poppins text-[19px] text-[#fff]'>{name}</p>
           <p className='capitalize mx-auto w-max font-Poppins text-[15px] text-[#fff]'>Admin</p>
         </div>
         <div className='mt-12 flex flex-col h-[250px] md:h-[300px] justify-between w-max mx-auto'>
           <div className='flex flex-col gap-[15px]'>
-            <div
-              onClick={() => navigate('/')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
-            >
-              <LayoutPanelLeft className='w-[25px] h-[25px]' />
-              <p className='capitalize'>Dashboard</p>
-            </div>
-            <div
-              onClick={() => navigate('/level')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <FileStack />
-              <p className='capitalize  '>Level</p>
-            </div>
+            {checkAccess('/') && (
+              <div
+                onClick={() => navigate('/')}
+                className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
+              >
+                <LayoutPanelLeft className='w-[25px] h-[25px]' />
+                <p className='capitalize'>Dashboard</p>
+              </div>
+            )}
+            {checkAccess('level') && (
+              <div
+                onClick={() => navigate('/level')}
+                className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
+              >
+                <FileStack />
+                <p className='capitalize  '>Level</p>
+              </div>
+            )}
+            {checkAccess('notes') && (
+              <div
+                onClick={() => navigate('/notes')}
+                className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
+              >
+                <TruckIcon className='w-[25px] h-[25px]' />
+                <p className='capitalize'>purchase order</p>
+              </div>
+            )}
+            {checkAccess('item') && (
+              <div
+                onClick={() => navigate('/item')}
+                className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
+              >
+                <PackageCheck />
+                <p className='capitalize'>Items Check</p>
+              </div>
+            )}
+            {checkAccess('users') && (
+              <div
+                onClick={() => navigate('/users')}
+                className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
+              >
+                <User className='w-[25px] h-[25px]' />
+                <p className='capitalize'>Users</p>
+              </div>
+            )}
           </div>
-          <div className='flex flex-col gap-[15px]'>
-            <div
-              onClick={() => navigate('/notes')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5]'
-            >
-              <TruckIcon className='w-[25px] h-[25px]' />
-              <p className='capitalize'>purchase order</p>
-            </div>
-            <div
-              onClick={() => navigate('/item')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <PackageCheck />
-              <p className='capitalize'>Items Check</p>
-            </div>
-            <div
-              onClick={() => navigate('/users')}
-              className='cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] '
-            >
-              <User className='w-[25px] h-[25px]' />
-              <p className='capitalize'>Users</p>
-            </div>
-          </div>
+
           <div
             onClick={() => logout()}
             className='cursor-pointer flex gap-[10px] active:text-red-600 items-center text-[#fff] hover:text-[#c5c5c5] '

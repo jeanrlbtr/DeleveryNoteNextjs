@@ -55,37 +55,54 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
       >
         <div className=''>
           <p className='text-[#525252] text-[19px]'>Page</p>
+
           <div className='mt-[13px] flex  gap-[10px]'>
             <div className='flex items-center space-x-2'>
               <input
-                id='note'
+                id='dasboard'
                 type='checkbox'
-                defaultChecked={UserAccess?.access.find((item: any) => item == 'note') === 'note'}
                 className='w-[15px]  border-[#d1cfcf]'
-                value={'note'}
+                defaultChecked={UserAccess?.access.find((item: any) => item == '/') === '/'}
+                value={'/'}
                 {...register('access')}
               />
               <label
-                htmlFor='note'
+                htmlFor='dasboard'
                 className='text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
               >
-                Delevery Note
+                Dashboard
               </label>
             </div>
             <div className='flex items-center space-x-2'>
               <input
-                id='profile'
+                id='notes'
                 type='checkbox'
+                defaultChecked={UserAccess?.access.find((item: any) => item == 'notes') === 'notes'}
                 className='w-[15px]  border-[#d1cfcf]'
-                value={'profile'}
-                defaultChecked={UserAccess?.access.find((item: any) => item == 'profile') === 'profile'}
+                value={'notes'}
                 {...register('access')}
               />
               <label
-                htmlFor='profile'
+                htmlFor='notes'
                 className='text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
               >
-                Profile
+                Purchase Order
+              </label>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <input
+                id='item'
+                type='checkbox'
+                className='w-[15px]  border-[#d1cfcf]'
+                value={'item'}
+                defaultChecked={UserAccess?.access.find((item: any) => item == 'item') === 'item'}
+                {...register('access')}
+              />
+              <label
+                htmlFor='item'
+                className='text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Item
               </label>
             </div>
             <div className='flex items-center space-x-2'>
@@ -102,6 +119,22 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
                 className='text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
               >
                 Users
+              </label>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <input
+                id='level'
+                type='checkbox'
+                className='w-[15px]  border-[#d1cfcf]'
+                defaultChecked={UserAccess?.access.find((item: any) => item == 'level') === 'level'}
+                value={'level'}
+                {...register('access')}
+              />
+              <label
+                htmlFor='level'
+                className='text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Level
               </label>
             </div>
           </div>

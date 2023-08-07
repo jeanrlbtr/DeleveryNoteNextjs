@@ -22,7 +22,7 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
     }
 
     if (event.length > 0) {
-      fetchEventSource('https://dev.saptakarsa.com/gtw/delivery/v1/events/po', {
+      fetchEventSource('https://staging.saptakarsa.com/gtw/delivery/v1/events/po', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
