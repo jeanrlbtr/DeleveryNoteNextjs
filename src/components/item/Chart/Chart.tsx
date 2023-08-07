@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { AreaChart, Card } from '@tremor/react';
 
 export default function Chart({ dataTotal }: { dataTotal: any }) {
   const data = [
@@ -76,35 +76,14 @@ export default function Chart({ dataTotal }: { dataTotal: any }) {
     });
   }
   return (
-    <LineChart
-      width={900}
-      height={280}
-      data={data}
-      margin={{
-        top: 2,
-        right: 20,
-        left: 20,
-        bottom: 2,
-      }}
-    >
-      <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='name' />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line
-        type='monotone'
-        dataKey='Total'
-        stroke='#8884d8'
-        strokeWidth={5}
+    <Card>
+      <AreaChart
+        className='h-[200px] mt-4'
+        data={data}
+        index='name'
+        categories={['Total', 'Cancel']}
+        colors={['blue', 'red']}
       />
-      <Line
-        type='monotone'
-        dataKey='Cancel'
-        stroke='#82ca9d'
-        strokeWidth={2}
-        strokeDasharray='3 4 5 2'
-      />
-    </LineChart>
+    </Card>
   );
 }

@@ -83,40 +83,46 @@ const Dashboard = () => {
           <div className='flex justify-between gap-[20px]'>
             <div className='h-[80vh] flex flex-col gap-[12px]  overflow-y-auto rounded-[12px] bg-white w-[250px] px-3 py-2'>
               <p className='text-[20px] mb-[20px]'>Activity</p>
-              {dashboardData?.activity.map((activity: any, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className='flex  gap-[10px]'
-                  >
-                    <div className='flex flex-col gap-[5px] items-center'>
-                      <div className='bg-[#5C469C] w-[30px] h-[30px] rounded-full flex justify-center items-center'>
-                        <p className='text-white'>AD</p>
-                      </div>
-                      <div className='h-[10px] w-[5px] bg-[#5C469C] rounded-full'></div>
-                      <div className='h-[7px] w-[5px] bg-[#5C469C] rounded-full'></div>
-                      <div className='h-[5px] w-[5px] bg-[#5C469C] rounded-full'></div>
-                      <div className='h-[3px] w-[3px] bg-[#5C469C] rounded-full'></div>
-                    </div>
-                    <div>
-                      <div className='text-[#525252] items-center w-full flex mb-[5px] justify-between'>
-                        <p className='text-[#666666]'>{activity.user.name}</p>
-                        <div className='flex items-center gap-[6px]'>
-                          <Clock3 className='w-[10px] h-[10px] cursor-pointer text-[#405189]' />
-                          <p className='text-[11px]'>{activity.fromTimestamp}</p>
+              {dashboardData?.activity.length > 0 ? (
+                dashboardData?.activity.map((activity: any, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className='flex  gap-[10px]'
+                    >
+                      <div className='flex flex-col gap-[5px] items-center'>
+                        <div className='bg-[#5C469C] w-[30px] h-[30px] rounded-full flex justify-center items-center'>
+                          <p className='text-white'>AD</p>
                         </div>
+                        <div className='h-[10px] w-[5px] bg-[#5C469C] rounded-full'></div>
+                        <div className='h-[7px] w-[5px] bg-[#5C469C] rounded-full'></div>
+                        <div className='h-[5px] w-[5px] bg-[#5C469C] rounded-full'></div>
+                        <div className='h-[3px] w-[3px] bg-[#5C469C] rounded-full'></div>
                       </div>
-                      <p className='text-[#7c7c7c] text-[13px]'>{activity.message}</p>
+                      <div>
+                        <div className='text-[#525252] items-center w-full flex mb-[5px] justify-between'>
+                          <p className='text-[#666666]'>{activity.user.name}</p>
+                          <div className='flex items-center gap-[6px]'>
+                            <Clock3 className='w-[10px] h-[10px] cursor-pointer text-[#405189]' />
+                            <p className='text-[11px]'>{activity.fromTimestamp}</p>
+                          </div>
+                        </div>
+                        <p className='text-[#7c7c7c] text-[13px]'>{activity.message}</p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <div className='w-full flex justify-center lg:h-[300px] items-center'>
+                  <p className='capitalize text-[#525252] text-[15px]'>no data activity</p>
+                </div>
+              )}
             </div>
             <div className='flex flex-1 flex-col-reverse gap-[20px]'>
               <div className=' flex-1 w-full flex  bg-white rounded-[12px]  px-5 py-2'>
                 <div className=' w-full flex-1 flex flex-col justify-between'>
                   <p className='mb-[10px] text-[20px] text-[#525252]'>Total Purchase Order</p>
-                  <Chart dataTotal={dashboardData?.total} />
+                  <Chart dataTotal={dashboardData?.total || false} />
                 </div>
               </div>
               <div className='bg-white rounded-[10px] px-[20px] py-[15px]'>

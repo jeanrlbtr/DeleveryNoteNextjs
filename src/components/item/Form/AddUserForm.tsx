@@ -5,11 +5,10 @@ import { Button } from '../../ui/button';
 import ControllerInput from '../Input/ControllerInput';
 import ControllerCheck from '../Input/ControllerCheck';
 import ControllerSelect from '../Input/ControllerSelect';
-import AsyncSelect from 'react-select/async';
 import ClientFetching from '@/hooks/clientFetching';
 import { Loader } from 'lucide-react';
 import MutationFetch from '@/hooks/MutationFetch';
-
+import AsyncSelect from 'react-select/async';
 interface User {
   id: string;
   name: string;
@@ -38,9 +37,9 @@ const UserForm = ({ level }: { level: any[] }) => {
     handleSubmit,
     control,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<User>({ defaultValues: defaultValuesUser });
-
   const { mutate: postUser, isLoading } = MutationFetch(['getUser']);
 
   const addUser = async (data: any) => {
@@ -79,9 +78,17 @@ const UserForm = ({ level }: { level: any[] }) => {
       <div className='mb-[10px]'>
         <div className='w-full'>
           <div className='mb-[10px] md:flex md:items-center md:justify-between'>
-            <label htmlFor=''>Name</label>
-            <div className='w-[500px]'>
+            <label htmlFor=''>
+              Name <span className='text-[red]'>*</span>
+            </label>
+            <div className={`w-[500px]`}>
               <AsyncSelect
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor: getValues().name ? '' : 'red',
+                  }),
+                }}
                 defaultOptions
                 getOptionLabel={(e: any) => e.full_name}
                 getOptionValue={(e: any) => e.id}
@@ -93,6 +100,7 @@ const UserForm = ({ level }: { level: any[] }) => {
                   setValue('username', e.username);
                 }}
               />
+              {getValues().name ? '' : <span className='text-[red] text-[13px]'>Name is required</span>}
             </div>
           </div>
         </div>
@@ -117,8 +125,8 @@ const UserForm = ({ level }: { level: any[] }) => {
             name='password'
             rules={{
               required: 'password must be required',
-              maxLength: { value: 9, message: 'username Max length 9 characters' },
-              minLength: { value: 6, message: 'username Min length 6 characters' },
+              maxLength: { value: 9, message: 'password Max length 9 characters' },
+              minLength: { value: 6, message: 'password Min length 6 characters' },
             }}
             title='Password'
             control={control}

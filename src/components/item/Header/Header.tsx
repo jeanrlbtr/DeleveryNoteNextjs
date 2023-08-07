@@ -4,7 +4,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import { Popover, PopoverContent, PopoverTrigger } from '../../../components/ui/popover';
 import { BellIcon, TextAlignLeftIcon, TrashIcon } from '@radix-ui/react-icons';
 
-const Header = ({ title }: { title: string }) => {
+const Header = ({ title, name }: { title: string; name: string }) => {
   return (
     <div className='max-w-screen bg-[#405189] flex justify-between md:px-8 px-4 pt-4 pb-3 shadow'>
       <div className='flex items-center md:gap-[25px] gap-[15px]'>
@@ -17,13 +17,13 @@ const Header = ({ title }: { title: string }) => {
             className='bg-[#405189] border-none w-[250px]'
             side={'left'}
           >
-            <Sidebar />
+            <Sidebar name={name} />
           </SheetContent>
         </Sheet>
         <p className='text-[17px] md:text-[25px] font-[600] text-[#fff]'>{title}</p>
       </div>
       <div className='flex gap-3 md:gap-7 items-center '>
-        <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#fafafa]'>jean Butar</p>
+        <p className='capitalize text-[16px] md:text-[24px] font-Poppins text-[#fafafa]'>{name}</p>
         {/* <div className='relative'>
           <Popover>
             <PopoverTrigger>

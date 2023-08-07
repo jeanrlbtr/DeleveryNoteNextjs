@@ -26,6 +26,7 @@ const ControllerCheck = ({ control, name, rules, title, className, type, ...prop
               return (
                 <>
                   <Checkbox
+                    ref={field.ref}
                     value={field.value}
                     checked={field.value}
                     defaultValue={field.value}

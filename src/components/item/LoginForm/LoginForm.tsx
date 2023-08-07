@@ -28,7 +28,7 @@ const LoginForm = () => {
   const onSubmit = handleSubmit(async (data: Data) => {
     setLoading(true);
     try {
-      const res = await axiosAuth.post('https://dev.saptakarsa.com/gtw/delivery/auth/login', data, {
+      const res = await axiosAuth.post('https://staging.saptakarsa.com/gtw/delivery/auth/login', data, {
         headers: {
           'Content-Type': 'application/json',
         },

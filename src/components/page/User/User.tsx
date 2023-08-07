@@ -23,10 +23,12 @@ const User = () => {
   const fetchingUser = ClientFetching();
   const [open, setOpen] = useState<boolean>(false);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
+
   const [defaultValues, setDefaultValues] = useState({
     access: [],
     module: [],
   });
+
   const { data: userFeature, isLoading: isLoadingFeature } = useQuery({
     queryFn: async () => {
       const res = await fetchingUser.get(`/delivery/v1/feature`);
@@ -80,6 +82,7 @@ const User = () => {
   if (isLoadingLevel || isLoadingUser) {
     return <TableLoading />;
   }
+
   return (
     <DataTable
       action={true}

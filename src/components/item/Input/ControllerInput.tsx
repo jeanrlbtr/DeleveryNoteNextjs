@@ -20,7 +20,9 @@ const ControllerInput = ({ control, name, rules, title, className, errors, type,
 
   return (
     <div className={className}>
-      <label htmlFor=''>{title}</label>
+      <label htmlFor=''>
+        {title} {rules.required && <span className='text-[red]'>*</span>}
+      </label>
       <Controller
         defaultValue={defaultValue}
         name={name}
@@ -35,7 +37,7 @@ const ControllerInput = ({ control, name, rules, title, className, errors, type,
                     {...field}
                     placeholder={title}
                     type={type}
-                    className='w-[500px]'
+                    className={`w-[500px] ${errors[name] && 'border-[red]'} `}
                   />
                   {errors[name] && <span className='text-[red]  text-[13px]'>{errors[name].message}</span>}
                 </div>

@@ -1,6 +1,6 @@
 ' use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../Header/Header';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { getCookie } from 'cookies-next';
@@ -8,11 +8,12 @@ import { useToast } from '@/components/ui/use-toast';
 
 const Container = ({ title, children }: { title: string; children: React.ReactNode }) => {
   const { toast } = useToast();
+  const [data, setData] = useState<any>({});
   const token = getCookie('access_token');
-
   React.useEffect(() => {
     const dataUser: any = localStorage.getItem('data');
     const jsonParse = JSON?.parse(dataUser);
+    setData(jsonParse);
     const event = [];
     for (let i = 0; i < jsonParse.module.length; i++) {
       if (jsonParse.module[i].feature === 'event') {
@@ -44,7 +45,10 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
   return (
     <div className='h-full relative'>
       <div className='sticky top-0 z-[9]'>
-        <Header title={title} />
+        <Header
+          name={data.name || ''}
+          title={title}
+        />
       </div>
       <div className='p-[20px]  mx-auto'>{children}</div>
     </div>

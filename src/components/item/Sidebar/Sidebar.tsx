@@ -1,18 +1,27 @@
 'use client';
 
+import ClientFetching from '@/hooks/clientFetching';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { LayoutPanelLeft } from 'lucide-react';
 import { TruckIcon, User, LogOut, FileStack, PackageCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({ name }: { name: string }) => {
   const route = useRouter();
   const navigate = (url?: any) => {
     route.push(url);
   };
-  const logout = () => {
-    navigate('/login');
+  const axiosFetch = ClientFetching();
+  const token = getCookie('access_token');
+  const logout = async () => {
+    try {
+      // const res = await axiosFetch.delete('/delivery/auth/logout');
+      deleteCookie('access_token', { path: '/', domain: '.saptakarsa.com' });
+      deleteCookie('refresh_token', { path: '/', domain: '.saptakarsa.com' });
+      navigate('/login');
+    } catch (error) {}
   };
   return (
     <div className='min-h-[100vh] z-10'>
@@ -26,7 +35,7 @@ const Sidebar = () => {
           />
         </div>
         <div className='mt-4 '>
-          <p className='capitalize mx-auto w-max font-Poppins text-[19px] text-[#fff]'>jean butar butar</p>
+          <p className='capitalize mx-auto w-max font-Poppins text-[19px] text-[#fff]'>{name}</p>
           <p className='capitalize mx-auto w-max font-Poppins text-[15px] text-[#fff]'>Admin</p>
         </div>
         <div className='mt-12 flex flex-col h-[250px] md:h-[300px] justify-between w-max mx-auto'>
