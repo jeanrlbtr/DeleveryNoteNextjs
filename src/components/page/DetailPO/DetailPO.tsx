@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Timeline, UpdateStatusPO } from '@/components/item';
 import { ArrowUpRightFromCircle } from 'lucide-react';
 import { Roboto } from 'next/font/google';
+import { Can } from '@/hooks/Can';
 
 const roboto = Roboto({ weight: ['700', '300', '400', '500'], subsets: ['cyrillic'] });
 
@@ -63,13 +64,18 @@ const DetailPO = ({ param }: { param: string }) => {
         </div>
       </div>
       <div className='flex gap-[13px]'>
-        <Button
-          onClick={() => setOpen(true)}
-          className='bg-[#405189] text-[15px] text-white hover:bg-[#6862d4] z-0'
-          disabled={data.status === 'FINISH'}
+        <Can
+          I='update'
+          a='po'
         >
-          Update Status
-        </Button>
+          <Button
+            onClick={() => setOpen(true)}
+            className='bg-[#405189] text-[15px] text-white hover:bg-[#6862d4] z-0'
+            disabled={data.status === 'FINISH'}
+          >
+            Update Status
+          </Button>
+        </Can>
         <Button className='bg-[#405189] hover:bg-[#6862d4]'>Print</Button>
       </div>
       <div className='bg-white rounded-[10px] py-[20px] mt-[40px] '>
