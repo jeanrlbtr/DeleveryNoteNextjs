@@ -57,7 +57,7 @@ const LoadingDashboard = () => {
         </div>
         <div className='bg-white px-4 rounded-[8px] py-3 mt-[20px]'>
           <>
-            <div className='mt-[30px] flex justify-between items-center'>
+            <div className='mt-[30px] px-[28px] flex justify-between items-center'>
               <p className='text-[26px] w-max text-[#525252]'>Most Ordered Product</p>
               <div className='flex items-center gap-[10px]'>
                 <Select>
@@ -72,7 +72,7 @@ const LoadingDashboard = () => {
                 </Select>
               </div>
             </div>
-            <div className='px-5'>
+            <div className='px-5 mt-[30px]'>
               <DataTable
                 data={[]}
                 columns={rankColumn}
