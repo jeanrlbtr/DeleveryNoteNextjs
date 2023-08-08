@@ -80,8 +80,8 @@ const Dashboard = () => {
     <>
       {!isLoading ? (
         <div>
-          <div className='flex justify-between gap-[20px]'>
-            <div className='h-[80vh] flex flex-col gap-[12px]  overflow-y-auto rounded-[12px] bg-white w-[250px] px-3 py-2'>
+          <div className='grid grid-cols-4 md:grid-rows-1 grid-rows-2 justify-between gap-[20px]'>
+            <div className='col-span-4 row-start-2 md:row-start-1  md:col-span-1 flex flex-col gap-[12px] md:h-full  overflow-y-auto rounded-[12px] bg-white px-3 py-2'>
               <p className='text-[20px] mb-[20px]'>Activity</p>
               {dashboardData?.activity.length > 0 ? (
                 dashboardData?.activity.map((activity: any, index: number) => {
@@ -118,7 +118,7 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
-            <div className='flex flex-1 flex-col-reverse gap-[20px]'>
+            <div className='col-span-4 row-span-1 md:col-span-3 flex flex-1 flex-col-reverse gap-[20px]'>
               <div className=' flex-1 w-full flex  bg-white rounded-[12px]  px-5 py-2'>
                 <div className=' w-full flex-1 flex flex-col justify-between'>
                   <p className='mb-[10px] text-[20px] text-[#525252]'>Total Purchase Order</p>
@@ -148,14 +148,14 @@ const Dashboard = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className='w-full flex gap-[15px]'>
+                <div className='w-full flex gap-[15px] overflow-x-auto md:overflow-visible py-[10px] md:py-0'>
                   {statusData.map((data: any, index: number) => {
                     return (
                       <div
                         className={`w-full p-2 flex flex-col items-center justify-center gap-[5px]   shadow-md h-[90px] rounded-[7px]  `}
                         key={index}
                       >
-                        <p className={`w-max font-[600]  text-[#818181]`}>{data.status}</p>
+                        <p className={`w-max font-[600] text-[#818181]`}>{data.status}</p>
                         <div className='flex gap-[10px] items-center w-max'>
                           {index == 1 && <CircleEllipsis className='text-[#6fa12c] w-[20px] h-[20px]' />}
                           {index == 2 && <FileCheck2 className='text-[#6fa12c] w-[20px] h-[20px]' />}
@@ -169,19 +169,19 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className='bg-white px-4 rounded-[8px] py-3 mt-[20px]'>
+          <div className='bg-white px-1 md:px-4 rounded-[8px] py-1 md:py-3 mt-[20px]'>
             {!isLoading && (
               <>
-                <div className='mt-[20px] px-[28px] flex justify-between items-center'>
-                  <p className='text-[26px] w-max text-[#525252]'>Most Ordered Product</p>
-                  <div className='flex items-center gap-[10px]'>
+                <div className='mt-[20px] px-[7px] md:px-[28px] md:flex justify-between items-center'>
+                  <p className='md:text-[26px] w-max text-[#525252]'>Most Ordered Product</p>
+                  <div className='flex mt-[20px] md:mt-0 items-center gap-[10px]'>
                     <Select
                       onValueChange={(e) => {
                         const limit = parseInt(e);
                         setLimit(limit);
                       }}
                     >
-                      <SelectTrigger className='w-[150px]'>
+                      <SelectTrigger className='md:w-[150px] w-max p-0 md:text-[16px] text-[12px] px-[5px]'>
                         <SelectValue placeholder='Limit Select' />
                       </SelectTrigger>
                       <SelectContent>
@@ -194,7 +194,7 @@ const Dashboard = () => {
                       defaultValue='year'
                       onValueChange={(e: string) => setDateRanked(e)}
                     >
-                      <SelectTrigger className='w-[150px]'>
+                      <SelectTrigger className='md:w-[150px] w-max p-0 md:text-[16px] text-[12px] px-[5px]'>
                         <SelectValue placeholder='Date Filter' />
                       </SelectTrigger>
                       <SelectContent>
@@ -212,7 +212,7 @@ const Dashboard = () => {
                     </Select>
                   </div>
                 </div>
-                <div className='px-5 mt-[30px]'>
+                <div className='px-[7px] md:px-5 md:mt-[30px] mt-[10px]'>
                   <DataTable
                     data={dataRankedItem?.rank || false}
                     columns={rankColumn}
