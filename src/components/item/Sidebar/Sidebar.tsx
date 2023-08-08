@@ -17,7 +17,7 @@ const Sidebar = ({ name }: { name: string }) => {
     try {
       deleteCookie('access_token', { path: '/', domain: '.saptakarsa.com' });
       deleteCookie('refresh_token', { path: '/', domain: '.saptakarsa.com' });
-      deleteCookie('delete', { path: '/', domain: '.saptakarsa.com' });
+      deleteCookie('data', { path: '/', domain: '.saptakarsa.com' });
       navigate('/login');
     } catch (error) {}
   };

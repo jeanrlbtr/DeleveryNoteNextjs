@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('access_token')?.value;
   const data = req.cookies.get('data')?.value || '';
-  const access: string[] = JSON.parse(data)?.access;
+  const access: string[] = data && JSON.parse(data)?.access;
   const matcher: string[] = ['login', 'users', 'notes', '/', 'item', 'level'];
 
   const url = req.url;

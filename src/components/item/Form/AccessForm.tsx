@@ -1,6 +1,7 @@
 import { Button } from '../../../components/ui/button';
 import { useForm } from 'react-hook-form';
 import MutationFetch from '@/hooks/MutationFetch';
+import { Can } from '@/hooks/Can';
 
 interface Inputs {
   access: string[];
@@ -178,12 +179,21 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
             })}
           </div>
         </div>
-        <Button
-          type='submit'
-          className='w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] bg-[#2e49e4] hover:bg-[#090961]'
+        <Can
+          I='update'
+          a='access'
+          passThrough
         >
-          Apply
-        </Button>
+          {(allow) => (
+            <Button
+              disabled={!allow}
+              type='submit'
+              className='w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] bg-[#2e49e4] hover:bg-[#090961]'
+            >
+              Apply
+            </Button>
+          )}
+        </Can>
       </form>
     </div>
   );

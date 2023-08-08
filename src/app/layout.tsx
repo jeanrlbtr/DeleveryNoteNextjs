@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <body className={poppins.className}>
         <Casl>
-          <Toaster />
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster />
+        <ReactQueryProvider>{children}</ReactQueryProvider>
         </Casl>
       </body>
     </html>
