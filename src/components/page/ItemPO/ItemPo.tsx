@@ -12,6 +12,7 @@ import UpdateItems from '@/components/item/Form/UpdateStatusItems';
 import { Button } from '@/components/ui/button';
 import LoadingItemPo from './LoadingItemPo';
 import Image from 'next/image';
+import { Can } from '@/hooks/Can';
 
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
 const status = ['ALL', 'PROCESS', 'CANCELED', 'FINISH', ' UNPROCESSED'];
@@ -45,10 +46,12 @@ const I = () => {
       key: 'FINISH',
     },
   ];
+
   const [page, setPage] = useState<number>(1);
   const [statusQuery, setStatusQuery] = useState<string>('ALL');
   const [purchaseOrder, setPurchaseOrder] = useState<string>('all');
   const axiosFetching = ClientFetching();
+
   const { data, isLoading, isError } = useQuery({
     queryFn: async () => {
       const url = statusQuery !== 'ALL' ? `/delivery/v1/note/items?k=status&v=${statusQuery}&page=${page}` : `/delivery/v1/note/items?page=${page}`;
@@ -180,20 +183,25 @@ const I = () => {
                                 <p className='text-[#626262] text-[14px]'>
                                   {itemDetail.itemProgress[updatedBy] && itemDetail.itemProgress[updatedBy].user.name}
                                 </p>
-                                <Dialog>
-                                  <DialogTrigger disabled={itemDetail.status === 'FINISH'}>
-                                    <div
-                                      className={`text-[14px] ${roboto.className} ${
-                                        itemDetail.status === 'FINISH' && 'bg-[#a8a8a8] cursor-not-allowed'
-                                      }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
-                                    >
-                                      Update Process
-                                    </div>
-                                  </DialogTrigger>
-                                  <DialogContent className='rounded-[10px]'>
-                                    <UpdateItems id={itemDetail.id} />
-                                  </DialogContent>
-                                </Dialog>
+                                <Can
+                                  I='update'
+                                  a='poItem'
+                                >
+                                  <Dialog>
+                                    <DialogTrigger disabled={itemDetail.status === 'FINISH'}>
+                                      <div
+                                        className={`text-[14px] ${roboto.className} ${
+                                          itemDetail.status === 'FINISH' && 'bg-[#a8a8a8] cursor-not-allowed'
+                                        }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
+                                      >
+                                        Update Process
+                                      </div>
+                                    </DialogTrigger>
+                                    <DialogContent className='rounded-[10px]'>
+                                      <UpdateItems id={itemDetail.id} />
+                                    </DialogContent>
+                                  </Dialog>
+                                </Can>
                               </div>
                             </div>
                           );
