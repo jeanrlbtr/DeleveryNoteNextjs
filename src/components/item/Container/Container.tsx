@@ -14,32 +14,27 @@ const Container = ({ title, children }: { title: string; children: React.ReactNo
     const dataUser: any = localStorage.getItem('data');
     const jsonParse = JSON?.parse(dataUser);
     setData(jsonParse);
-    const event = [];
     for (let i = 0; i < jsonParse.module.length; i++) {
       if (jsonParse.module[i].feature === 'event') {
-        event.push(jsonParse.module);
+        fetchEventSource('https://staging.saptakarsa.com/gtw/delivery/v1/events/po', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          method: 'GET',
+          onmessage: (e: any) => {
+            if (e.data) {
+              const data = JSON.parse(e.data);
+              toast({
+                variant: 'notif',
+                title: data.title,
+                duration: 3000,
+                description: data.body,
+                color: 'green',
+              });
+            }
+          },
+        });
       }
-    }
-
-    if (event.length > 0) {
-      fetchEventSource('https://staging.saptakarsa.com/gtw/delivery/v1/events/po', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        method: 'GET',
-        onmessage: (e: any) => {
-          if (e.data) {
-            const data = JSON.parse(e.data);
-            toast({
-              variant: 'notif',
-              title: data.title,
-              duration: 3000,
-              description: data.body,
-              color: 'green',
-            });
-          }
-        },
-      });
     }
   }, []);
 
