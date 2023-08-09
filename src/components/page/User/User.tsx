@@ -89,6 +89,8 @@ const User = () => {
       action={true}
       data={user}
       columns={userColumn}
+      disabledNext={true}
+      disabledPrev={true}
       topTable={
         <div className='flex'>
           <Can
@@ -98,7 +100,7 @@ const User = () => {
             <div className='ml-[32px]'>
               <Dialog>
                 <DialogTrigger>
-                  <div className='bg-[#140e27] text-white px-3 py-1 rounded-[6px] text-[16px]'>Add User</div>
+                  <div className='bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]'>Add User</div>
                 </DialogTrigger>
                 <DialogContent className='w-full'>
                   <DialogHeader>
@@ -118,7 +120,7 @@ const User = () => {
             >
               <Dialog>
                 <DialogTrigger>
-                  <div className='bg-[#d65421] text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]'>Add Feature</div>
+                  <div className='bg-submit hover:bg-submit-hover text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]'>Add Feature</div>
                 </DialogTrigger>
                 <DialogContent className='w-full'>
                   <div className='px-4 py-2 min-w-[700px] max-w-[800px]'>
