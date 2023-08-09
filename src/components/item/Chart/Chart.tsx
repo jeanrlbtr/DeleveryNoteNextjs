@@ -78,7 +78,7 @@ export default function Chart({ dataTotal }: { dataTotal: any }) {
   return (
     <Card>
       <AreaChart
-        className='h-[200px] mt-4'
+        className='h-[200px] mt-4 border-0'
         data={data}
         index='name'
         categories={['Total', 'Cancel']}
