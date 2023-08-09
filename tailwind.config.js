@@ -149,6 +149,13 @@ module.exports = {
           inverted: '#000000', // black
         },
       },
+      backgroundColor: {
+        submit: '#374579', // for button submit,
+        'submit-hover': '#2C3760', // for hover button submit
+      },
+      accentColor: {
+        checkbox: '#162764',
+      },
     },
   },
   safelist: [
