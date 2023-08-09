@@ -9,7 +9,6 @@ type ModuleType = {
 
 const data: string = getCookie('data')?.toString() || '';
 const userModule: ModuleType = data && JSON?.parse(data)?.module;
-console.log(userModule);
 const ability = defineAbility((can) => {
   for (let i = 0; i < userModule.length; i++) {
     can(userModule[i]?.method, userModule[i]?.feature);
