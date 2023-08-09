@@ -6,7 +6,7 @@ import { rankColumn } from '@/components/table/columns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ClientFetching from '@/hooks/clientFetching';
 import { useQuery } from '@tanstack/react-query';
-import { Clock3, FileCheck2, FileX, FileX2 } from 'lucide-react';
+import { Clock3, FileCheck2, FileX2 } from 'lucide-react';
 import React from 'react';
 import LoadingDashboard from './LoadingDashboard';
 import { CircleEllipsis } from 'lucide-react';
@@ -114,7 +114,7 @@ const Dashboard = () => {
                 })
               ) : (
                 <div className='w-full flex justify-center lg:h-[300px] items-center'>
-                  <p className='capitalize text-[#525252] text-[15px]'>no data activity</p>
+                  <p className='capitalize text-[#525252] text-[15px]'>no activity</p>
                 </div>
               )}
             </div>
@@ -176,13 +176,14 @@ const Dashboard = () => {
                   <p className='md:text-[26px] w-max text-[#525252]'>Most Ordered Product</p>
                   <div className='flex mt-[20px] md:mt-0 items-center gap-[10px]'>
                     <Select
+                      defaultValue='10'
                       onValueChange={(e) => {
                         const limit = parseInt(e);
                         setLimit(limit);
                       }}
                     >
                       <SelectTrigger className='md:w-[150px] w-max p-0 md:text-[16px] text-[12px] px-[5px]'>
-                        <SelectValue placeholder='Limit Select' />
+                        <SelectValue placeholder='Limit' />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value='10'>10</SelectItem>
