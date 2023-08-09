@@ -54,7 +54,7 @@ const ModalPageAccess = () => {
             <input
               id='create'
               type='checkbox'
-              className='w-[15px]  border-[#d1cfcf]'
+              className='w-[15px]  border-[#d1cfcf] accent-checkbox'
               value={'create'}
               {...register('method')}
             />
@@ -69,7 +69,7 @@ const ModalPageAccess = () => {
             <input
               id='update'
               type='checkbox'
-              className='w-[15px]  border-[#d1cfcf]'
+              className='w-[15px]  border-[#d1cfcf] accent-checkbox'
               value={'update'}
               {...register('method')}
             />
@@ -84,7 +84,7 @@ const ModalPageAccess = () => {
             <input
               id='read'
               type='checkbox'
-              className='w-[15px]  border-[#d1cfcf]'
+              className='w-[15px]  border-[#d1cfcf] accent-checkbox'
               value={'read'}
               {...register('method')}
             />
@@ -99,7 +99,7 @@ const ModalPageAccess = () => {
             <input
               id='delete'
               type='checkbox'
-              className='w-[15px]  border-[#d1cfcf]'
+              className='w-[15px]  border-[#d1cfcf] accent-checkbox'
               value={'delete'}
               {...register('method')}
             />
@@ -112,7 +112,7 @@ const ModalPageAccess = () => {
           </div>
           <Button
             type='submit'
-            className='h-max p-[1px] mt-[5px] text-[17px] bg-[#2e49e4] hover:bg-[#090961]'
+            className='h-max p-[1px] mt-[5px] text-[17px] bg-submit hover:bg-submit-hover'
             disabled={isLoading}
           >
             {isLoading ? <Loader /> : 'Apply'}

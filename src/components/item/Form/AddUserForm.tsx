@@ -180,7 +180,7 @@ const UserForm = ({ level }: { level: any[] }) => {
       </div>
       <div className='flex justify-end'>
         <Button
-          className='mt-[20px]'
+          className='mt-[20px] bg-submit hover:bg-submit-hover'
           type='submit'
           disabled={disable || isLoading}
         >

@@ -62,7 +62,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
               <input
                 id='dasboard'
                 type='checkbox'
-                className='w-[15px]  border-[#d1cfcf]'
+                className='w-[15px]  border-[#d1cfcf] accent-checkbox'
                 defaultChecked={UserAccess?.access.find((item: any) => item == '/') === '/'}
                 value={'/'}
                 {...register('access')}
@@ -79,7 +79,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
                 id='notes'
                 type='checkbox'
                 defaultChecked={UserAccess?.access.find((item: any) => item == 'notes') === 'notes'}
-                className='w-[15px]  border-[#d1cfcf]'
+                className='w-[15px]  border-[#d1cfcf] accent-checkbox'
                 value={'notes'}
                 {...register('access')}
               />
@@ -94,7 +94,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
               <input
                 id='item'
                 type='checkbox'
-                className='w-[15px]  border-[#d1cfcf]'
+                className='w-[15px]  border-[#d1cfcf] accent-checkbox'
                 value={'item'}
                 defaultChecked={UserAccess?.access.find((item: any) => item == 'item') === 'item'}
                 {...register('access')}
@@ -110,7 +110,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
               <input
                 id='users'
                 type='checkbox'
-                className='w-[15px]  border-[#d1cfcf]'
+                className='w-[15px]  border-[#d1cfcf] accent-checkbox'
                 defaultChecked={UserAccess?.access.find((item: any) => item == 'users') === 'users'}
                 value={'users'}
                 {...register('access')}
@@ -126,7 +126,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
               <input
                 id='level'
                 type='checkbox'
-                className='w-[15px]  border-[#d1cfcf]'
+                className='w-[15px]  border-[#d1cfcf] accent-checkbox'
                 defaultChecked={UserAccess?.access.find((item: any) => item == 'level') === 'level'}
                 value={'level'}
                 {...register('access')}
@@ -160,7 +160,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
                           <input
                             id={`${feature.feature}/${dt}`}
                             type='checkbox'
-                            className='w-[15px]  border-[#d1cfcf]'
+                            className='w-[15px]  border-[#d1cfcf]  accent-checkbox'
                             value={`${feature.feature}/${dt}`}
                             {...register('module')}
                           />
@@ -188,7 +188,7 @@ const ModalAccess = ({ UserAccess, userFeature, defaultValues }: { UserAccess: a
             <Button
               disabled={!allow}
               type='submit'
-              className='w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] bg-[#2e49e4] hover:bg-[#090961]'
+              className='w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] bg-submit hover:bg-submit-hover'
             >
               Apply
             </Button>

@@ -154,7 +154,7 @@ const EditUserForm = ({ defaultValue, level }: { defaultValue?: any; level: any[
       </div>
       <div className='flex justify-end'>
         <Button
-          className='mt-[20px] '
+          className='mt-[20px] bg-submit hover:bg-submit-hover'
           type='submit'
           disabled={isLoading}
         >
