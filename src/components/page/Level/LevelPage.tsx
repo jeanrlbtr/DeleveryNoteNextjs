@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import ClientFetching from '@/hooks/clientFetching';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import TableLoading from '@/components/table/TableLoading';
 import { useToast } from '@/components/ui/use-toast';
 
 const LevelPage = () => {
@@ -35,7 +34,7 @@ const LevelPage = () => {
       });
       return res.data;
     },
-    onSuccess: (res) => {
+    onSuccess: (res: any) => {
       toast({
         title: res.message,
         duration: 3000,
@@ -61,7 +60,7 @@ const LevelPage = () => {
       });
       return res.data;
     },
-    onSuccess: (res) => {
+    onSuccess: (res: any) => {
       toast({
         title: res.message,
         duration: 3000,
@@ -82,6 +81,8 @@ const LevelPage = () => {
     <DataTable
       data={levelData || false}
       columns={LevelColumn}
+      disabledNext={true}
+      disabledPrev={true}
       action={true}
       topTable={
         <Dialog
@@ -91,7 +92,7 @@ const LevelPage = () => {
           }}
         >
           <DialogTrigger>
-            <div className='ml-6 bg-[#405189] text-white px-3 py-1 rounded-[6px] text-[16px]'>Add Level</div>
+            <div className='ml-6 bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]'>Add Level</div>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -99,7 +100,7 @@ const LevelPage = () => {
             </DialogHeader>
             <div>
               <form
-                onSubmit={handleSubmitAdd((data) => {
+                onSubmit={handleSubmitAdd((data: any) => {
                   const code = parseInt(`${data.code}`);
                   addLevel({
                     name: data.name,
@@ -120,7 +121,7 @@ const LevelPage = () => {
                 />
                 <Button
                   type='submit'
-                  className='bg-[#0f4912]'
+                  className='bg-submit hover:bg-submit-hover'
                 >
                   Submit
                 </Button>
@@ -151,7 +152,7 @@ const LevelPage = () => {
               </DialogHeader>
               <div>
                 <form
-                  onSubmit={handleSubmit((data) => {
+                  onSubmit={handleSubmit((data: any) => {
                     const code = parseInt(`${data.code}`);
                     const body = {
                       name: data.name,
@@ -176,7 +177,7 @@ const LevelPage = () => {
                   />
                   <Button
                     type='submit'
-                    className='bg-[#0f4912]'
+                    className='bg-submit hover:bg-submit-hover'
                   >
                     Submit
                   </Button>
