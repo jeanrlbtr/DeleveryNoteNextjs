@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Saptakarsa Frontend Setup Project
+
+## Introduction
+
+This is a Business Portal project built with Next.js, utilizing the app router, Tailwind CSS, and TypeScript. It provides a solid foundation for developing efficient web applications with modern frontend technologies.
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to set up the project locally:
 
-```bash
-npm run dev
-# or
+Clone the repository to your local machine:
+git clone <repository_url.git>
+Install the dependencies using yarn:
+yarn install
+Prepare the repository to enable husky:
+yarn prepare
+Development
+To start the development server, run the following command
 yarn dev
-# or
-pnpm dev
-```
+Once the server is running, access the Business Portal in your web browser at http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Building the Project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To build the project for production, use the following command:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## yarn build
 
-## Learn More
+Linting and Commit Guidelines
+This project utilizes Commitlint and Husky to enforce commit message conventions and ensure code quality. Before committing any changes, make sure to stage your files and run:
+yarn lint
+This command will check for code linting issues and enforce commit message guidelines. Follow the conventional commit format when writing commit messages.
 
-To learn more about Next.js, take a look at the following resources:
+## Commit Message Guidelines
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+git commit -m "build: added new dependencies for dev"
+When contributing to this project, please follow these commit message guidelines:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+- docs: Documentation only changes
+- feat: A new feature
+- fix: A bug fix
+- perf: A code change that improves performance
+- refactor: A code change that neither fixes a bug nor adds a feature
+- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- test: Adding missing tests or correcting existing tests
+- config Changes to the project configuration files
+  Happy coding! 🚀
