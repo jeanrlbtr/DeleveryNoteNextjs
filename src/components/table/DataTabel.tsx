@@ -74,8 +74,8 @@ export function DataTable<TData, TValue>({
           {topTable}
         </div>
       )}
-      <div className={`${isLoading && 'h-[60vh]'} max-h-[60vh] border-[1px] rounded-sm overflow-y-auto relative`}>
-        <Table className='bg-white '>
+      <div className={`tableContainer h-[60vh] rounded-sm overflow-auto relative`}>
+        <Table className='bg-white w-full'>
           <TableHeader>
             {getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
