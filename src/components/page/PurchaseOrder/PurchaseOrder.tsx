@@ -45,8 +45,9 @@ const PurchaseOrder = () => {
       key: 'FINISH',
     },
   ];
+
   const [searchValue, setSearchValue] = useState<string>('');
-  const [statusValue, setStatusValue] = useState<string>('');
+  const [statusValue, setStatusValue] = useState<string>('ALL');
   const [limitValue, setLimitValue] = useState<string>('10');
   const [selectValue, setSelectValue] = useState<string>('all');
   const [page, setPage] = useState<number>(1);
@@ -75,7 +76,7 @@ const PurchaseOrder = () => {
 
   return (
     <div className='bg-white rounded-[7px] p-3'>
-      <div className='flex bg-[#ececec] justify-between items-center rounded-[7px] p-2'>
+      <div className='flex bg-[#fff] justify-between items-center  rounded-[7px] p-2'>
         <div className='h-full rounded-[5px] text-[14px] bg-white overflow-hidden w-max'>
           {status.map((statusItem: any, index: number) => {
             return (
@@ -85,7 +86,9 @@ const PurchaseOrder = () => {
                   setStatusValue(statusItem.key);
                   setSearchValue('');
                 }}
-                className={`px-[8px] ${index != status.length - 1 && 'border-r-[2px]'} ${statusValue == statusItem.key && 'bg-[#f7f7f7]'} py-[8px]`}
+                className={`px-[8px] ${
+                  statusValue == statusItem.key ? 'bg-[#f7f7f7] rounded-[5px] text-[#525252]' : 'text-[#807f7f]'
+                } py-[8px] lg:text-[17px]`}
               >
                 {statusItem.name}
               </button>
@@ -100,7 +103,7 @@ const PurchaseOrder = () => {
               setSearchValue('');
             }}
           >
-            <SelectTrigger className='w-[300px] gap-[12px] bg-[white]'>
+            <SelectTrigger className='w-[300px] lg:text-[17px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]'>
               <SelectValue placeholder='Select Filter' />
             </SelectTrigger>
             <SelectContent>
@@ -116,10 +119,10 @@ const PurchaseOrder = () => {
               })}
             </SelectContent>
           </Select>
-          <div className='flex items-center px-[10px] border-[1px] rounded-[5px] py-[6px] bg-white'>
+          <div className='flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[6px] bg-white'>
             <input
               placeholder='Search'
-              className={`w-full outline-none border-none ${selectValue === 'all' && 'cursor-not-allowed'}`}
+              className={`w-full outline-none lg:text-[17px] border-none ${selectValue === 'all' && 'cursor-not-allowed'}`}
               disabled={selectValue === 'all'}
               id='inputSelect'
               value={searchValue}
@@ -132,7 +135,7 @@ const PurchaseOrder = () => {
           </div>
         </div>
       </div>
-      <div className='mt-[10px]'>
+      <div className='mt-[20px]'>
         <DataTable
           type='note'
           columns={columnsDelevery}

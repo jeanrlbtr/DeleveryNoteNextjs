@@ -3,7 +3,7 @@ import React from 'react';
 const LoadingItemPo = () => {
   return (
     <div>
-      <div className='w-full h-max p-2 rounded-[5px] bg-[#dfdfdf] mt-[30px]'>
+      <div className='w-full h-max p-2 rounded-[5px] bg-[#fefefe] mt-[30px]'>
         <div className={`flex justify-between items-center `}>
           <p className='text-[18px] text-[#525252] font-[500]'>Loading ...</p>
         </div>

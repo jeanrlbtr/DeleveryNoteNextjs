@@ -17,13 +17,12 @@ import { Can } from '@/hooks/Can';
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
 const status = ['ALL', 'PROCESS', 'CANCELED', 'FINISH', ' UNPROCESSED'];
 
-const I = () => {
+const ItemPO = () => {
   const status1 = [
     {
       name: 'view All',
       key: 'ALL',
     },
-
     {
       name: 'Unprocessed',
       key: 'UNPROCESSED',
@@ -70,12 +69,12 @@ const I = () => {
 
   return (
     <div className=' lg:w-full lg:bg-white px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]'>
-      <div className='flex bg-[#ececec] justify-between items-center rounded-[7px] p-2 flex-row-reverse mb-[10px]'>
+      <div className='flex bg-[#fff] justify-between items-center rounded-[7px] p-2 flex-row-reverse mb-[10px]'>
         <Select
           onValueChange={(e) => setPurchaseOrder(e)}
           value={purchaseOrder}
         >
-          <SelectTrigger className='w-[180px]  bg-white'>
+          <SelectTrigger className='min-w-[180px] max-w-[220px] lg:text-[17px] text-[#646464] bg-white'>
             <SelectValue placeholder='Purchase Order' />
           </SelectTrigger>
           <SelectContent>
@@ -109,15 +108,18 @@ const I = () => {
             })}
           </SelectContent>
         </Select>
-        <div className='h-full hidden lg:flex rounded-[5px] text-[14px] bg-white overflow-hidden w-max'>
+        <div className='h-full hidden lg:flex gap-[10px] text-[14px]  bg-white overflow-hidden w-max'>
           {status1.map((statusItem: any, index: number) => {
             return (
               <button
                 key={index}
                 onClick={() => {
+                  setPurchaseOrder('all');
                   setStatusQuery(statusItem.key);
                 }}
-                className={`px-[8px] ${index != status1.length - 1 && 'border-r-[2px]'} ${statusQuery == statusItem.key && 'bg-[#f7f7f7]'} py-[8px]`}
+                className={`px-[8px] lg:text-[17px] ${
+                  statusQuery == statusItem.key ? 'bg-[#f7f7f7] rounded-[5px] text-[#525252]' : 'text-[#807f7f]'
+                } py-[8px]`}
               >
                 {statusItem.name}
               </button>
@@ -126,7 +128,7 @@ const I = () => {
         </div>
       </div>
       <div className='w-full '>
-        <div className='lg:h-[65vh] lg:bg-white lg:rounded-[5px] lg:overflow-y-auto'>
+        <div className={`lg:h-[65vh] lg:bg-[#fdfdfd] lg:rounded-[10px] lg:overflow-y-auto`}>
           {purchaseOrder === 'all' ? (
             <div className='w-full'>
               {isLoading && <LoadingItemPo />}
@@ -135,7 +137,7 @@ const I = () => {
                   return (
                     <div
                       key={index}
-                      className={`w-full h-max p-2 rounded-[5px] bg-white mt-[30px]`}
+                      className={`w-full h-max p-2 rounded-[5px] bg-[transparent] mt-[30px]`}
                     >
                       <div className={`flex justify-between items-center  ${roboto.className}`}>
                         <p className='text-[18px] text-[#525252] font-[500]'>{purchaseOrder.no}</p>
@@ -210,13 +212,14 @@ const I = () => {
                   );
                 })
               ) : (
-                <div className='w-full flex justify-center'>
+                <div className='w-full flex bg-[#fdfdfd] justify-center'>
                   {!isLoading && (
                     <div className='overflow-hidden relative w-[350px] h-[400px]'>
                       <Image
                         src={'/animate.gif'}
                         fill
                         alt=''
+                        quality={100}
                         className='object-contain'
                       />
                     </div>
@@ -321,4 +324,4 @@ const I = () => {
   );
 };
 
-export default I;
+export default ItemPO;
