@@ -35,14 +35,14 @@ This command will check for code linting issues and enforce commit message guide
 git commit -m "build: added new dependencies for dev"
 When contributing to this project, please follow these commit message guidelines:
 
-- build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-- docs: Documentation only changes
-- feat: A new feature
-- fix: A bug fix
-- perf: A code change that improves performance
-- refactor: A code change that neither fixes a bug nor adds a feature
-- style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-- test: Adding missing tests or correcting existing tests
-- config Changes to the project configuration files
-  Happy coding! 🚀
+-  build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+-  ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+-  docs: Documentation only changes
+-  feat: A new feature
+-  fix: A bug fix
+-  perf: A code change that improves performance
+-  refactor: A code change that neither fixes a bug nor adds a feature
+-  style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+-  test: Adding missing tests or correcting existing tests
+-  config Changes to the project configuration files
+   Happy coding! 🚀

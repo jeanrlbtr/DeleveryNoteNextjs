@@ -3,17 +3,17 @@ import { DataTable } from './DataTabel';
 import { LoadingColumn } from './columns';
 
 const TableLoading = () => {
-  return (
-    <DataTable
-      columns={LoadingColumn}
-      type={'loading'}
-      data={[
-        {
-          loading: 'loading',
-        },
-      ]}
-    />
-  );
+   return (
+      <DataTable
+         columns={LoadingColumn}
+         type={'loading'}
+         data={[
+            {
+               loading: 'loading',
+            },
+         ]}
+      />
+   );
 };
 
 export default TableLoading;
