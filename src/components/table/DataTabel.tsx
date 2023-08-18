@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
          globalFilter,
       },
    });
-
+   console.log('jean');
    return (
       <div className="">
          {!type && (
