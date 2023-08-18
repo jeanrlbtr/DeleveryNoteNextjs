@@ -1,13 +1,12 @@
-'use client';
-
 import { Container } from '@/components/item';
 import { LevelPage } from '@/components/page';
-import React from 'react';
+import { getLevel } from '@/fetchingServer/LevelFetching';
 
-const Level = () => {
+const Level = async () => {
+   const levelData = await getLevel();
    return (
       <Container title="Level">
-         <LevelPage />
+         <LevelPage initialLevelData={levelData} />
       </Container>
    );
 };

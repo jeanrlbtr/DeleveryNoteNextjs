@@ -1,15 +1,5 @@
 'use client';
-import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
-} from '@/components/ui/select';
-import React, { useState } from 'react';
-import { Roboto } from 'next/font/google';
-import ClientFetching from '@/hooks/clientFetching';
-import { useQuery } from '@tanstack/react-query';
+import { Timeline } from '@/components/item';
 import {
    Dialog,
    DialogContent,
@@ -17,14 +7,24 @@ import {
    DialogTitle,
    DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from '@/components/ui/select';
+import ClientFetching from '@/hooks/clientFetching';
+import { useQuery } from '@tanstack/react-query';
 import { Clock3 } from 'lucide-react';
-import { Timeline } from '@/components/item';
+import { Roboto } from 'next/font/google';
+import { useState } from 'react';
 
 import UpdateItems from '@/components/item/Form/UpdateStatusItems';
 import { Button } from '@/components/ui/button';
-import LoadingItemPo from './LoadingItemPo';
-import Image from 'next/image';
 import { Can } from '@/hooks/Can';
+import Image from 'next/image';
+import LoadingItemPo from './LoadingItemPo';
 
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
 const status = ['ALL', 'PROCESS', 'CANCELED', 'FINISH', ' UNPROCESSED'];
@@ -81,7 +81,6 @@ const ItemPO = () => {
    }
 
    const noPo = data?.items.find((item: any) => item.no === purchaseOrder);
-
    return (
       <div className=" lg:w-full lg:bg-white px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]">
          <div className="flex bg-[#fff] justify-between items-center rounded-[7px] p-2 flex-row-reverse mb-[10px]">
@@ -117,7 +116,7 @@ const ItemPO = () => {
                   })}
                </SelectContent>
             </Select>
-            <div className="h-full hidden lg:flex gap-[10px] text-[14px]  bg-white overflow-hidden w-max">
+            <div className="h-full hidden lg:flex gap-[10px] text-[14px]  bg-gray-50 overflow-hidden w-max">
                {status1.map((statusItem: any, index: number) => {
                   return (
                      <button
@@ -126,9 +125,9 @@ const ItemPO = () => {
                            setPurchaseOrder('all');
                            setStatusQuery(statusItem.key);
                         }}
-                        className={`px-[8px] lg:text-[17px] ${
+                        className={`px-[8px] lg:text-[16px] ${
                            statusQuery == statusItem.key
-                              ? 'bg-[#f7f7f7] rounded-[5px] text-[#525252]'
+                              ? 'bg-gray-200 rounded-[5px] text-[#525252]'
                               : 'text-[#807f7f]'
                         } py-[8px]`}
                      >
@@ -140,7 +139,7 @@ const ItemPO = () => {
          </div>
          <div className="w-full ">
             <div
-               className={`lg:h-[65vh] lg:bg-[#fdfdfd] lg:rounded-[10px] lg:overflow-y-auto`}
+               className={`lg:h-[59vh] lg:bg-[#fdfdfd] lg:rounded-[10px] lg:overflow-y-auto`}
             >
                {purchaseOrder === 'all' ? (
                   <div className="w-full">

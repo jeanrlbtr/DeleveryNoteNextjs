@@ -2,7 +2,6 @@
 
 import { Container } from '@/components/item';
 import { ItemPo } from '@/components/page';
-import React from 'react';
 
 const page = () => {
    return (

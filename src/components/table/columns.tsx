@@ -7,12 +7,11 @@ import {
    HistoryItem,
    Invoice,
    Items,
-   Level,
    Loading,
-   NoteDetail,
    RankItem,
    Users,
 } from '@/lib/types';
+import { DetailPoTableType, LevelTabelType } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
@@ -29,7 +28,7 @@ const InvoiceColumn: ColumnDef<Invoice>[] = [
    },
 ];
 
-const LevelColumn: ColumnDef<Level>[] = [
+const LevelColumn: ColumnDef<LevelTabelType>[] = [
    {
       header: 'Level',
       accessorKey: 'code',
@@ -50,7 +49,7 @@ const LoadingColumn: ColumnDef<Loading>[] = [
    },
 ];
 
-const detailNoteColumn: ColumnDef<NoteDetail>[] = [
+const detailNoteColumn: ColumnDef<DetailPoTableType>[] = [
    {
       header: '^',
       accessorKey: 'id',

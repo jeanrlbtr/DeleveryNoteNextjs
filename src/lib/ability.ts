@@ -1,5 +1,6 @@
-import { getCookie } from 'cookies-next';
+'use client';
 import { defineAbility } from '@casl/ability';
+import { getCookie } from 'cookies-next';
 
 type ModuleType = {
    userId: string;

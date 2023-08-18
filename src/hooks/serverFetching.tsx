@@ -19,7 +19,7 @@ const ServerFetching = () => {
          return response;
       },
       async (error) => {
-         if (error.response.status == 401) {
+         if (error.response?.status == 401) {
             try {
                const originalRequest = error.config;
                const refresh = await axiosAuth.post(

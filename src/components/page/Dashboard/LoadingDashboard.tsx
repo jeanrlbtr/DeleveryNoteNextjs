@@ -1,15 +1,21 @@
+'use client';
 import { DataTable } from '@/components/table/DataTabel';
 import { rankColumn } from '@/components/table/columns';
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FileX2 } from 'lucide-react';
-import { CircleEllipsis, FileCheck2 } from 'lucide-react';
-import React from 'react';
+import { TextAlignLeftIcon } from '@radix-ui/react-icons';
+import { CircleEllipsis, FileCheck2, FileX2 } from 'lucide-react';
 
 const LoadingDashboard = () => {
    const arr = ['Loading', 'Loading', 'Loading', 'Loading'];
    return (
       <div>
-         <div>
+         <div className='className="max-w-screen bg-[#405189] flex justify-between md:px-8 px-4 pt-4 pb-3 shadow'>
+            <TextAlignLeftIcon className="text-[#fafafa] w-[25px] h-[25px] cursor-pointer md:w-[30px] md:h-[30px]" />
+            <p className="text-[17px] md:text-[25px] font-[600] text-[#fff]">
+               Loading...
+            </p>
+         </div>
+         <div className="p-[20px]  mx-auto">
             <div className="flex justify-between gap-[20px]">
                <div className="h-[80vh] flex flex-col gap-[12px]  overflow-y-auto rounded-[12px] bg-white w-[250px] px-3 py-2">
                   <p className="text-[20px] mb-[20px]">Activity</p>

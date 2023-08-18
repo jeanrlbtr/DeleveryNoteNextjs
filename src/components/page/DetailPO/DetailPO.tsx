@@ -1,3 +1,5 @@
+'use client';
+
 import { Timeline, UpdateStatusPO } from '@/components/item';
 import { DataTableDetail } from '@/components/table/DataTableDetail';
 import { detailNoteColumn } from '@/components/table/columns';
@@ -10,24 +12,13 @@ import {
    DialogTrigger,
 } from '@/components/ui/dialog';
 import { Can } from '@/hooks/Can';
-import ClientFetching from '@/hooks/clientFetching';
-import { useQuery } from '@tanstack/react-query';
+import { DetailPoType } from '@/types';
 import { ArrowUpRightFromCircle } from 'lucide-react';
 import { useState } from 'react';
 
-const DetailPO = ({ param }: { param: string }) => {
-   const axiosFetching = ClientFetching();
+const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
+   const data = detailPo.data;
    const [open, setOpen] = useState<boolean>(false);
-   const { data, isLoading } = useQuery({
-      queryKey: ['getDetailNote'],
-      queryFn: async () => {
-         const res = await axiosFetching.get(`/delivery/v1/note?no=${param}`);
-         return res.data.data;
-      },
-   });
-   if (isLoading) {
-      return <div>Loading please wait ....</div>;
-   }
 
    const dateDelivery = new Date(data.dateDelivery).toDateString();
    return (
@@ -74,7 +65,7 @@ const DetailPO = ({ param }: { param: string }) => {
          <div className="flex gap-[13px]">
             <Can I="update" a="po">
                <Button
-                  onClick={() => setOpen(true)}
+                  onClick={async () => setOpen(true)}
                   className="bg-[#405189] text-[15px] text-white hover:bg-[#6862d4] z-0"
                   disabled={data.status === 'FINISH'}
                >

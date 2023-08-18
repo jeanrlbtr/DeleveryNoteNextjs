@@ -1,11 +1,7 @@
 'use client';
 
-import ClientFetching from '@/hooks/clientFetching';
 import { DataTable } from '@/components/table/DataTabel';
 import { columnsDelevery } from '@/components/table/columns';
-import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
 import {
    Select,
    SelectContent,
@@ -13,8 +9,12 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import { useState } from 'react';
+import ClientFetching from '@/hooks/clientFetching';
 import useDebounce from '@/hooks/useDebounce';
+import { useQuery } from '@tanstack/react-query';
+import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const PurchaseOrder = () => {
    const filter = [
@@ -83,7 +83,7 @@ const PurchaseOrder = () => {
    return (
       <div className="bg-white rounded-[7px] p-3">
          <div className="flex bg-[#fff] justify-between items-center  rounded-[7px] p-2">
-            <div className="h-full rounded-[5px] text-[14px] bg-white overflow-hidden w-max">
+            <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden w-max">
                {status.map((statusItem: any, index: number) => {
                   return (
                      <button
@@ -91,27 +91,28 @@ const PurchaseOrder = () => {
                         onClick={() => {
                            setStatusValue(statusItem.key);
                            setSearchValue('');
+                           setSelectValue('');
                         }}
                         className={`px-[8px] ${
                            statusValue == statusItem.key
-                              ? 'bg-[#f7f7f7] rounded-[5px] text-[#525252]'
+                              ? 'bg-gray-200 rounded-[5px] text-[#525252]'
                               : 'text-[#807f7f]'
-                        } py-[8px] lg:text-[17px]`}
+                        } py-[8px] lg:text-[16px]`}
                      >
                         {statusItem.name}
                      </button>
                   );
                })}
             </div>
-            <div className="w-[400px] h-max rounded-[5px] flex items-center">
+            <div className="w-[430px] h-max rounded-[5px] flex items-center">
                <Select
                   onValueChange={(e) => {
                      setStatusValue('');
-                     setSelectValue(e);
                      setSearchValue('');
+                     setSelectValue(e);
                   }}
                >
-                  <SelectTrigger className="w-[300px] lg:text-[17px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]">
+                  <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]">
                      <SelectValue placeholder="Select Filter" />
                   </SelectTrigger>
                   <SelectContent>
@@ -127,7 +128,7 @@ const PurchaseOrder = () => {
                <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[6px] bg-white">
                   <input
                      placeholder="Search"
-                     className={`w-full outline-none lg:text-[17px] border-none ${
+                     className={`w-full outline-none lg:text-[16px] border-none ${
                         selectValue === 'all' && 'cursor-not-allowed'
                      }`}
                      disabled={selectValue === 'all'}

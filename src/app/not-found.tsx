@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Page = () => {
    return (
       <section className="flex items-center h-full p-16 dark:bg-gray-900 dark:text-gray-100">

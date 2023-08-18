@@ -1,15 +1,16 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
    Select,
-   SelectItem,
    SelectContent,
+   SelectItem,
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
 import MutationFetch from '@/hooks/MutationFetch';
 import { Loader } from 'lucide-react';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 
 interface DefaulValue {

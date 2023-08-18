@@ -31,7 +31,7 @@ export function middleware(req: NextRequest) {
       if (pageAccess.length > 0) {
          return NextResponse.next();
       }
-      return NextResponse.redirect(new URL('/not404found', url));
+      return NextResponse.redirect(new URL('/404', url));
    }
 }
 

@@ -1,5 +1,3 @@
-'use client';
-
 import { Container } from '@/components/item';
 import { PurchaseOrder } from '@/components/page';
 function DeleveryNote() {

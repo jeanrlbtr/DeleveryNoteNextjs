@@ -1,9 +1,9 @@
-' use client';
+'use client';
 
 import { useToast } from '@/components/ui/use-toast';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 import { getCookie } from 'cookies-next';
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../Header/Header';
 
 const Container = ({
@@ -14,7 +14,7 @@ const Container = ({
    children: React.ReactNode;
 }) => {
    const { toast } = useToast();
-   const [data, setData] = useState<any>({});
+   const [data, setData] = React.useState<any>({});
    const token = getCookie('access_token');
    React.useEffect(() => {
       const dataUser: any = localStorage.getItem('data');

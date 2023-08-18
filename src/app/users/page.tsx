@@ -1,8 +1,7 @@
-'use client';
 import { Container } from '@/components/item';
 import User from '@/components/page/User/User';
 
-const UserPage = () => {
+const UserPage = async () => {
    return (
       <Container title="Users">
          <User />

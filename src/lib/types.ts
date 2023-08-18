@@ -62,12 +62,17 @@ export type Items = {
 };
 
 export type Users = {
+   id: string;
    name: string;
    username: string;
    isActive: boolean;
-   levelId: string;
-   image: string;
-   autoUpdate: string;
+   autoUpdate: boolean;
+   image: string | null;
+   levelUser: {
+      id: number;
+      name: string;
+      code: number;
+   };
 };
 
 export type Loading = {
