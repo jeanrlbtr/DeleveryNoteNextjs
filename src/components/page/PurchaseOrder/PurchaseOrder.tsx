@@ -9,9 +9,9 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import ClientFetching from '@/hooks/clientFetching';
+import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import useDebounce from '@/hooks/useDebounce';
-import { useQuery } from '@tanstack/react-query';
+import { AllPurchaseOrder } from '@/types';
 import { Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -59,26 +59,22 @@ const PurchaseOrder = () => {
    const [page, setPage] = useState<number>(1);
 
    const { push } = useRouter();
-   const axiosFetching = ClientFetching();
    const debounceValue = useDebounce(searchValue, 1000);
 
-   const { data: dataNote, isLoading } = useQuery({
-      queryKey: ['getNote', debounceValue, statusValue, page, limitValue],
-      queryFn: async () => {
-         const statusUrl =
-            statusValue && statusValue != 'ALL'
-               ? `/delivery/v1/notes?k=status&v=${statusValue}&page=${page}&limit=${limitValue}`
-               : `/delivery/v1/notes?page=${page}&limit=${limitValue}`;
+   const statusUrl =
+      statusValue && statusValue != 'ALL'
+         ? `/delivery/v1/notes?k=status&v=${statusValue}&page=${page}&limit=${limitValue}`
+         : `/delivery/v1/notes?page=${page}&limit=${limitValue}`;
 
-         const url =
-            selectValue && debounceValue.length > 1
-               ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=${page}&limit=${limitValue}`
-               : statusUrl;
-         const res = await axiosFetching.get(url);
-
-         return res.data.data;
-      },
-   });
+   const url =
+      selectValue && debounceValue.length > 1
+         ? `/delivery/v1/notes?k=${selectValue}&v=${debounceValue}&page=${page}&limit=${limitValue}`
+         : statusUrl;
+   const queryKey = ['getNote', debounceValue, statusValue, page, limitValue];
+   const { data: dataNote, isLoading } = UseQueryFetching<AllPurchaseOrder>(
+      url,
+      queryKey
+   );
 
    return (
       <div className="bg-white rounded-[7px] p-3">
@@ -148,21 +144,25 @@ const PurchaseOrder = () => {
                type="note"
                columns={columnsDelevery}
                disabledNext={
-                  dataNote?.currentPage === 1 || dataNote?.count === 0
+                  dataNote?.data.currentPage === 1 || dataNote?.data.count === 0
                }
                disabledPrev={
-                  dataNote?.currentPage === dataNote?.totalPages ||
-                  dataNote?.count === 0
+                  dataNote?.data.currentPage === dataNote?.data.totalPages ||
+                  dataNote?.data.count === 0
                }
                nextPage={() => {
-                  dataNote?.currentPage !== dataNote?.totalPages &&
-                     setPage(dataNote?.currentPage + 1);
+                  if (dataNote) {
+                     dataNote?.data.currentPage !== dataNote?.data.totalPages &&
+                        setPage(dataNote.data.currentPage + 1);
+                  }
                }}
                previousPage={() => {
-                  if (dataNote?.currentPage !== 1)
-                     setPage(dataNote?.currentPage - 1);
+                  if (dataNote) {
+                     dataNote?.data.currentPage !== 1 &&
+                        setPage(dataNote.data.currentPage - 1);
+                  }
                }}
-               data={dataNote?.notes || []}
+               data={dataNote?.data.notes || []}
                action={true}
                isLoading={isLoading}
                limit={limitValue}

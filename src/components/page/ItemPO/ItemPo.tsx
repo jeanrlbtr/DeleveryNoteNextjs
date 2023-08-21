@@ -1,5 +1,7 @@
 'use client';
 import { Timeline } from '@/components/item';
+import UpdateItems from '@/components/item/Form/UpdateStatusItems';
+import { Button } from '@/components/ui/button';
 import {
    Dialog,
    DialogContent,
@@ -14,16 +16,13 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import ClientFetching from '@/hooks/clientFetching';
-import { useQuery } from '@tanstack/react-query';
+import { Can } from '@/hooks/Can';
+import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { AllItemType } from '@/types';
 import { Clock3 } from 'lucide-react';
 import { Roboto } from 'next/font/google';
-import { useState } from 'react';
-
-import UpdateItems from '@/components/item/Form/UpdateStatusItems';
-import { Button } from '@/components/ui/button';
-import { Can } from '@/hooks/Can';
 import Image from 'next/image';
+import { useState } from 'react';
 import LoadingItemPo from './LoadingItemPo';
 
 const roboto = Roboto({ weight: ['400', '500', '700'], subsets: ['latin'] });
@@ -61,28 +60,25 @@ const ItemPO = () => {
    const [page, setPage] = useState<number>(1);
    const [statusQuery, setStatusQuery] = useState<string>('ALL');
    const [purchaseOrder, setPurchaseOrder] = useState<string>('all');
-   const axiosFetching = ClientFetching();
 
-   const { data, isLoading, isError } = useQuery({
-      queryFn: async () => {
-         const url =
-            statusQuery !== 'ALL'
-               ? `/delivery/v1/note/items?k=status&v=${statusQuery}&page=${page}`
-               : `/delivery/v1/note/items?page=${page}`;
-         const res = await axiosFetching.get(url);
-         return res.data?.data;
-      },
-      enabled: true,
-      queryKey: ['getAllItems', page, statusQuery],
-   });
+   const url =
+      statusQuery !== 'ALL'
+         ? `/delivery/v1/note/items?k=status&v=${statusQuery}&page=${page}`
+         : `/delivery/v1/note/items?page=${page}`;
+
+   const { data, isLoading, isError } = UseQueryFetching<AllItemType>(url, [
+      'getAllItems',
+      page,
+      statusQuery,
+   ]);
 
    if (isError) {
       return <div>Erorr 404</div>;
    }
 
-   const noPo = data?.items.find((item: any) => item.no === purchaseOrder);
+   const noPo = data?.data.items.find((item: any) => item.no === purchaseOrder);
    return (
-      <div className=" lg:w-full lg:bg-white px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]">
+      <div className="lg:w-full lg:bg-white px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]">
          <div className="flex bg-[#fff] justify-between items-center rounded-[7px] p-2 flex-row-reverse mb-[10px]">
             <Select
                onValueChange={(e) => setPurchaseOrder(e)}
@@ -93,13 +89,16 @@ const ItemPO = () => {
                </SelectTrigger>
                <SelectContent>
                   <SelectItem value="all">All Purchase Order</SelectItem>
-                  {data?.items.map((purchaseOrder: any, index: number) => {
-                     return (
-                        <SelectItem value={purchaseOrder.no} key={index}>
-                           <div>{purchaseOrder.no}</div>
-                        </SelectItem>
-                     );
-                  })}
+                  {data &&
+                     data?.data.items.map(
+                        (purchaseOrder: any, index: number) => {
+                           return (
+                              <SelectItem value={purchaseOrder.no} key={index}>
+                                 <div>{purchaseOrder.no}</div>
+                              </SelectItem>
+                           );
+                        }
+                     )}
                </SelectContent>
             </Select>
             <Select onValueChange={(e) => setStatusQuery(e)}>
@@ -144,135 +143,144 @@ const ItemPO = () => {
                {purchaseOrder === 'all' ? (
                   <div className="w-full">
                      {isLoading && <LoadingItemPo />}
-                     {data?.items.length > 0 ? (
-                        data?.items.map((purchaseOrder: any, index: number) => {
-                           return (
-                              <div
-                                 key={index}
-                                 className={`w-full h-max p-2 rounded-[5px] bg-[transparent] mt-[30px]`}
-                              >
+                     {data && data?.data.items.length > 0 ? (
+                        data?.data.items.map(
+                           (purchaseOrder: any, index: number) => {
+                              return (
                                  <div
-                                    className={`flex justify-between items-center  ${roboto.className}`}
+                                    key={index}
+                                    className={`w-full h-max p-2 rounded-[5px] bg-[transparent] mt-[30px]`}
                                  >
-                                    <p className="text-[18px] text-[#525252] font-[500]">
-                                       {purchaseOrder.no}
-                                    </p>
-                                 </div>
-                                 {purchaseOrder.items &&
-                                    purchaseOrder.items.map(
-                                       (itemDetail: any, index: number) => {
-                                          const updatedBy =
-                                             itemDetail.itemProgress.length - 1;
-                                          return (
-                                             <div
-                                                key={index}
-                                                className={`p-[10px] ${
-                                                   index === 0 && 'mt-[10px]'
-                                                }  hover:bg-[#2a47ca11] border-t-[1px]`}
-                                             >
-                                                <div className="w-full ">
-                                                   <div className="flex w-full justify-between items-center">
-                                                      <p className="text-[#333333] text-[20px]">
-                                                         {itemDetail.name}
-                                                         <span
-                                                            className={`ml-[4px] text-[15px] ${
-                                                               itemDetail.status !==
-                                                               'FINISH'
-                                                                  ? 'text-[#b88c3b]'
-                                                                  : 'text-[green]'
-                                                            }`}
-                                                         >
-                                                            (
-                                                            {itemDetail.status ||
-                                                               'UnProcess'}
-                                                            )
-                                                         </span>
+                                    <div
+                                       className={`flex justify-between items-center  ${roboto.className}`}
+                                    >
+                                       <p className="text-[18px] text-[#525252] font-[500]">
+                                          {purchaseOrder.no}
+                                       </p>
+                                    </div>
+                                    {purchaseOrder.items &&
+                                       purchaseOrder.items.map(
+                                          (itemDetail: any, index: number) => {
+                                             const updatedBy =
+                                                itemDetail.itemProgress.length -
+                                                1;
+                                             return (
+                                                <div
+                                                   key={index}
+                                                   className={`p-[10px] ${
+                                                      index === 0 && 'mt-[10px]'
+                                                   }  hover:bg-[#2a47ca11] border-t-[1px]`}
+                                                >
+                                                   <div className="w-full ">
+                                                      <div className="flex w-full justify-between items-center">
+                                                         <p className="text-[#333333] text-[20px]">
+                                                            {itemDetail.name}
+                                                            <span
+                                                               className={`ml-[4px] text-[15px] ${
+                                                                  itemDetail.status !==
+                                                                  'FINISH'
+                                                                     ? 'text-[#b88c3b]'
+                                                                     : 'text-[green]'
+                                                               }`}
+                                                            >
+                                                               (
+                                                               {itemDetail.status ||
+                                                                  'UnProcess'}
+                                                               )
+                                                            </span>
+                                                         </p>
+                                                         <div className="flex items-center flex-row-reverse gap-[12px]">
+                                                            <Dialog>
+                                                               <DialogTrigger>
+                                                                  <Clock3 className="w-[20px] h-[20px] cursor-pointer text-[#405189]" />
+                                                               </DialogTrigger>
+                                                               <DialogContent className="rounded-[10px]">
+                                                                  <DialogHeader>
+                                                                     <DialogTitle>
+                                                                        <p className="text-[20px] text-[#525252] font-[500]">
+                                                                           Timeline
+                                                                           Items
+                                                                        </p>
+                                                                     </DialogTitle>
+                                                                  </DialogHeader>
+                                                                  <Timeline
+                                                                     dataItems={
+                                                                        itemDetail.itemProgress
+                                                                     }
+                                                                  />
+                                                               </DialogContent>
+                                                            </Dialog>
+                                                         </div>
+                                                      </div>
+                                                      <div className="flex mt-[2px]  justify-between text-[14px] w-full">
+                                                         <p className="text-[#626262]">
+                                                            {itemDetail.type}{' '}
+                                                            <span className="ml-[2px]">
+                                                               (
+                                                               {
+                                                                  itemDetail.variant
+                                                               }
+                                                               )
+                                                            </span>
+                                                         </p>
+                                                         <p className="text-black">
+                                                            Quantity :{' '}
+                                                            {itemDetail.qty}
+                                                         </p>
+                                                      </div>
+                                                   </div>
+                                                   <div className="flex justify-between mt-[6px]">
+                                                      <p className="text-[#626262] text-[14px]">
+                                                         {itemDetail
+                                                            .itemProgress[
+                                                            updatedBy
+                                                         ] &&
+                                                            itemDetail
+                                                               .itemProgress[
+                                                               updatedBy
+                                                            ].user.name}
                                                       </p>
-                                                      <div className="flex items-center flex-row-reverse gap-[12px]">
+                                                      <Can
+                                                         I="update"
+                                                         a="poItem"
+                                                      >
                                                          <Dialog>
-                                                            <DialogTrigger>
-                                                               <Clock3 className="w-[20px] h-[20px] cursor-pointer text-[#405189]" />
+                                                            <DialogTrigger
+                                                               disabled={
+                                                                  itemDetail.status ===
+                                                                  'FINISH'
+                                                               }
+                                                            >
+                                                               <div
+                                                                  className={`text-[14px] ${
+                                                                     roboto.className
+                                                                  } ${
+                                                                     itemDetail.status ===
+                                                                        'FINISH' &&
+                                                                     'bg-[#a8a8a8] cursor-not-allowed'
+                                                                  }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
+                                                               >
+                                                                  Update Process
+                                                               </div>
                                                             </DialogTrigger>
                                                             <DialogContent className="rounded-[10px]">
-                                                               <DialogHeader>
-                                                                  <DialogTitle>
-                                                                     <p className="text-[20px] text-[#525252] font-[500]">
-                                                                        Timeline
-                                                                        Items
-                                                                     </p>
-                                                                  </DialogTitle>
-                                                               </DialogHeader>
-                                                               <Timeline
-                                                                  dataItems={
-                                                                     itemDetail.itemProgress
+                                                               <UpdateItems
+                                                                  id={
+                                                                     itemDetail.id
                                                                   }
                                                                />
                                                             </DialogContent>
                                                          </Dialog>
-                                                      </div>
-                                                   </div>
-                                                   <div className="flex mt-[2px]  justify-between text-[14px] w-full">
-                                                      <p className="text-[#626262]">
-                                                         {itemDetail.type}{' '}
-                                                         <span className="ml-[2px]">
-                                                            (
-                                                            {itemDetail.variant}
-                                                            )
-                                                         </span>
-                                                      </p>
-                                                      <p className="text-black">
-                                                         Quantity :{' '}
-                                                         {itemDetail.qty}
-                                                      </p>
+                                                      </Can>
                                                    </div>
                                                 </div>
-                                                <div className="flex justify-between mt-[6px]">
-                                                   <p className="text-[#626262] text-[14px]">
-                                                      {itemDetail.itemProgress[
-                                                         updatedBy
-                                                      ] &&
-                                                         itemDetail
-                                                            .itemProgress[
-                                                            updatedBy
-                                                         ].user.name}
-                                                   </p>
-                                                   <Can I="update" a="poItem">
-                                                      <Dialog>
-                                                         <DialogTrigger
-                                                            disabled={
-                                                               itemDetail.status ===
-                                                               'FINISH'
-                                                            }
-                                                         >
-                                                            <div
-                                                               className={`text-[14px] ${
-                                                                  roboto.className
-                                                               } ${
-                                                                  itemDetail.status ===
-                                                                     'FINISH' &&
-                                                                  'bg-[#a8a8a8] cursor-not-allowed'
-                                                               }  bg-[#1d3f72] text-white px-2 py-1 rounded-[5px]`}
-                                                            >
-                                                               Update Process
-                                                            </div>
-                                                         </DialogTrigger>
-                                                         <DialogContent className="rounded-[10px]">
-                                                            <UpdateItems
-                                                               id={
-                                                                  itemDetail.id
-                                                               }
-                                                            />
-                                                         </DialogContent>
-                                                      </Dialog>
-                                                   </Can>
-                                                </div>
-                                             </div>
-                                          );
-                                       }
-                                    )}
-                              </div>
-                           );
-                        })
+                                             );
+                                          }
+                                       )}
+                                 </div>
+                              );
+                           }
+                        )
                      ) : (
                         <div className="w-full flex bg-[#fdfdfd] justify-center">
                            {!isLoading && (
@@ -393,10 +401,12 @@ const ItemPO = () => {
                   variant="outline"
                   size="sm"
                   className="text-[#525252]"
-                  disabled={data?.currentPage === 1 || data?.count === 0}
+                  disabled={
+                     data?.data.currentPage === 1 || data?.data.count === 0
+                  }
                   onClick={() => {
-                     if (data?.currentPage !== 1)
-                        setPage(data?.currentPage - 1);
+                     if (data && data?.data.currentPage !== 1)
+                        setPage(data?.data.currentPage - 1);
                   }}
                >
                   Previous
@@ -406,11 +416,15 @@ const ItemPO = () => {
                   size="sm"
                   className="text-[#525252]"
                   disabled={
-                     data?.currentPage === data?.totalPages || data?.count === 0
+                     data?.data.currentPage === data?.data.totalPages ||
+                     data?.data.count === 0
                   }
                   onClick={() => {
-                     if (data?.currentPage !== data?.totalPages)
-                        setPage(data?.currentPage + 1);
+                     if (
+                        data &&
+                        data?.data.currentPage !== data?.data.totalPages
+                     )
+                        setPage(data?.data.currentPage + 1);
                   }}
                >
                   Next

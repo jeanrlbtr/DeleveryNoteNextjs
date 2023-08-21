@@ -10,10 +10,8 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import ClientFetching from '@/hooks/clientFetching';
-import { DashboardType, Status, StatusType } from '@/types';
-import { useQuery } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { DashboardType, RankType, Status, StatusType } from '@/types';
 import { CircleEllipsis, Clock3, FileCheck2, FileX2 } from 'lucide-react';
 import React from 'react';
 
@@ -52,35 +50,30 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
       },
    ];
 
-   const axiosFetching = ClientFetching();
+   const { data: dataStatus } = UseQueryFetching<Status>(
+      `/delivery/v1/data/ui?chart[][data]=status&chart[][time]=${statusDate}`,
+      ['getStatus', statusDate],
+      { data: { status: dashboardData?.status } }
+   );
 
-   const { data: dataStatus } = useQuery({
-      queryKey: ['getStatus', statusDate],
-      queryFn: async () => {
-         const res: AxiosResponse<Status> = await axiosFetching.get(
-            `/delivery/v1/data/ui?chart[][data]=status&chart[][time]=${statusDate}`
-         );
-         return res.data.data;
-      },
-   });
-
-   const { data: dataRankedItem, isLoading: isLoadingRanked } = useQuery({
-      queryKey: ['getDataRanked', dateRanked, limit],
-      queryFn: async () => {
-         const res = await axiosFetching.get(
-            `/delivery/v1/data/ui?chart[3][data]=rank&chart[3][limit]=${limit}&chart[3][time]=${dateRanked}`
-         );
-         return res.data.data;
-      },
-   });
+   const { data: dataRankedItem, isLoading: isLoadingRanked } =
+      UseQueryFetching<RankType>(
+         `/delivery/v1/data/ui?chart[3][data]=rank&chart[3][limit]=${limit}&chart[3][time]=${dateRanked}`,
+         ['getDataRanked', dateRanked, limit],
+         {
+            data: {
+               rank: dashboardData.rank,
+            },
+         }
+      );
 
    React.useEffect(() => {
       if (dataStatus) {
          setStatusData([
-            { status: dataStatus.status.total, name: 'Total' },
-            { status: dataStatus?.status.process, name: 'Process' },
-            { status: dataStatus?.status.finish, name: 'Finish' },
-            { status: dataStatus?.status.canceled, name: 'Canceled' },
+            { status: dataStatus.data?.status.total, name: 'Total' },
+            { status: dataStatus.data?.status.process, name: 'Process' },
+            { status: dataStatus.data?.status.finish, name: 'Finish' },
+            { status: dataStatus.data?.status.canceled, name: 'Canceled' },
          ]);
       }
    }, [dataStatus]);
@@ -237,7 +230,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                </div>
                <div className="px-[7px] md:px-5 md:mt-[30px] mt-[10px]">
                   <DataTable
-                     data={dataRankedItem?.rank || false}
+                     data={dataRankedItem?.data.rank || []}
                      columns={rankColumn}
                      isLoading={isLoadingRanked}
                      type={'dash'}

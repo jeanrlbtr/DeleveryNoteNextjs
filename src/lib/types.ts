@@ -1,11 +1,25 @@
 export type Delevery = {
-   no: number;
+   no: string;
    store: string;
    sales: string;
-   address: string;
-   nomor_sj: string;
-   dateDelevery: string;
-   status: boolean;
+   dateNote: string;
+   dateDelivery: string;
+   specialNote: boolean;
+   senderName: string;
+   senderAddress: string;
+   recipientName: string;
+   recipientAddress: string;
+   note: string;
+   attachment: string;
+   status: string;
+   timestamp: number;
+   items: {
+      name: string;
+      variant: string;
+      type: string;
+      qty: number;
+      status: string;
+   }[];
 };
 
 export type NoteDetail = {
