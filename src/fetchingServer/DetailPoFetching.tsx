@@ -16,14 +16,4 @@ async function getDetailPO(param: string) {
    return res.data;
 }
 
-// async function customFetching<TypeFetch>(url: string) {
-//    const token = cookies().get('access_token')?.value;
-//    const res: AxiosResponse<TypeFetch> = await axiosAuth.get(url, {
-//       headers: {
-//          Authorization: `Bearer ${token}`,
-//       },
-//    });
-//    return res.data;
-// }
-
 export { getDetailPO };

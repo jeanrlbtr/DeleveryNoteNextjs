@@ -16,7 +16,7 @@ import {
    DialogTrigger,
 } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
-import { Can } from '@/hooks/Can';
+import { CanRule } from '@/hooks/Can';
 import ClientFetching from '@/hooks/clientFetching';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Edit, Eraser, FolderLock } from 'lucide-react';
@@ -25,12 +25,11 @@ import { useState } from 'react';
 const User = () => {
    const { toast } = useToast();
    const queryClient = useQueryClient();
-   const [detailUser, setDetailUser] = useState<any>({});
    const [detailAccess, setDetailAccess] = useState<string>('');
    const fetchingUser = ClientFetching();
    const [open, setOpen] = useState<boolean>(false);
    const [openDelete, setOpenDelete] = useState<boolean>(false);
-
+   const Can = CanRule();
    const [defaultValues, setDefaultValues] = useState({
       access: [],
       module: [],
@@ -86,22 +85,32 @@ const User = () => {
       },
    });
 
+   const handleCloseAccess = () => {
+      setOpen(false);
+   };
    if (isLoadingLevel || isLoadingUser) {
       return <TableLoading />;
    }
 
    return (
-      <div className="bg-white px-[20px] pt-[20px] rounded-[10px]">
+      <div
+         className="bg-white w-full px-[20px] overflow-auto
+       pt-[10px] rounded-[10px]"
+      >
+         <div className="mb-[30px]">
+            <p className="text-[25px] text-gray-500">Users Page</p>
+         </div>
          <DataTable
             action={true}
             data={user}
             columns={userColumn}
             disabledNext={true}
             disabledPrev={true}
+            isLoading={isLoadingUser}
             topTable={
-               <div className="flex">
+               <div className="flex mt-[20px]">
                   <Can I="create" a="user">
-                     <div className="ml-[32px]">
+                     <div className="md:ml-[32px]">
                         <Dialog>
                            <DialogTrigger>
                               <div className="bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]">
@@ -148,10 +157,7 @@ const User = () => {
                         <Can I="update" a="user">
                            <Dialog>
                               <DialogTrigger>
-                                 <Edit
-                                    className="text-[green]"
-                                    onClick={() => setDetailUser(row.original)}
-                                 />
+                                 <Edit className="text-[green]" />
                               </DialogTrigger>
                               <DialogContent>
                                  <DialogHeader>
@@ -160,7 +166,7 @@ const User = () => {
                                  <div className="px-4 py-2">
                                     <EditUserForm
                                        level={level}
-                                       defaultValue={detailUser}
+                                       defaultValue={row.original}
                                     />
                                  </div>
                               </DialogContent>
@@ -172,31 +178,35 @@ const User = () => {
                            <Dialog
                               open={open}
                               onOpenChange={async (e) => {
-                                 const res = await fetchingUser.get(
-                                    `/delivery/v1/user/${row.original.id}`
-                                 );
-                                 const userData = res.data.data;
-                                 setDetailAccess(res.data.data);
-                                 for (let i in userData) {
-                                    if (i === 'access') {
-                                       setDefaultValues((prev: any) => ({
-                                          ...prev,
-                                          access: userData[i],
-                                       }));
-                                    }
-                                    if (i === 'module') {
-                                       const arr: any[] = [];
-                                       userData[i].forEach((e: any) => {
-                                          const valueFeature = `${e.feature}/${e.method}`;
-                                          arr.push(valueFeature);
+                                 try {
+                                    const res = await fetchingUser.get(
+                                       `/delivery/v1/user/${row.original.id}`
+                                    );
+                                    const userData = res.data.data;
+                                    setDetailAccess(res.data.data);
+                                    for (let i in userData) {
+                                       if (i === 'access') {
                                           setDefaultValues((prev: any) => ({
                                              ...prev,
-                                             module: arr,
+                                             access: userData[i],
                                           }));
-                                       });
+                                       }
+                                       if (i === 'module') {
+                                          const arr: any[] = [];
+                                          userData[i].forEach((e: any) => {
+                                             const valueFeature = `${e.feature}/${e.method}`;
+                                             arr.push(valueFeature);
+                                             setDefaultValues((prev: any) => ({
+                                                ...prev,
+                                                module: arr,
+                                             }));
+                                          });
+                                       }
                                     }
+                                    setOpen(e);
+                                 } catch (error) {
+                                    // do nothing
                                  }
-                                 setOpen(e);
                               }}
                            >
                               <DialogTrigger>
@@ -211,6 +221,7 @@ const User = () => {
                                  <div className="px-4 py-2 min-w-[700px] max-w-[800px] max-h-[70vh] overflow-y-auto">
                                     <div className="flex gap-[20px]">
                                        <ModalAccess
+                                          handleClose={handleCloseAccess}
                                           defaultValues={defaultValues}
                                           userFeature={userFeature}
                                           UserAccess={detailAccess}

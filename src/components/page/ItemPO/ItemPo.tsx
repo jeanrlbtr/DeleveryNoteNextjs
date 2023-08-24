@@ -16,7 +16,7 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
-import { Can } from '@/hooks/Can';
+import { CanRule } from '@/hooks/Can';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import { AllItemType } from '@/types';
 import { Clock3 } from 'lucide-react';
@@ -56,7 +56,7 @@ const ItemPO = () => {
          key: 'FINISH',
       },
    ];
-
+   const Can = CanRule();
    const [page, setPage] = useState<number>(1);
    const [statusQuery, setStatusQuery] = useState<string>('ALL');
    const [purchaseOrder, setPurchaseOrder] = useState<string>('all');

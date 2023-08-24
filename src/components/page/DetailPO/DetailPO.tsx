@@ -11,7 +11,7 @@ import {
    DialogTitle,
    DialogTrigger,
 } from '@/components/ui/dialog';
-import { Can } from '@/hooks/Can';
+import { CanRule } from '@/hooks/Can';
 import { DetailPoType } from '@/types';
 import { ArrowUpRightFromCircle } from 'lucide-react';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ import { useState } from 'react';
 const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
    const data = detailPo.data;
    const [open, setOpen] = useState<boolean>(false);
-
+   const Can = CanRule();
    const dateDelivery = new Date(data.dateDelivery).toDateString();
    return (
       <div className="pb-[50px]">

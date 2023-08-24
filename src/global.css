@@ -10,7 +10,7 @@
 }
 
 .tableContainer {
-   scrollbar-width: none;
+   scrollbar-width: thin;
 }
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {

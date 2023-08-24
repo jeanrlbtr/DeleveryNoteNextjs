@@ -57,9 +57,9 @@ export function DataTable<TData, TValue>({
       },
    });
    return (
-      <div className="">
+      <div className="w-full">
          {!type && (
-            <div className="flex h-max mb-[30px] items-center">
+            <div className="md:flex h-max mb-[30px] items-center">
                <div className="w-[200px] rounded-[5px] border-[1px] bg-[#fff] px-1 border-[teal] flex justify-between items-center py-1 ">
                   <input
                      type="text"
@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
             </div>
          )}
          <div
-            className={`tableContainer h-[58vh] px-2 rounded-sm overflow-auto relative`}
+            className={`tableContainer h-[58vh] px-2 w-full rounded-sm overflow-auto relative`}
          >
             <table className="bg-white  w-full">
                <thead>

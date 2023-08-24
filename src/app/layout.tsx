@@ -1,17 +1,17 @@
-import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
-import '../global.css';
-import { Poppins } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import Casl from '@/hooks/CASL';
+import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
+import { Montserrat } from 'next/font/google';
+import '../global.css';
 
-const poppins = Poppins({
-   weight: ['300', '400', '500', '600'],
-   subsets: ['latin'],
+const montserrat = Montserrat({
+   subsets: ['cyrillic'],
+   weight: ['100', '300', '500', '600'],
 });
 
 export const metadata = {
    title: 'Delivery Note',
-   description: 'see all notes for the delevery ',
+   description: 'see all notes for the delevery',
 };
 
 export default function RootLayout({
@@ -21,11 +21,13 @@ export default function RootLayout({
 }) {
    return (
       <html lang="en">
-         <body className={poppins.className}>
-            <Casl>
-               <Toaster />
-               <ReactQueryProvider>{children}</ReactQueryProvider>
-            </Casl>
+         <body className={montserrat.className}>
+            <ReactQueryProvider>
+               <Casl>
+                  <Toaster />
+                  {children}
+               </Casl>
+            </ReactQueryProvider>
          </body>
       </html>
    );

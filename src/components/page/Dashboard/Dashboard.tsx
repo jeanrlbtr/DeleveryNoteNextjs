@@ -153,7 +153,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                         </SelectContent>
                      </Select>
                   </div>
-                  <div className="w-full flex gap-[15px] overflow-x-auto md:overflow-visible py-[10px] md:py-0">
+                  <div className="max-w-full flex gap-[15px] overflow-x-auto  py-[10px] px-[10px]">
                      {statusData.map((data: any, index: number) => {
                         return (
                            <div

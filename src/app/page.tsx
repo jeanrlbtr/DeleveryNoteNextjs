@@ -1,5 +1,3 @@
-// 'use client';
-
 import { Container } from '@/components/item';
 import { Dashboard } from '@/components/page';
 import { getDashboard } from '@/fetchingServer/DasboardFetching';

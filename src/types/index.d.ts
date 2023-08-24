@@ -222,3 +222,16 @@ export interface AllItemType {
       }[];
    };
 }
+
+export interface UserDetail {
+   image: null;
+   username: string;
+   name: string;
+   level: string;
+   access: string[];
+   module: {
+      userId: string;
+      method: string;
+      feature: string;
+   }[];
+}

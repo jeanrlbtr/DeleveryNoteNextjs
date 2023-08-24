@@ -1,4 +1,4 @@
-import { Can } from '@/hooks/Can';
+import { CanRule } from '@/hooks/Can';
 import MutationFetch from '@/hooks/MutationFetch';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../../components/ui/button';
@@ -12,10 +12,12 @@ const ModalAccess = ({
    UserAccess,
    userFeature,
    defaultValues,
+   handleClose,
 }: {
    UserAccess: any;
    userFeature: any;
    defaultValues: any;
+   handleClose: () => void;
 }) => {
    const { register, handleSubmit } = useForm<Inputs>({
       defaultValues: {
@@ -23,7 +25,7 @@ const ModalAccess = ({
          module: defaultValues.module,
       },
    });
-
+   const Can = CanRule();
    const { mutate: postAcces } = MutationFetch(['getAccess']);
    const applyAccess = async (data: any) => {
       const newArr: any = [];
@@ -55,6 +57,7 @@ const ModalAccess = ({
          method: 'post',
          headers: 'json',
       });
+      handleClose();
    };
 
    return (
