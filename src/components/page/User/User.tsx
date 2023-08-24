@@ -93,186 +93,184 @@ const User = () => {
    }
 
    return (
-      <div
-         className="bg-white w-full px-[20px] overflow-auto
-       pt-[10px] rounded-[10px]"
-      >
-         <div className="mb-[30px]">
-            <p className="text-[25px] text-gray-500">Users Page</p>
-         </div>
-         <DataTable
-            action={true}
-            data={user}
-            columns={userColumn}
-            disabledNext={true}
-            disabledPrev={true}
-            isLoading={isLoadingUser}
-            topTable={
-               <div className="flex mt-[20px]">
-                  <Can I="create" a="user">
-                     <div className="md:ml-[32px]">
-                        <Dialog>
-                           <DialogTrigger>
-                              <div className="bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]">
-                                 Add User
-                              </div>
-                           </DialogTrigger>
-                           <DialogContent className="w-full">
-                              <DialogHeader>
-                                 <DialogTitle>Add User</DialogTitle>
-                              </DialogHeader>
-                              <div className="px-4 py-2 w-full">
-                                 <UserForm level={level} />
-                              </div>
-                           </DialogContent>
-                        </Dialog>
-                     </div>
-                  </Can>
-                  <div>
-                     <Can I="create" a="access">
-                        <Dialog>
-                           <DialogTrigger>
-                              <div className="bg-submit hover:bg-submit-hover text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]">
-                                 Add Feature
-                              </div>
-                           </DialogTrigger>
-                           <DialogContent className="w-full">
-                              <div className="px-4 py-2 min-w-[700px] max-w-[800px]">
-                                 <p className="text-[24px] text-[#525252] mb-[20px]">
-                                    Add Features
-                                 </p>
-                                 <ModalPageAccess />
-                              </div>
-                           </DialogContent>
-                        </Dialog>
-                     </Can>
-                  </div>
-               </div>
-            }
-         >
-            {(row: any) => {
-               return (
-                  <div key={row.index} className="flex items-center gap-4">
-                     <div>
-                        <Can I="update" a="user">
+      <div className="">
+         <div className="bg-white w-full px-[20px] overflow-auto pt-[30px] rounded-[10px]">
+            <DataTable
+               action={true}
+               data={user}
+               columns={userColumn}
+               disabledNext={true}
+               disabledPrev={true}
+               isLoading={isLoadingUser}
+               topTable={
+                  <div className="flex">
+                     <Can I="create" a="user">
+                        <div className="md:ml-[32px]">
                            <Dialog>
                               <DialogTrigger>
-                                 <Edit className="text-[green]" />
+                                 <div className="bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]">
+                                    Add User
+                                 </div>
                               </DialogTrigger>
-                              <DialogContent>
+                              <DialogContent className="w-full">
                                  <DialogHeader>
-                                    <DialogTitle>Edit user</DialogTitle>
+                                    <DialogTitle>Add User</DialogTitle>
                                  </DialogHeader>
-                                 <div className="px-4 py-2">
-                                    <EditUserForm
-                                       level={level}
-                                       defaultValue={row.original}
-                                    />
+                                 <div className="px-4 py-2 w-full">
+                                    <UserForm level={level} />
                                  </div>
                               </DialogContent>
                            </Dialog>
-                        </Can>
-                     </div>
+                        </div>
+                     </Can>
                      <div>
-                        <Can I="read" a="access">
-                           <Dialog
-                              open={open}
-                              onOpenChange={async (e) => {
-                                 try {
-                                    const res = await fetchingUser.get(
-                                       `/delivery/v1/user/${row.original.id}`
-                                    );
-                                    const userData = res.data.data;
-                                    setDetailAccess(res.data.data);
-                                    for (let i in userData) {
-                                       if (i === 'access') {
-                                          setDefaultValues((prev: any) => ({
-                                             ...prev,
-                                             access: userData[i],
-                                          }));
-                                       }
-                                       if (i === 'module') {
-                                          const arr: any[] = [];
-                                          userData[i].forEach((e: any) => {
-                                             const valueFeature = `${e.feature}/${e.method}`;
-                                             arr.push(valueFeature);
-                                             setDefaultValues((prev: any) => ({
-                                                ...prev,
-                                                module: arr,
-                                             }));
-                                          });
-                                       }
-                                    }
-                                    setOpen(e);
-                                 } catch (error) {
-                                    // do nothing
-                                 }
-                              }}
-                           >
+                        <Can I="create" a="access">
+                           <Dialog>
                               <DialogTrigger>
-                                 <FolderLock className="text-[#d65421]" />
-                              </DialogTrigger>
-                              <DialogContent>
-                                 <DialogHeader>
-                                    <p className="text-[24px] text-[#525252] mb-[10px]">
-                                       User Access
-                                    </p>
-                                 </DialogHeader>
-                                 <div className="px-4 py-2 min-w-[700px] max-w-[800px] max-h-[70vh] overflow-y-auto">
-                                    <div className="flex gap-[20px]">
-                                       <ModalAccess
-                                          handleClose={handleCloseAccess}
-                                          defaultValues={defaultValues}
-                                          userFeature={userFeature}
-                                          UserAccess={detailAccess}
-                                       />
-                                    </div>
+                                 <div className="bg-submit hover:bg-submit-hover text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]">
+                                    Add Feature
                                  </div>
-                              </DialogContent>
-                           </Dialog>
-                        </Can>
-                     </div>
-                     <div>
-                        <Can I="delete" a="user">
-                           <Dialog
-                              open={openDelete}
-                              onOpenChange={setOpenDelete}
-                           >
-                              <DialogTrigger>
-                                 <Eraser className="text-[red]" />
                               </DialogTrigger>
-                              <DialogContent>
-                                 <DialogHeader>
-                                    <p className="text-[19px] text-[#525252]">
-                                       Delete User
+                              <DialogContent className="w-full">
+                                 <div className="px-4 py-2 min-w-[700px] max-w-[800px]">
+                                    <p className="text-[24px] text-[#525252] mb-[20px]">
+                                       Add Features
                                     </p>
-                                 </DialogHeader>
-                                 <div className="px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto">
-                                    <div className="flex gap-[20px] mb-[10px] text-[#525252]">
-                                       Are you sure to delete{' '}
-                                       {row.original.name}?
-                                    </div>
-                                    <div className="w-full flex justify-end mt-[10px]">
-                                       <Button
-                                          onClick={() => {
-                                             postUser(row.original.id);
-                                             setOpenDelete(false);
-                                          }}
-                                          size={'sm'}
-                                          className="bg-[red] text-[14px] hover:bg-[#f34848]"
-                                       >
-                                          Delete
-                                       </Button>
-                                    </div>
+                                    <ModalPageAccess />
                                  </div>
                               </DialogContent>
                            </Dialog>
                         </Can>
                      </div>
                   </div>
-               );
-            }}
-         </DataTable>
+               }
+            >
+               {(row: any) => {
+                  return (
+                     <div key={row.index} className="flex items-center gap-4">
+                        <div>
+                           <Can I="update" a="user">
+                              <Dialog>
+                                 <DialogTrigger>
+                                    <Edit className="text-[green]" />
+                                 </DialogTrigger>
+                                 <DialogContent>
+                                    <DialogHeader>
+                                       <DialogTitle>Edit user</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="px-4 py-2">
+                                       <EditUserForm
+                                          level={level}
+                                          defaultValue={row.original}
+                                       />
+                                    </div>
+                                 </DialogContent>
+                              </Dialog>
+                           </Can>
+                        </div>
+                        <div>
+                           <Can I="read" a="access">
+                              <Dialog
+                                 open={open}
+                                 onOpenChange={async (e) => {
+                                    try {
+                                       const res = await fetchingUser.get(
+                                          `/delivery/v1/user/${row.original.id}`
+                                       );
+                                       const userData = res.data.data;
+                                       setDetailAccess(res.data.data);
+                                       for (let i in userData) {
+                                          if (i === 'access') {
+                                             setDefaultValues((prev: any) => ({
+                                                ...prev,
+                                                access: userData[i],
+                                             }));
+                                          }
+                                          if (i === 'module') {
+                                             const arr: any[] = [];
+                                             userData[i].forEach((e: any) => {
+                                                const valueFeature = `${e.feature}/${e.method}`;
+                                                arr.push(valueFeature);
+                                                setDefaultValues(
+                                                   (prev: any) => ({
+                                                      ...prev,
+                                                      module: arr,
+                                                   })
+                                                );
+                                             });
+                                          }
+                                       }
+                                       setOpen(e);
+                                    } catch (error) {
+                                       // do nothing
+                                    }
+                                 }}
+                              >
+                                 <DialogTrigger>
+                                    <FolderLock className="text-[#d65421]" />
+                                 </DialogTrigger>
+                                 <DialogContent>
+                                    <DialogHeader>
+                                       <p className="text-[24px] text-[#525252] mb-[10px]">
+                                          User Access
+                                       </p>
+                                    </DialogHeader>
+                                    <div className="px-4 py-2 min-w-[700px] max-w-[800px] max-h-[70vh] overflow-y-auto">
+                                       <div className="flex gap-[20px]">
+                                          <ModalAccess
+                                             handleClose={handleCloseAccess}
+                                             defaultValues={defaultValues}
+                                             userFeature={userFeature}
+                                             UserAccess={detailAccess}
+                                          />
+                                       </div>
+                                    </div>
+                                 </DialogContent>
+                              </Dialog>
+                           </Can>
+                        </div>
+                        <div>
+                           <Can I="delete" a="user">
+                              <Dialog
+                                 open={openDelete}
+                                 onOpenChange={setOpenDelete}
+                              >
+                                 <DialogTrigger>
+                                    <Eraser className="text-[red]" />
+                                 </DialogTrigger>
+                                 <DialogContent>
+                                    <DialogHeader>
+                                       <p className="text-[19px] text-[#525252]">
+                                          Delete User
+                                       </p>
+                                    </DialogHeader>
+                                    <div className="px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto">
+                                       <div className="flex gap-[20px] mb-[10px] text-[#525252]">
+                                          Are you sure to delete{' '}
+                                          {row.original.name}?
+                                       </div>
+                                       <div className="w-full flex justify-end mt-[10px]">
+                                          <Button
+                                             onClick={() => {
+                                                postUser(row.original.id);
+                                                setOpenDelete(false);
+                                             }}
+                                             size={'sm'}
+                                             className="bg-[red] text-[14px] hover:bg-[#f34848]"
+                                          >
+                                             Delete
+                                          </Button>
+                                       </div>
+                                    </div>
+                                 </DialogContent>
+                              </Dialog>
+                           </Can>
+                        </div>
+                     </div>
+                  );
+               }}
+            </DataTable>
+         </div>
       </div>
    );
 };

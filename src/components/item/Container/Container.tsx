@@ -62,7 +62,10 @@ const Container = ({
             <Header name={data.name} title={title} />
          </div>
          <div className="p-[20px] md:p-[40px] flex-1 h-screen mx-auto max-w-[100vw] overflow-auto">
-            {children}
+            <div className="mb-[30px]">
+               <p className="text-[30px] text-gray-500">{title}</p>
+            </div>
+            <div>{children}</div>
          </div>
       </div>
    );

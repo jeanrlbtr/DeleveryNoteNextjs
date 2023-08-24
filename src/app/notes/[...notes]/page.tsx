@@ -8,8 +8,9 @@ const DetailNote = async ({ params }: { params: any }) => {
    newParam.splice(0, 5);
    const noPo: string = newParam.join('');
    const detailPO = await getDetailPO(noPo);
+   // ${newParam.join('')}
    return (
-      <Container title={`${newParam.join('')}`}>
+      <Container title={`Detail PO`}>
          {detailPO && <DetailPO detailPo={detailPO} />}
       </Container>
    );
