@@ -8,7 +8,9 @@ const DetailNote = async ({ params }: { params: any }) => {
    const newParam: string[] = param.split('');
    newParam.splice(0, 5);
    const noPo: string = newParam.join('');
-   const detailPO = await fetchingServer<DetailPoType>(`/delivery/v1/note?no=${noPo}`);
+   const detailPO = await fetchingServer<DetailPoType>(
+      `/delivery/v1/note?no=${noPo}`
+   );
    // ${newParam.join('')}
    const userMe = await fetchingServer<UserMeType>('/delivery/v1/user/me');
 
