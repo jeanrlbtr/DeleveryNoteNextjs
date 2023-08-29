@@ -1,18 +1,19 @@
 'use client';
-import { UserDetail } from '@/types';
+import { UserMeType } from '@/types';
 import { defineAbility } from '@casl/ability';
 import { createContext } from 'react';
-import { UseQueryFetching } from './UseQueryFetch';
 
-const Casl = ({ children }: { children: any }) => {
-   const { data: userModule } = UseQueryFetching<UserDetail>(
-      '/delivery/v1/user/me',
-      ['getModule']
-   );
+const Casl = ({
+   children,
+   userDetail,
+}: {
+   children: React.ReactNode;
+   userDetail: UserMeType | undefined;
+}) => {
    const ability = defineAbility((can) => {
-      if (userModule) {
-         for (let i = 0; i < userModule.module.length; i++) {
-            can(userModule.module[i].method, userModule.module[i]?.feature);
+      if (userDetail) {
+         for (let i = 0; i < userDetail.module.length; i++) {
+            can(userDetail.module[i].method, userDetail.module[i]?.feature);
          }
       }
    });

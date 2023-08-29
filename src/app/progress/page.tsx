@@ -1,15 +1,16 @@
 import { Container } from '@/components/item';
-import { PurchaseOrder } from '@/components/page';
+import ProgressSummary from '@/components/page/ProgressSummary/ProgressSummary';
 import fetchingServer from '@/fetchingServer';
 import { UserMeType } from '@/types';
-async function DeleveryNote() {
+
+const Page = async () => {
    const userMe = await fetchingServer<UserMeType>('/delivery/v1/user/me');
 
    return (
-      <Container dataUser={userMe} title="Purchase Order">
-         <PurchaseOrder />
+      <Container dataUser={userMe} title="Progress Summary">
+         <ProgressSummary />
       </Container>
    );
-}
+};
 
-export default DeleveryNote;
+export default Page;

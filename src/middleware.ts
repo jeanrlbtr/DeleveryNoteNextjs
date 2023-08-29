@@ -21,7 +21,15 @@ export async function middleware(req: NextRequest) {
    const theAccess = await userData();
 
    const access: string[] = theAccess || [''];
-   const matcher: string[] = ['login', 'users', 'notes', '/', 'item', 'level'];
+   const matcher: string[] = [
+      'login',
+      'users',
+      'notes',
+      '/',
+      'item',
+      'level',
+      'progress',
+   ];
 
    const url = req.url;
    if (req.nextUrl.pathname.startsWith('/login') && !token) {
@@ -61,5 +69,6 @@ export const config = {
       '/approve',
       '/level',
       '/item',
+      '/progress',
    ],
 };

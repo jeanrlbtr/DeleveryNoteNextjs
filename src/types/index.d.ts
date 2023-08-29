@@ -235,3 +235,16 @@ export interface UserDetail {
       feature: string;
    }[];
 }
+
+export interface UserMeType {
+   image: string | null;
+   username: string;
+   name: string;
+   level: string;
+   access: string[];
+   module: {
+      userId: string;
+      method: string;
+      feature: string;
+   }[];
+}

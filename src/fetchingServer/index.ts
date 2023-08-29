@@ -2,7 +2,7 @@ import { axiosAuth } from '@/lib/api';
 import axios, { AxiosResponse } from 'axios';
 import { cookies } from 'next/headers';
 
-async function customFetching<TypeFetch>(url: string) {
+async function fetchingServer<TypeFetch>(url: string) {
    const token = cookies().get('access_token')?.value;
    try {
       const res: AxiosResponse<TypeFetch> = await axiosAuth.get(url, {
@@ -16,4 +16,4 @@ async function customFetching<TypeFetch>(url: string) {
    }
 }
 
-export default customFetching;
+export default fetchingServer;

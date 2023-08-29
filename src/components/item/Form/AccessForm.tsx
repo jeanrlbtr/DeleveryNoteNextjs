@@ -26,7 +26,7 @@ const ModalAccess = ({
       },
    });
    const Can = CanRule();
-   const { mutate: postAcces } = MutationFetch(['getAccess']);
+   const { mutate: postAcces } = MutationFetch(['getAccess', 'getMe']);
    const applyAccess = async (data: any) => {
       const newArr: any = [];
       data.module.forEach((e: any) => {
@@ -70,7 +70,7 @@ const ModalAccess = ({
             <div className="">
                <p className="text-[#525252] text-[19px]">Page</p>
 
-               <div className="mt-[13px] flex  gap-[10px]">
+               <div className="mt-[13px] grid grid-cols-3 gap-[10px]">
                   <div className="flex items-center space-x-2">
                      <input
                         id="dasboard"
@@ -109,6 +109,26 @@ const ModalAccess = ({
                         className="text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                      >
                         Purchase Order
+                     </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                     <input
+                        id="progress"
+                        type="checkbox"
+                        defaultChecked={
+                           UserAccess?.access.find(
+                              (item: any) => item == 'progress'
+                           ) === 'progress'
+                        }
+                        className="w-[15px] border-[#d1cfcf] accent-checkbox"
+                        value={'progress'}
+                        {...register('access')}
+                     />
+                     <label
+                        htmlFor="progress"
+                        className="text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                     >
+                        Progress Summary
                      </label>
                   </div>
                   <div className="flex items-center space-x-2">

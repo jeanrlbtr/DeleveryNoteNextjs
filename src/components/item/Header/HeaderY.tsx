@@ -1,10 +1,12 @@
 'use client';
 
-import { deleteCookie, getCookie } from 'cookies-next';
+import { UserMeType } from '@/types';
+import { deleteCookie } from 'cookies-next';
 import {
    ChevronLeft,
    ChevronRight,
    FileStack,
+   FolderKanban,
    LayoutPanelLeft,
    LogOut,
    PackageCheck,
@@ -12,12 +14,13 @@ import {
    User,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import TooltipComponent from '../Tooltip/Tooltip';
 
 interface HeaderYProps {
    handleSidebar: () => void;
    show: boolean;
+   dataUser: UserMeType;
 }
 
 const menu = [
@@ -36,6 +39,13 @@ const menu = [
       spaceY: false,
    },
    {
+      name: 'Progress Summary',
+      icon: <FolderKanban className="w-[25px] h-[25px]" />,
+      url: '/progress',
+      access: 'progress',
+      spaceY: false,
+   },
+   {
       name: 'Check Item',
       icon: <PackageCheck className="w-[25px] h-[25px]" />,
       url: '/item',
@@ -49,6 +59,7 @@ const menu = [
       access: 'level',
       spaceY: true,
    },
+
    {
       name: 'Users',
       icon: <User className="w-[25px] h-[25px]" />,
@@ -58,9 +69,9 @@ const menu = [
    },
 ];
 
-const HeaderY = ({ handleSidebar, show }: HeaderYProps) => {
+const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
    const route = useRouter();
-   const data: string = getCookie('data')?.toString() || '';
+   const pathname = usePathname();
    const navigate = (url?: any) => {
       route.push(url);
    };
@@ -78,7 +89,7 @@ const HeaderY = ({ handleSidebar, show }: HeaderYProps) => {
       }
    };
    const checkAccess = (name: string): boolean => {
-      const pageAccess: string[] = data ? JSON.parse(data)?.access : [''];
+      const pageAccess: string[] = dataUser.access;
       if (pageAccess.includes(name)) return true;
       return false;
    };
@@ -118,42 +129,45 @@ const HeaderY = ({ handleSidebar, show }: HeaderYProps) => {
                   quality={100}
                />
             </div>
-
             <p className={`text-white ${!show && 'hidden'}`}>Delevery note</p>
          </div>
-
-         <div className={`flex flex-col gap-[20px] mt-14  w-max mx-auto`}>
+         <div className={`flex flex-col gap-[7px] mt-14  w-max mx-auto`}>
             {menu.map((item, index) => {
                return (
-                  <div key={index}>
-                     {checkAccess(item.access) && (
-                        <div
-                           onClick={() => navigate(item.url)}
-                           className={`cursor-pointer flex gap-[10px] items-center active:text-red-600  text-[#fff] hover:text-[#c5c5c5] ${
-                              item.spaceY && 'mt-[30px]'
-                           }`}
-                        >
-                           <TooltipComponent title={item.name}>
-                              <div className="flex gap-[10px] items-center">
-                                 {item.icon}
-                                 <p
-                                    className={`capitalize duration-300 ease-in-out ${
-                                       !show && 'hidden'
-                                    }`}
-                                 >
-                                    {item.name}
-                                 </p>
-                              </div>
-                           </TooltipComponent>
-                        </div>
-                     )}
+                  <div
+                     className={`${!checkAccess(item.access) && 'hidden'}`}
+                     key={index}
+                  >
+                     <div
+                        onClick={() => navigate(item.url)}
+                        className={`cursor-pointer flex gap-[10px] rounded-md ${
+                           item.url === pathname
+                              ? 'bg-slate-600 text-[#fff]'
+                              : 'text-[#e9e9e9]'
+                        } p-2 items-center active:text-red-600  hover:text-[#fff]  ${
+                           item.spaceY && 'mt-[30px]'
+                        }`}
+                     >
+                        <TooltipComponent title={item.name}>
+                           <div className="flex gap-[10px] items-center">
+                              {item.icon}
+                              <p
+                                 className={`capitalize duration-300 ease-in-out ${
+                                    !show && 'hidden'
+                                 }`}
+                              >
+                                 {item.name}
+                              </p>
+                           </div>
+                        </TooltipComponent>
+                     </div>
                   </div>
                );
             })}
 
             <div
                onClick={() => logout()}
-               className={`cursor-pointer flex gap-[10px] mt-[30px] active:text-red-600 items-center  text-[#fff] hover:text-[#c5c5c5]`}
+               className={`cursor-pointer flex p-2 gap-[10px] mt-[30px] active:text-red-600 items-center  hover:text-[#fff] text-[#e9e9e9]`}
             >
                <TooltipComponent title="Logout">
                   <div className="flex gap-[10px] items-center">

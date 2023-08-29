@@ -1,12 +1,15 @@
 import { Container } from '@/components/item';
 import { LevelPage } from '@/components/page';
-import { getLevel } from '@/fetchingServer/LevelFetching';
+import fetchingServer from '@/fetchingServer';
+import { LevelType, UserMeType } from '@/types';
 
 const Level = async () => {
-   const levelData = await getLevel();
+   const levelData = await fetchingServer<LevelType>(`/delivery/v1/levels`);
+   const userMe = await fetchingServer<UserMeType>('/delivery/v1/user/me');
+
    return (
-      <Container title="Level">
-         <LevelPage initialLevelData={levelData} />
+      <Container dataUser={userMe} title="Level">
+         {levelData?.data && <LevelPage initialLevelData={levelData} />}
       </Container>
    );
 };

@@ -1,12 +1,11 @@
 import { Toaster } from '@/components/ui/toaster';
-import Casl from '@/hooks/CASL';
 import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
 import { Montserrat } from 'next/font/google';
 import '../global.css';
 
 const montserrat = Montserrat({
    subsets: ['cyrillic'],
-   weight: ['100', '300', '500', '600'],
+   weight: ['100', '300', '400', '500', '600', '700'],
 });
 
 export const metadata = {
@@ -23,10 +22,8 @@ export default function RootLayout({
       <html lang="en">
          <body className={montserrat.className}>
             <ReactQueryProvider>
-               <Casl>
-                  <Toaster />
-                  {children}
-               </Casl>
+               <Toaster />
+               {children}
             </ReactQueryProvider>
          </body>
       </html>
