@@ -1,0 +1,6 @@
+input[id='cb'] + label {
+   display: inline-block;
+   border: 1px solid #bcbcbc;
+   border-radius: 2px;
+   cursor: pointer;
+}

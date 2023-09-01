@@ -1,14 +1,16 @@
 'use client';
 
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
 import MutationFetch from '@/hooks/MutationFetch';
 import ClientFetching from '@/hooks/clientFetching';
 import { Loader } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
 import { Button } from '../../ui/button';
-import ControllerCheck from '../Input/ControllerCheck';
-import ControllerInput from '../Input/ControllerInput';
 import ControllerSelect from '../Input/ControllerSelect';
+import './form.css';
+
 interface User {
    id: string;
    name: string;
@@ -16,12 +18,13 @@ interface User {
    autoUpdate: boolean;
    levelId: number;
    password: string;
-   image: any;
+   image: File | string;
    isActive: boolean;
 }
 
 const UserForm = ({ level }: { level: any[] }) => {
    const axiosAction = ClientFetching();
+
    const defaultValuesUser: User = {
       id: '',
       name: '',
@@ -37,6 +40,7 @@ const UserForm = ({ level }: { level: any[] }) => {
       handleSubmit,
       control,
       setValue,
+      register,
       getValues,
       formState: { errors },
    } = useForm<User>({ defaultValues: defaultValuesUser });
@@ -75,119 +79,146 @@ const UserForm = ({ level }: { level: any[] }) => {
          })}
          className="md:w-[700px]"
       >
-         <div className="mb-[10px]">
-            <div className="w-full">
-               <div className="mb-[10px] md:flex md:items-center md:justify-between">
-                  <label htmlFor="">
-                     Name <span className="text-[red]">*</span>
-                  </label>
-                  <div className={`w-[500px]`}>
-                     <AsyncSelect
-                        styles={{
-                           control: (baseStyles) => ({
-                              ...baseStyles,
-                              borderColor: getValues().name ? '' : 'red',
-                           }),
-                        }}
-                        defaultOptions
-                        getOptionLabel={(e: any) => e.full_name}
-                        getOptionValue={(e: any) => e.id}
-                        cacheOptions
-                        loadOptions={loadOptions}
-                        onChange={(e: any) => {
-                           setValue('name', e.full_name);
-                           setValue('id', e.id);
-                           setValue('username', e.username);
-                        }}
-                     />
-                     {getValues().name ? (
-                        ''
-                     ) : (
-                        <span className="text-[red] text-[13px]">
-                           Name is required
+         <div className="mt-3 flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+               <label htmlFor="name" className="text-sm text-gray-700">
+                  Name <span className="text-red-700">*</span>{' '}
+                  {!getValues('name') && (
+                     <span className="text-red-700 text-xs">
+                        (This field cannot be empty)
+                     </span>
+                  )}
+               </label>
+               <AsyncSelect
+                  styles={{
+                     control: (baseStyles) => ({
+                        ...baseStyles,
+                        borderColor: 'rgb(156 163 175)',
+                        borderWidth: '1px',
+                     }),
+                  }}
+                  defaultOptions
+                  getOptionLabel={(e: any) => e.full_name}
+                  getOptionValue={(e: any) => e.id}
+                  cacheOptions
+                  loadOptions={loadOptions}
+                  onChange={(e: any) => {
+                     setValue('name', e.full_name);
+                     setValue('id', e.id);
+                     setValue('username', e.username);
+                  }}
+               />
+            </div>
+            <div className="flex gap-5 w-full">
+               <div className="flex w-full flex-col gap-1">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Username <span className="text-red-700">*</span>{' '}
+                     {!getValues('username') && (
+                        <span className="text-red-700 text-xs">
+                           (This field cannot be empty)
                         </span>
                      )}
-                  </div>
+                  </label>
+                  <Input
+                     type="text"
+                     placeholder="username"
+                     className="border-[1px] border-gray-400"
+                     {...register('username', {
+                        required: true,
+                        value: getValues('username'),
+                     })}
+                  />
+               </div>
+               <div className="flex w-full flex-col gap-1">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Password <span className="text-red-700">*</span>{' '}
+                     {!getValues('password') && (
+                        <span className="text-red-700 text-xs">
+                           (This field cannot be empty)
+                        </span>
+                     )}
+                  </label>
+                  <Input
+                     type="text"
+                     placeholder="* * * * *"
+                     className="border-[1px] border-gray-400"
+                     {...register('password', {
+                        required: true,
+                     })}
+                  />
                </div>
             </div>
-            <div className="w-full">
-               <ControllerInput
-                  errors={errors}
-                  defaultValue={defaultValuesUser.username}
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="username"
-                  rules={{
-                     required: 'Username must be required',
-                  }}
-                  title="Usename"
-                  control={control}
-                  type="text"
-               />
+
+            <div className="flex w-full gap-5">
+               <div className="flex w-full flex-col gap-1">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Level User <span className="text-red-700">*</span>{' '}
+                     {!getValues('levelId') && (
+                        <span className="text-red-700 text-xs">
+                           (This field cannot be empty)
+                        </span>
+                     )}
+                  </label>
+                  <ControllerSelect
+                     control={control}
+                     name="level"
+                     rules={{ require: true }}
+                     title="level"
+                     level={level}
+                     type="level"
+                  />
+               </div>
+               <div className="flex w-full flex-col gap-1">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Photo
+                  </label>
+                  <Input
+                     placeholder="Image"
+                     type="file"
+                     className="border-[1px] border-gray-400 text-gray-500"
+                     onChange={(e) => {
+                        if (e.target.files) {
+                           setValue('image', e.target.files[0]);
+                        }
+                     }}
+                  />
+               </div>
             </div>
-            <div className="w-full">
-               <ControllerInput
-                  errors={errors}
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="password"
-                  rules={{
-                     required: 'password must be required',
-                     maxLength: {
-                        value: 9,
-                        message: 'password Max length 9 characters',
-                     },
-                     minLength: {
-                        value: 6,
-                        message: 'password Min length 6 characters',
-                     },
-                  }}
-                  title="Password"
-                  control={control}
-                  type="password"
-               />
-            </div>
-            <div className="w-full">
-               <ControllerCheck
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="isActive"
-                  rules={{}}
-                  title="Is Active"
-                  control={control}
-                  type="checkbox"
-               />
-            </div>
-            <div className="w-full">
-               <ControllerCheck
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="autoUpdate"
-                  rules={{}}
-                  title="Auto Update"
-                  control={control}
-                  type="checkbox"
-               />
-            </div>
-            <div className="w-full">
-               <ControllerSelect
-                  level={level}
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="levelId"
-                  rules={{
-                     required: 'level id must be required',
-                  }}
-                  title="Level Id"
-                  control={control}
-                  type="select"
-               />
-            </div>
-            <div className="w-full">
-               <ControllerInput
-                  errors={errors}
-                  className="mb-[10px] md:flex md:items-center md:justify-between"
-                  name="image"
-                  rules={{}}
-                  title="Photo"
-                  control={control}
-                  type="file"
-               />
+            <div className="flex  gap-5 w-full">
+               <div className="flex w-full items-start flex-col gap-2">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Is Active <span className="text-red-700">*</span>
+                     {!getValues('isActive') && (
+                        <span className="text-red-700 text-xs">
+                           (This field cannot be empty)
+                        </span>
+                     )}
+                  </label>
+                  <div className="flex gap-2 items-center">
+                     <Checkbox
+                        onCheckedChange={(e: boolean) => {
+                           setValue('isActive', e);
+                        }}
+                        className="bg-transparent border-gray-400"
+                     />
+                     <p className="text-sm font-light">User Not Active</p>
+                  </div>
+               </div>
+               <div className="flex w-full items-start flex-col gap-2">
+                  <label htmlFor="name" className="text-sm text-gray-700">
+                     Auto Update <span className="text-red-700">*</span>
+                  </label>
+                  <div className="flex gap-2 items-center">
+                     <Checkbox
+                        disabled={getValues('password') ? true : false}
+                        onCheckedChange={(e: boolean) => {
+                           setValue('autoUpdate', e);
+                        }}
+                        className="bg-transparent border-gray-400"
+                     />
+                     <p className="text-sm font-light">Not Auto Update</p>
+                  </div>
+               </div>
             </div>
          </div>
          <div className="flex justify-end">

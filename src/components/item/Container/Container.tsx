@@ -65,6 +65,7 @@ const Container = ({
    const handleShowSidebar = () => {
       setShow(!show);
    };
+
    return (
       <div className="h-full w-full flex md:flex-row flex-col relative">
          <div className="sticky hidden md:flex h-screen top-0 z-[9]">
@@ -76,11 +77,11 @@ const Container = ({
                />
             )}
          </div>
-         <div className="w-[100vw] md:hidden fixed z-[9] right-0 top-0">
+         <div className="w-[100vw] md:hidden sticky z-[9] top-0">
             <Header name={data ? data.name : ''} title={title} />
          </div>
-         <div className="px-[30px] pb-[30px] pt-[20px] flex-1 h-screen mx-auto w-full max-w-[100vw] overflow-auto">
-            <div className="mb-[30px] flex justify-between items-center w-full">
+         <div className="px-2 md:px-[30px] pb-[30px] pt-[20px] flex-1 h-screen mx-auto w-full max-w-[100vw] overflow-auto">
+            <div className="mb-[30px] hidden md:flex justify-between items-center w-full">
                <div>
                   <p className="text-[30px] font-medium text-gray-700">
                      {title}

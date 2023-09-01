@@ -12,7 +12,7 @@ const status = [
 
 const ProgressSummary = () => {
    return (
-      <div className="mt-[20px]">
+      <div className="">
          <div className="flex justify-end gap-4 mb-4 w-full items-center">
             <div className="flex gap-2 items-center ">
                <p className="text-[14px] font-[500]">Current</p>
@@ -29,20 +29,20 @@ const ProgressSummary = () => {
                </div>
             </div>
          </div>
-         <div className="bg-white w-full min-w-[100%] p-3 rounded-[7px] min-h-[73vh] overflow-auto">
+         <div className="bg-white w-full min-w-[100%]  rounded-[7px] min-h-[73vh] overflow-auto">
             <div className="grid grid-cols-5 w-full gap-5">
                {status.map((title, index) => {
                   return (
                      <div
                         key={index}
-                        className="relative rounded-md col-span-1"
+                        className="relative rounded-md col-span-1 bg-gray-100 px-2 py-2 pb-3"
                      >
-                        <div className="flex justify-between items-center px-2 mb-[20px]">
+                        <div className="flex justify-between items-center mb-[20px]">
                            <div className="flex items-center gap-[8px]">
                               <div className="h-[10px] w-[10px] rounded-full bg-blue-700" />
                               <p className="sticky rounded-sm top-0 text-[15px] text-gray-900 font-medium">
                                  {title}{' '}
-                                 <span className="bg-gray-100 rounded-lg text-gray-700 px-2">
+                                 <span className="bg-white rounded-lg text-gray-700 px-2">
                                     4
                                  </span>
                               </p>
@@ -51,7 +51,7 @@ const ProgressSummary = () => {
                               <MoreVertical className="w-4 h-4" />
                            </div>
                         </div>
-                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-gray-50 shadow-lg min-h-[200px]">
+                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]">
                            <div className="flex flex-col gap-1">
                               <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
                                  GFB/SJ/2023/05/01
@@ -94,12 +94,12 @@ const ProgressSummary = () => {
                               </div>
                            </div>
                         </div>
-                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-gray-50 shadow-lg min-h-[200px]">
+                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]">
                            <div className="flex flex-col gap-1">
                               <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
                                  GFB/SJ/2023/05/01
                               </p>
-                              <p className="text-[14px] uppercase font-semibold ">
+                              <p className="text-[14px] uppercase font-semibold">
                                  kursi Vettor (10)
                               </p>
                            </div>

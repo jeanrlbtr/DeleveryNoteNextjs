@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '@/components/ui/use-toast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosAuth } from '@/lib/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getCookie } from 'cookies-next';
 
 interface Params {
@@ -92,15 +92,6 @@ const MutationFetch = (key: string[]) => {
             duration: 3000,
          });
          return queryClient.invalidateQueries({ queryKey: key });
-      },
-      onError: (error: any) => {
-         if (error.response) {
-            toast({
-               title: error.response.data.message,
-               duration: 3000,
-               type: 'background',
-            });
-         }
       },
    });
 };

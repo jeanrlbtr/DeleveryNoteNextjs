@@ -52,7 +52,7 @@ const Loading = () => {
    let show = false;
    return (
       <div className="flex relative h-screen w-screen">
-         <div className="sticky top-0">
+         <div className="sticky hidden md:block top-0">
             <div
                className={`relative h-screen pb-[40px] ${
                   show ? 'px-6' : 'px-3'
