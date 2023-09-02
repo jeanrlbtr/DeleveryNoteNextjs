@@ -92,7 +92,9 @@ export function DataTable<TData, TValue>({
                            return (
                               <th
                                  key={header.id}
-                                 className="sticky top-0 py-3 px-3 bg-white font-[400] text-sm  text-left"
+                                 className={`sticky top-0 py-3 px-3 ${
+                                    type !== 'item' ? 'bg-white' : 'bg-gray-50'
+                                 } font-[400] text-sm  text-left`}
                               >
                                  {header.isPlaceholder
                                     ? null

@@ -1,9 +1,9 @@
 'use client';
 
-import { ChevronDown, MoreVertical } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const status = [
-   'Process',
+   'Process Order',
    'Preparing Material',
    'In Production',
    'Final Packing',
@@ -13,20 +13,14 @@ const status = [
 const ProgressSummary = () => {
    return (
       <div className="">
-         <div className="flex justify-end gap-4 mb-4 w-full items-center">
-            <div className="flex gap-2 items-center ">
-               <p className="text-[14px] font-[500]">Current</p>
-               <div className="bg-transparent border-[1px] border-gray-300 px-1 py-[3px] rounded-md h-max flex text-gray-700  gap-2 items-center text-sm">
-                  Page 1
-                  <ChevronDown className="w-[15px] h-[15px]" />
-               </div>
-            </div>
-            <div className="flex gap-2 items-center">
-               <p className="text-[14px] font-[500]">Show</p>
-               <div className="flex gap-1 bg-transparent border-[1px] border-gray-300 px-2 py-[3px] text-gray-700 rounded-md items-center text-sm">
-                  <p>10</p>
-                  <ChevronDown className="w-[15px] h-[15px]" />
-               </div>
+         <div className="flex justify-end gap-4 mb-5 w-full items-center">
+            <div className="flex gap-2 border-[1px] items-center px-1 py-1 rounded-md overflow-hidden w-[200px]">
+               <Search className="w-4 h-4 text-gray-600" />
+               <input
+                  placeholder="Search"
+                  className="w-[70%] outline-none text-gray-600
+                  "
+               />
             </div>
          </div>
          <div className="bg-white w-full min-w-[100%]  rounded-[7px] min-h-[73vh] overflow-auto">
@@ -47,9 +41,12 @@ const ProgressSummary = () => {
                                  </span>
                               </p>
                            </div>
-                           <div>
-                              <MoreVertical className="w-4 h-4" />
-                           </div>
+                           {/* {title === 'Finish' && (
+                              <div className="flex items-center gap-3">
+                                 <ChevronLeft className="w-4 h-4 cursor-pointer" />
+                                 <ChevronRight className="w-4 h-4 cursor-pointer" />
+                              </div>
+                           )} */}
                         </div>
                         <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]">
                            <div className="flex flex-col gap-1">

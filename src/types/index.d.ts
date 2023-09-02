@@ -61,7 +61,30 @@ export interface ItemType {
       user: {
          name: string;
       };
-   };
+   }[];
+}
+
+export interface ItemPO {
+   id: number;
+   type: string;
+   name: string;
+   variant: string;
+   qty: number;
+   variantId: number;
+   itemId: number;
+   status: string;
+   itemProgress: {
+      status: string;
+      note: string;
+      timestamp: number;
+      user: {
+         name: string;
+      };
+   }[];
+   store: string;
+   sales: string;
+   dateNote: string;
+   dateDelivery: string;
 }
 
 export interface DetailPoType {

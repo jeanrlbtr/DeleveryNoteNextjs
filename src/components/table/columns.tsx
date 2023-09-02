@@ -11,12 +11,42 @@ import {
    RankItem,
    Users,
 } from '@/lib/types';
-import { DetailPoTableType, LevelTabelType } from '@/types';
+import { DetailPoTableType, ItemPO, LevelTabelType } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 
+const ItemPOColumns: ColumnDef<ItemPO>[] = [
+   {
+      header: 'Name',
+      accessorKey: 'name',
+   },
+   {
+      header: 'Color',
+      accessorKey: 'variant',
+   },
+   {
+      header: 'Quantity',
+      accessorKey: 'qty',
+   },
+   {
+      header: 'Customer',
+      accessorKey: 'store',
+   },
+   {
+      header: 'Ricipient Name',
+      accessorKey: 'sales',
+   },
+   {
+      header: 'Date Shipment',
+      accessorKey: 'dateDelivery',
+   },
+   {
+      header: 'Date Order',
+      accessorKey: 'dateNote',
+   },
+];
 const InvoiceColumn: ColumnDef<Invoice>[] = [
    {
       header: 'Name',
@@ -481,6 +511,7 @@ const rankColumn: ColumnDef<RankItem>[] = [
 ];
 export {
    InvoiceColumn,
+   ItemPOColumns,
    LevelColumn,
    LoadingColumn,
    allHistoryColumn,
