@@ -19,10 +19,6 @@ import { Button } from '../ui/button';
 
 const ItemPOColumns: ColumnDef<ItemPO>[] = [
    {
-      header: 'Name',
-      accessorKey: 'name',
-   },
-   {
       header: 'Color',
       accessorKey: 'variant',
    },

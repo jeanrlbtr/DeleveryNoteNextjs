@@ -77,110 +77,114 @@ const PurchaseOrder = () => {
    );
 
    return (
-      <div className="bg-white rounded-[7px] p-3">
-         <div className="flex bg-[#fff] justify-between items-center  rounded-[7px] p-2">
-            <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden w-max">
-               {status.map((statusItem: any, index: number) => {
-                  return (
-                     <button
-                        key={index}
-                        onClick={() => {
-                           setStatusValue(statusItem.key);
-                           setSearchValue('');
-                           setSelectValue('');
-                        }}
-                        className={`px-[8px] ${
-                           statusValue == statusItem.key
-                              ? 'bg-gray-200 rounded-[5px] text-[#525252]'
-                              : 'text-[#807f7f]'
-                        } py-[8px] lg:text-[16px]`}
-                     >
-                        {statusItem.name}
-                     </button>
-                  );
-               })}
-            </div>
-            <div className="w-[430px] h-max rounded-[5px] flex items-center">
-               <Select
-                  onValueChange={(e) => {
-                     setStatusValue('');
-                     setSearchValue('');
-                     setSelectValue(e);
-                  }}
-               >
-                  <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]">
-                     <SelectValue placeholder="Select Filter" />
-                  </SelectTrigger>
-                  <SelectContent>
-                     {filter.map((filterItem: any, index: number) => {
-                        return (
-                           <SelectItem value={filterItem.query} key={index}>
-                              {filterItem.title}
-                           </SelectItem>
-                        );
-                     })}
-                  </SelectContent>
-               </Select>
-               <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[6px] bg-white">
-                  <input
-                     placeholder="Search"
-                     className={`w-full outline-none lg:text-[16px] border-none ${
-                        selectValue === 'all' && 'cursor-not-allowed'
-                     }`}
-                     disabled={selectValue === 'all'}
-                     id="inputSelect"
-                     value={searchValue}
-                     onChange={(e) => {
-                        setStatusValue('');
-                        setSearchValue(e.target.value);
+      <>
+         <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden mb-5 w-max">
+            {status.map((statusItem: any, index: number) => {
+               return (
+                  <button
+                     key={index}
+                     onClick={() => {
+                        setStatusValue(statusItem.key);
+                        setSearchValue('');
+                        setSelectValue('');
                      }}
-                  />
-                  <Search className="text-[#919191]" />
+                     className={`px-[8px] ${
+                        statusValue == statusItem.key
+                           ? 'bg-gray-200 rounded-[5px] text-[#525252]'
+                           : 'text-[#807f7f]'
+                     } py-[8px] lg:text-[16px]`}
+                  >
+                     {statusItem.name}
+                  </button>
+               );
+            })}
+         </div>
+         <div className="bg-white rounded-[7px] p-3">
+            <div className="flex bg-[#fff] justify-between items-center  rounded-[7px] p-2">
+               <div className="w-[430px] h-max rounded-[5px] flex items-center">
+                  <Select
+                     onValueChange={(e) => {
+                        setStatusValue('');
+                        setSearchValue('');
+                        setSelectValue(e);
+                     }}
+                  >
+                     <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]">
+                        <SelectValue placeholder="Select Filter" />
+                     </SelectTrigger>
+                     <SelectContent>
+                        {filter.map((filterItem: any, index: number) => {
+                           return (
+                              <SelectItem value={filterItem.query} key={index}>
+                                 {filterItem.title}
+                              </SelectItem>
+                           );
+                        })}
+                     </SelectContent>
+                  </Select>
+                  <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[7px] bg-white">
+                     <input
+                        placeholder="Search"
+                        className={`w-full outline-none lg:text-[16px] border-none ${
+                           selectValue === 'all' && 'cursor-not-allowed'
+                        }`}
+                        disabled={selectValue === 'all'}
+                        id="inputSelect"
+                        value={searchValue}
+                        onChange={(e) => {
+                           setStatusValue('');
+                           setSearchValue(e.target.value);
+                        }}
+                     />
+                     <Search className="text-[#919191]" />
+                  </div>
                </div>
             </div>
-         </div>
-         <div className="mt-[20px]">
-            <DataTable
-               type="note"
-               columns={columnsDelevery}
-               disabledNext={
-                  dataNote?.data.currentPage === 1 || dataNote?.data.count === 0
-               }
-               disabledPrev={
-                  dataNote?.data.currentPage === dataNote?.data.totalPages ||
-                  dataNote?.data.count === 0
-               }
-               nextPage={() => {
-                  if (dataNote) {
-                     dataNote?.data.currentPage !== dataNote?.data.totalPages &&
-                        setPage(dataNote.data.currentPage + 1);
+            <div className="mt-[20px]">
+               <DataTable
+                  type="item"
+                  columns={columnsDelevery}
+                  disabledNext={
+                     dataNote?.data.currentPage === 1 ||
+                     dataNote?.data.count === 0
                   }
-               }}
-               previousPage={() => {
-                  if (dataNote) {
-                     dataNote?.data.currentPage !== 1 &&
-                        setPage(dataNote.data.currentPage - 1);
+                  disabledPrev={
+                     dataNote?.data.currentPage === dataNote?.data.totalPages ||
+                     dataNote?.data.count === 0
                   }
-               }}
-               data={dataNote?.data.notes || []}
-               action={true}
-               isLoading={isLoading}
-               limit={limitValue}
-               onChange={(e: string) => setLimitValue(e)}
-            >
-               {(row: any) => {
-                  return (
-                     <div
-                        className="bg-[#405189] py-1 px-[10px] text-center cursor-pointer text-white rounded-[6px] text-[14px]"
-                        onClick={() => push(`/notes/no=${row.original?.no}`)}
-                     >
-                        Detail
-                     </div>
-                  );
-               }}
-            </DataTable>
+                  nextPage={() => {
+                     if (dataNote) {
+                        dataNote?.data.currentPage !==
+                           dataNote?.data.totalPages &&
+                           setPage(dataNote.data.currentPage + 1);
+                     }
+                  }}
+                  previousPage={() => {
+                     if (dataNote) {
+                        dataNote?.data.currentPage !== 1 &&
+                           setPage(dataNote.data.currentPage - 1);
+                     }
+                  }}
+                  data={dataNote?.data.notes || []}
+                  action={true}
+                  isLoading={isLoading}
+                  limit={limitValue}
+                  onChange={(e: string) => setLimitValue(e)}
+               >
+                  {(row: any) => {
+                     return (
+                        <div
+                           className="bg-[#405189] py-1 px-[10px] text-center cursor-pointer text-white rounded-[6px] text-[14px]"
+                           onClick={() => push(`/notes/no=${row.original?.no}`)}
+                        >
+                           Detail
+                        </div>
+                     );
+                  }}
+               </DataTable>
+            </div>
          </div>
-      </div>
+      </>
    );
 };
 

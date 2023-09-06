@@ -17,7 +17,11 @@ const TooltipComponent = ({
       <TooltipProvider>
          <Tooltip>
             <TooltipTrigger>{children}</TooltipTrigger>
-            <TooltipContent className="bg-[#5C6EAA] border-0">
+            <TooltipContent
+               sideOffset={20}
+               side="right"
+               className="bg-[#5C6EAA] border-0"
+            >
                <p className="text-[white]">{title}</p>
             </TooltipContent>
          </Tooltip>

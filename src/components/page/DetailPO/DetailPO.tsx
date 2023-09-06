@@ -18,6 +18,7 @@ import { useState } from 'react';
 
 const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
    const data = detailPo.data;
+   console.log(data);
    const [open, setOpen] = useState<boolean>(false);
    const Can = CanRule();
    const dateDelivery = new Date(data.dateDelivery).toDateString();

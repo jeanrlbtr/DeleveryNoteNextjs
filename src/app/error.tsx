@@ -12,11 +12,9 @@ const Error = ({ reset }: { error: Error; reset: () => void }) => {
                         <h1 className="font-extrabold text-5xl text-center text-white leading-tight mt-4 uppercase">
                            SOMETHING WHEN WRONG WITH THE SERVER
                         </h1>
-
                         <p className="font-extrabold text-8xl my-20 text-white animate-bounce">
                            500
                         </p>
-
                         <button
                            onClick={() => reset()}
                            className="text-[24px] bg-[white] rounded-[12px] px-[20px]"

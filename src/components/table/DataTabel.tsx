@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({
                                  key={header.id}
                                  className={`sticky top-0 py-3 px-3 ${
                                     type !== 'item' ? 'bg-white' : 'bg-gray-50'
-                                 } font-[400] text-sm  text-left`}
+                                 } font-[400] text-sm  text-left `}
                               >
                                  {header.isPlaceholder
                                     ? null
@@ -106,7 +106,11 @@ export function DataTable<TData, TValue>({
                            );
                         })}
                         {action && !isLoading ? (
-                           <th className="sticky top-0 bg-white py-3 px-3 font-[400] text-sm  text-left">
+                           <th
+                              className={`sticky top-0  ${
+                                 type !== 'item' ? 'bg-white' : 'bg-gray-50'
+                              } py-3 px-3 font-[400] text-sm  text-left `}
+                           >
                               Action
                            </th>
                         ) : (

@@ -153,8 +153,7 @@ export interface DetailPoTableType {
          user: {
             name: string;
          };
-      };
-      [];
+      }[];
    }[];
 }
 
