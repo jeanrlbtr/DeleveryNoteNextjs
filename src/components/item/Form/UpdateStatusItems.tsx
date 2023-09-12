@@ -2,23 +2,29 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
    Select,
-   SelectItem,
    SelectContent,
+   SelectItem,
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/select';
 import MutationFetch from '@/hooks/MutationFetch';
+import { StatusItem } from '@/types';
 import { Loader } from 'lucide-react';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 
 interface DefaulValue {
-   status: string;
+   statusId: number;
    note: string;
 }
 
-const UpdateItems = ({ id }: { id: string }) => {
-   const status = ['PROCESS', 'CANCELED', 'UNCOMPLETED', 'FINISH', 'MODIFIED'];
+const UpdateItems = ({
+   id,
+   status: { data },
+}: {
+   id: string;
+   status: StatusItem;
+}) => {
+   const statusItem = data;
    const {
       register,
       setValue,
@@ -27,15 +33,15 @@ const UpdateItems = ({ id }: { id: string }) => {
    } = useForm<DefaulValue>();
 
    const disable = Object.keys(errors).length > 0;
-
    const { mutate, isLoading } = MutationFetch(['getAllItems']);
+
    return (
       <div className="w-[200px] md:w-[500px]">
          <p className="text-[20px] text-[#3d3d3d]">Update Status PO</p>
          <form
             onSubmit={handleSubmit((data) => {
                mutate({
-                  body: { ...data, id },
+                  body: { ...data, id: Number(id) },
                   url: '/delivery/v1/note/item',
                   headers: 'json',
                   method: 'patch',
@@ -49,15 +55,15 @@ const UpdateItems = ({ id }: { id: string }) => {
                </p>
                <Select
                   required
-                  onValueChange={(e: string) => setValue('status', e)}
+                  onValueChange={(e: string) => setValue('statusId', Number(e))}
                >
                   <SelectTrigger>
                      <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                     {status.map((data, index) => (
-                        <SelectItem value={`${data}`} key={index}>
-                           {data}
+                     {statusItem.map((data, index) => (
+                        <SelectItem value={`${data.id}`} key={index}>
+                           {data.name}
                         </SelectItem>
                      ))}
                   </SelectContent>

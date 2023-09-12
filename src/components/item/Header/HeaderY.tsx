@@ -89,7 +89,7 @@ const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
       }
    };
    const checkAccess = (name: string): boolean => {
-      const pageAccess: string[] = dataUser.access;
+      const pageAccess: string[] = dataUser.data.access;
       if (pageAccess.includes(name)) return true;
       return false;
    };
@@ -98,13 +98,13 @@ const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
       <div
          className={`relative h-screen pb-[40px] ${
             show ? 'px-6' : 'px-3'
-         }  flex flex-col duration-300 pt-[20px] bg-[#5C6EAA] rounded-r-[10px]`}
+         }  flex flex-col duration-300 pt-[20px] bg-[#252851] rounded-r-[10px]`}
       >
          <div
             onClick={() => {
                handleSidebar();
             }}
-            className={`absolute bg-[#6173ac]  top-[35px] right-[-10px]
+            className={`absolute bg-[#292c5c]  top-[35px] right-[-10px]
             cursor-pointer shadow-2xl rounded-full`}
          >
             {show ? (
@@ -142,8 +142,8 @@ const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
                         onClick={() => navigate(item.url)}
                         className={`cursor-pointer flex gap-[10px] rounded-md ${
                            item.url === pathname
-                              ? 'bg-slate-600 text-[#fff]'
-                              : 'text-[#e9e9e9]'
+                              ? 'bg-[#292E5A] text-[#fff]'
+                              : 'text-gray-400'
                         } p-2 items-center active:text-red-600  hover:text-[#fff]  ${
                            item.spaceY && 'mt-[30px]'
                         }`}
@@ -167,7 +167,7 @@ const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
 
             <div
                onClick={() => logout()}
-               className={`cursor-pointer flex p-2 gap-[10px] mt-[30px] active:text-red-600 items-center  hover:text-[#fff] text-[#e9e9e9]`}
+               className={`cursor-pointer flex p-2 gap-[10px] mt-[30px] active:text-red-600 items-center  hover:text-[#fff] text-gray-400`}
             >
                <TooltipComponent title="Logout">
                   <div className="flex gap-[10px] items-center">

@@ -1,16 +1,10 @@
 'use client';
 
+import { ProgressSummaryT } from '@/types';
 import { Search } from 'lucide-react';
 
-const status = [
-   'Process Order',
-   'Preparing Material',
-   'In Production',
-   'Final Packing',
-   'Finish',
-];
-
-const ProgressSummary = () => {
+const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
+   const statusAllItem = allItem.data;
    return (
       <div className="">
          <div className="flex justify-end gap-4 mb-5 w-full items-center">
@@ -25,7 +19,7 @@ const ProgressSummary = () => {
          </div>
          <div className="bg-white w-full min-w-[100%]  rounded-[7px] min-h-[73vh] overflow-auto">
             <div className="grid grid-cols-5 w-full gap-5">
-               {status.map((title, index) => {
+               {statusAllItem.map((item, index) => {
                   return (
                      <div
                         key={index}
@@ -35,9 +29,9 @@ const ProgressSummary = () => {
                            <div className="flex items-center gap-[8px]">
                               <div className="h-[10px] w-[10px] rounded-full bg-blue-700" />
                               <p className="sticky rounded-sm top-0 text-[15px] text-gray-900 font-medium">
-                                 {title}{' '}
-                                 <span className="bg-white rounded-lg text-gray-700 px-2">
-                                    4
+                                 {item.name}
+                                 <span className="bg-white rounded-lg ml-1 text-gray-700 px-2">
+                                    {item.items.length}
                                  </span>
                               </p>
                            </div>
@@ -48,92 +42,66 @@ const ProgressSummary = () => {
                               </div>
                            )} */}
                         </div>
-                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]">
-                           <div className="flex flex-col gap-1">
-                              <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
-                                 GFB/SJ/2023/05/01
-                              </p>
-                              <p className="text-[14px] uppercase font-semibold ">
-                                 kursi Vettor (10)
-                              </p>
-                           </div>
-                           <div className="text-[15px] font-normal text-gray-900 mt-2 flex flex-col gap-2">
-                              <div>
-                                 <p className="text-[12px] text-gray-700 font-normal">
-                                    Customer:
-                                 </p>
-                                 <p>Gudang Furniture</p>
+                        {item.items.map((itemDetail, index: number) => {
+                           const dateNote = new Date(
+                              itemDetail.inv.dateNote
+                           ).toLocaleDateString();
+                           const dateDelevery = new Date(
+                              itemDetail.inv.dateDelivery
+                           ).toLocaleDateString();
+                           return (
+                              <div
+                                 key={index}
+                                 className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]"
+                              >
+                                 <div className="flex flex-col gap-1">
+                                    <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
+                                       {itemDetail.no}
+                                    </p>
+                                    <p className="text-[14px] uppercase font-semibold ">
+                                       {itemDetail.name}{' '}
+                                       <span className="ml-1">
+                                          {' '}
+                                          ({itemDetail.qty})
+                                       </span>
+                                    </p>
+                                 </div>
+                                 <div className="text-[15px] font-normal text-gray-900 mt-2 flex flex-col gap-2">
+                                    <div>
+                                       <p className="text-[12px] text-gray-700 font-normal">
+                                          Customer:
+                                       </p>
+                                       <p>{itemDetail.inv.recipientName}</p>
+                                    </div>
+                                    <div>
+                                       <p className="text-[12px] text-gray-700 font-normal">
+                                          Update By:
+                                       </p>
+                                       <p>{itemDetail.inv.store}</p>
+                                    </div>
+                                 </div>
+                                 <div className="h-[1px] mt-[7px] w-full bg-gray-300" />
+                                 <div className="flex justify-between items-center">
+                                    <div>
+                                       <p className="text-[12px] capitalize">
+                                          date Shipment :
+                                       </p>
+                                       <p className="text-sm font-medium">
+                                          {dateNote}
+                                       </p>
+                                    </div>
+                                    <div>
+                                       <p className="text-[12px] capitalize">
+                                          date Order :
+                                       </p>
+                                       <p className="text-sm font-medium">
+                                          {dateDelevery}
+                                       </p>
+                                    </div>
+                                 </div>
                               </div>
-                              <div>
-                                 <p className="text-[12px] text-gray-700 font-normal">
-                                    Update By:
-                                 </p>
-                                 <p>Henri Setia</p>
-                              </div>
-                           </div>
-                           <div className="h-[1px] mt-[7px] w-full bg-gray-300" />
-                           <div className="flex justify-between items-center">
-                              <div>
-                                 <p className="text-[12px] capitalize">
-                                    date Shipment :
-                                 </p>
-                                 <p className="text-sm font-medium">
-                                    27-08-2023
-                                 </p>
-                              </div>
-                              <div>
-                                 <p className="text-[12px] capitalize">
-                                    date Order :
-                                 </p>
-                                 <p className="text-sm font-medium">
-                                    27-08-2023
-                                 </p>
-                              </div>
-                           </div>
-                        </div>
-                        <div className=" mt-[10px] rounded-[5px] px-2 py-[10px] bg-white shadow-lg min-h-[200px]">
-                           <div className="flex flex-col gap-1">
-                              <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
-                                 GFB/SJ/2023/05/01
-                              </p>
-                              <p className="text-[14px] uppercase font-semibold">
-                                 kursi Vettor (10)
-                              </p>
-                           </div>
-                           <div className="text-[15px] font-normal text-gray-900 mt-2 flex flex-col gap-2">
-                              <div>
-                                 <p className="text-[12px] text-gray-700 font-normal">
-                                    Customer:
-                                 </p>
-                                 <p>Gudang Furniture</p>
-                              </div>
-                              <div>
-                                 <p className="text-[12px] text-gray-700 font-normal">
-                                    Update By:
-                                 </p>
-                                 <p>Henri Setia</p>
-                              </div>
-                           </div>
-                           <div className="h-[1px] mt-[7px] w-full bg-gray-300" />
-                           <div className="flex justify-between items-center">
-                              <div>
-                                 <p className="text-[12px] capitalize">
-                                    date Shipment :
-                                 </p>
-                                 <p className="text-sm font-medium">
-                                    27-08-2023
-                                 </p>
-                              </div>
-                              <div>
-                                 <p className="text-[12px] capitalize">
-                                    date Order :
-                                 </p>
-                                 <p className="text-sm font-medium">
-                                    27-08-2023
-                                 </p>
-                              </div>
-                           </div>
-                        </div>
+                           );
+                        })}
                      </div>
                   );
                })}

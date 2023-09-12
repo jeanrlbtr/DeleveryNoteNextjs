@@ -19,6 +19,7 @@ const ModalAccess = ({
    defaultValues: any;
    handleClose: () => void;
 }) => {
+   console.log({ defaultValues, UserAccess, userFeature });
    const { register, handleSubmit } = useForm<Inputs>({
       defaultValues: {
          access: defaultValues.access,
@@ -52,7 +53,7 @@ const ModalAccess = ({
          module: moduleData,
       };
       postAcces({
-         url: `/delivery/v1/user/access`,
+         url: `/delivery/v1/access`,
          body,
          method: 'post',
          headers: 'json',

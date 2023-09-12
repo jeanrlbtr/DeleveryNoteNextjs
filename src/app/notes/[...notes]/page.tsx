@@ -11,12 +11,11 @@ const DetailNote = async ({ params }: { params: any }) => {
    const detailPO = await fetchingServer<DetailPoType>(
       `/delivery/v1/note?no=${noPo}`
    );
-   // ${newParam.join('')}
    const userMe = await fetchingServer<UserMeType>('/delivery/v1/user/me');
 
    return (
       <Container dataUser={userMe} title={`Detail PO`}>
-         {detailPO && <DetailPO detailPo={detailPO} />}
+         {detailPO && <DetailPO noPo={noPo} detailPo={detailPO} />}
       </Container>
    );
 };

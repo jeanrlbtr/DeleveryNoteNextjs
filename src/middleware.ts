@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { UserDetail } from './types/index.d';
+import { UserMeType } from './types/index.d';
 
 export async function middleware(req: NextRequest) {
    const token = req.cookies.get('access_token')?.value;
@@ -14,12 +14,11 @@ export async function middleware(req: NextRequest) {
                },
             }
          );
-         const response: UserDetail = await res.json();
-         return response.access;
+         const response: UserMeType = await res.json();
+         return response.data.access;
       }
    };
    const theAccess = await userData();
-
    const access: string[] = theAccess || [''];
    const matcher: string[] = [
       'login',
@@ -32,6 +31,7 @@ export async function middleware(req: NextRequest) {
    ];
 
    const url = req.url;
+
    if (req.nextUrl.pathname.startsWith('/login') && !token) {
       return;
    }

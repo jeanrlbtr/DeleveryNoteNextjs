@@ -19,7 +19,7 @@ interface DefaulValue {
 }
 
 const UpdateStatusPO = ({ no }: { no: string }) => {
-   const status = ['PROCESS', 'CANCELED', 'UNCOMPLETED', 'FINISH'];
+   const status = ['CANCELED', 'CONFIRM', 'FINISH'];
    const {
       register,
       setValue,

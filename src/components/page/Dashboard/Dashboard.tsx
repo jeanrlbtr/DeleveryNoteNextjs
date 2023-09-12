@@ -17,13 +17,13 @@ import React from 'react';
 
 const Dashboard = ({ data }: { data: DashboardType }) => {
    const [dasboard] = React.useState<DashboardType>(data);
-   const dashboardData = dasboard.data;
+   const dashboardData = dasboard;
    const [dateRanked, setDateRanked] = React.useState<string>('year');
    const [limit, setLimit] = React.useState<number>(5);
    const [statusDate, setStatusDate] = React.useState<string>('year');
    const [statusData, setStatusData] = React.useState<StatusType[]>([
       { status: dashboardData?.status.total, name: 'Total' },
-      { status: dashboardData?.status.process, name: 'Process' },
+      { status: dashboardData?.status.inprogress, name: 'Process' },
       { status: dashboardData?.status.finish, name: 'Finish' },
       { status: dashboardData?.status.canceled, name: 'Canceled' },
    ]);
@@ -53,7 +53,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
    const { data: dataStatus } = UseQueryFetching<Status>(
       `/delivery/v1/data/ui?chart[][data]=status&chart[][time]=${statusDate}`,
       ['getStatus', statusDate],
-      { data: { status: dashboardData?.status } }
+      { status: dashboardData?.status }
    );
 
    const { data: dataRankedItem, isLoading: isLoadingRanked } =
@@ -61,26 +61,24 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
          `/delivery/v1/data/ui?chart[3][data]=rank&chart[3][limit]=${limit}&chart[3][time]=${dateRanked}`,
          ['getDataRanked', dateRanked, limit],
          {
-            data: {
-               rank: dashboardData.rank,
-            },
+            rank: dashboardData.rank,
          }
       );
 
    React.useEffect(() => {
       if (dataStatus) {
          setStatusData([
-            { status: dataStatus.data?.status.total, name: 'Total' },
-            { status: dataStatus.data?.status.process, name: 'Process' },
-            { status: dataStatus.data?.status.finish, name: 'Finish' },
-            { status: dataStatus.data?.status.canceled, name: 'Canceled' },
+            { status: dataStatus.status.total, name: 'Total' },
+            { status: dataStatus.status.inprogress, name: 'Process' },
+            { status: dataStatus.status.finish, name: 'Finish' },
+            { status: dataStatus.status.canceled, name: 'Canceled' },
          ]);
       }
    }, [dataStatus]);
    return (
       <div>
          <div className="grid grid-cols-4 md:grid-rows-1 grid-rows-2 justify-between gap-[20px]">
-            <div className="col-span-4 row-start-2 md:row-start-1 h-[400px]  md:col-span-1 flex flex-col gap-[12px] md:h-full  overflow-y-auto rounded-[12px] bg-white px-3 py-2">
+            <div className="activity col-span-4 row-start-2 md:row-start-1 h-[400px] overflow-hidden  md:col-span-1 flex flex-col gap-[12px] md:h-[600px]  overflow-y-auto rounded-[12px] bg-white px-3 py-2">
                <p className="text-[20px] mb-[20px]">Activity</p>
                {dashboardData?.activity.length > 0 ? (
                   dashboardData?.activity.map(
@@ -230,7 +228,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                </div>
                <div className="px-[7px] md:px-5 md:mt-[30px] mt-[10px]">
                   <DataTable
-                     data={dataRankedItem?.data.rank || []}
+                     data={dataRankedItem?.rank || []}
                      columns={rankColumn}
                      isLoading={isLoadingRanked}
                      type={'dash'}

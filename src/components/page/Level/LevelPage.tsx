@@ -35,6 +35,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
       },
       initialData: initialLevelData,
    });
+
    const { mutate: addLevel } = useMutation({
       mutationFn: async (body: any) => {
          const res = await axiosFetching.post(`/delivery/v1/level`, body, {
@@ -90,7 +91,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
    return (
       <div className="bg-white px-[20px] pt-[20px] rounded-[10px]">
          <DataTable
-            data={levelData.data}
+            data={levelData.data || []}
             columns={LevelColumn}
             disabledNext={true}
             disabledPrev={true}

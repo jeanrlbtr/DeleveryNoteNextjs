@@ -11,13 +11,27 @@ import {
    RankItem,
    Users,
 } from '@/lib/types';
-import { DetailPoTableType, ItemPO, LevelTabelType } from '@/types';
+import { DetailPoTableType, Item, LevelTabelType } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 
-const ItemPOColumns: ColumnDef<ItemPO>[] = [
+const ItemPOColumns: ColumnDef<Item>[] = [
+   {
+      header: 'Name',
+      accessorKey: 'name',
+      cell: (row) => {
+         return (
+            <div>
+               <p>{String(row.getValue())}</p>
+               <p className="text-[12px] text-gray-400">
+                  {String(row.row.original.no)}
+               </p>
+            </div>
+         );
+      },
+   },
    {
       header: 'Color',
       accessorKey: 'variant',
@@ -28,19 +42,53 @@ const ItemPOColumns: ColumnDef<ItemPO>[] = [
    },
    {
       header: 'Customer',
-      accessorKey: 'store',
+      cell: (row) => {
+         const value = String(row.row.original.inv.store);
+         return <div>{value}</div>;
+      },
    },
    {
       header: 'Ricipient Name',
-      accessorKey: 'sales',
+      cell: (row) => {
+         const value = String(row.row.original.inv.recipientName);
+         return <div>{value}</div>;
+      },
    },
    {
       header: 'Date Shipment',
-      accessorKey: 'dateDelivery',
+      cell: (row) => {
+         const value = String(row.row.original.inv.dateDelivery);
+         const date = new Date(value).toLocaleDateString();
+         return <div>{date}</div>;
+      },
    },
    {
       header: 'Date Order',
-      accessorKey: 'dateNote',
+      cell: (row) => {
+         const value = String(row.row.original.inv.dateNote);
+         const date = new Date(value).toLocaleDateString();
+         return <div>{date}</div>;
+      },
+   },
+   {
+      header: 'Status',
+      accessorKey: 'status',
+      cell: (row) => {
+         const statusName = row.row.original.status?.name;
+         return (
+            <div
+               className={`border-[1px] px-2 py-1 rounded-[5px] w-max flex gap-2 items-center ${
+                  statusName !== 'finish' ? 'text-[#b88c3b]' : 'text-[green]'
+               }`}
+            >
+               <p>
+                  {statusName || (
+                     <span className="text-red-500">Unprocessed</span>
+                  )}
+               </p>
+            </div>
+         );
+      },
    },
 ];
 const InvoiceColumn: ColumnDef<Invoice>[] = [

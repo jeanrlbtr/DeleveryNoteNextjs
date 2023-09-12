@@ -5,7 +5,6 @@ import { UserMeType } from '@/types';
 
 const UserPage = async () => {
    const userMe = await fetchingServer<UserMeType>('/delivery/v1/user/me');
-
    return (
       <Container dataUser={userMe} title="Users">
          <User />

@@ -1,30 +1,28 @@
 import { Delevery } from '@/lib/types';
 
 export interface DashboardType {
-   data: {
-      activity: {
-         message: string;
-         fromTimestamp: number;
-         user: {
-            name: string;
-         };
-      }[];
-      total: {
-         month: string;
-         total: number;
-         canceled: number;
-      }[];
-      rank: {
+   activity: {
+      message: string;
+      fromTimestamp: number;
+      user: {
          name: string;
-         variant: string;
-         total: number;
-      }[];
-      status: {
-         total: number;
-         process: number;
-         finish: number;
-         canceled: number;
       };
+   }[];
+   total: {
+      month: string;
+      total: number;
+      canceled: number;
+   }[];
+   rank: {
+      name: string;
+      variant: string;
+      total: number;
+   }[];
+   status: {
+      total: number;
+      inprogress: number;
+      finish: number;
+      canceled: number;
    };
 }
 
@@ -34,13 +32,11 @@ export interface StatusType {
 }
 
 export interface Status {
-   data: {
-      status: {
-         total: number;
-         process: number;
-         finish: number;
-         canceled: number;
-      };
+   status: {
+      total: number;
+      inprogress: number;
+      finish: number;
+      canceled: number;
    };
 }
 
@@ -64,28 +60,7 @@ export interface ItemType {
    }[];
 }
 
-export interface ItemPO {
-   id: number;
-   type: string;
-   name: string;
-   variant: string;
-   qty: number;
-   variantId: number;
-   itemId: number;
-   status: string;
-   itemProgress: {
-      status: string;
-      note: string;
-      timestamp: number;
-      user: {
-         name: string;
-      };
-   }[];
-   store: string;
-   sales: string;
-   dateNote: string;
-   dateDelivery: string;
-}
+//
 
 export interface DetailPoType {
    data: {
@@ -102,16 +77,18 @@ export interface DetailPoType {
       note: string;
       attachment: string;
       status: string;
-      timeline: {
-         status: string;
-         note: string;
-         timestamp: number;
-         user: {
-            name: string;
-         };
-      }[];
+      timeline: TimelineT[];
       items: ItemType[];
    };
+}
+
+export interface TimelineT {
+   id: number;
+   status: string;
+   note: string;
+   no: string;
+   updatedBy: string;
+   timestamp: number;
 }
 
 export interface DetailPoTableType {
@@ -128,14 +105,7 @@ export interface DetailPoTableType {
    note: string;
    attachment: string;
    status: string;
-   timeline: {
-      status: string;
-      note: string;
-      timestamp: number;
-      user: {
-         name: string;
-      };
-   }[];
+   timeline: TimelineT[];
    items: {
       id: number;
       no: string;
@@ -195,13 +165,11 @@ export interface FeatureType {
 }
 
 export interface RankType {
-   data: {
-      rank: {
-         name: string;
-         variant: string;
-         total: number;
-      }[];
-   };
+   rank: {
+      name: string;
+      variant: string;
+      total: number;
+   }[];
 }
 
 export interface AllPurchaseOrder {
@@ -245,11 +213,23 @@ export interface AllItemType {
    };
 }
 
+export interface UserDetailT {
+   data: UserDetail;
+}
+
 export interface UserDetail {
-   image: null;
-   username: string;
+   id: string;
    name: string;
-   level: string;
+   username: string;
+   isActive: boolean;
+   autoUpdate: boolean;
+   image: string | null;
+   updatedBy: string;
+   levelUser: {
+      id: number;
+      name: string;
+      code: number;
+   };
    access: string[];
    module: {
       userId: string;
@@ -259,14 +239,76 @@ export interface UserDetail {
 }
 
 export interface UserMeType {
-   image: string | null;
-   username: string;
+   data: {
+      image: string | null;
+      username: string;
+      name: string;
+      level: string;
+      access: string[];
+      module: {
+         userId: string;
+         method: string;
+         feature: string;
+      }[];
+   };
+}
+
+export interface fetchingServerType<ResponseType> {
+   data: ResponseType;
+}
+
+export interface StatusItem {
+   data: StatusT[];
+}
+export interface StatusT {
+   id: number;
    name: string;
-   level: string;
-   access: string[];
-   module: {
-      userId: string;
-      method: string;
-      feature: string;
+}
+
+export interface ItemPO {
+   data: {
+      count: number;
+      totalPages: number;
+      currentPage: number;
+      items: Item[];
+   };
+}
+
+export interface Item {
+   id: number;
+   no: string;
+   type: string;
+   name: string;
+   variant: string;
+   qty: number;
+   variantId: number;
+   itemId: number;
+   statusId?: number | null;
+   inv: {
+      store: string;
+      dateDelivery: string;
+      dateNote: string;
+      recipientName: string;
+   };
+   status?: { name: string } | null;
+   itemProgress: ItemProgressT[];
+}
+
+export interface ItemProgressT {
+   status: {
+      name: string;
+   };
+   note: string;
+   timestamp: number;
+   user: {
+      name: string;
+   };
+}
+
+export interface ProgressSummaryT {
+   data: {
+      statusId: number;
+      name: string;
+      items: Item[];
    }[];
 }

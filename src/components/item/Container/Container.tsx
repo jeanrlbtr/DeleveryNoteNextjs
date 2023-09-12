@@ -1,11 +1,8 @@
 'use client';
 
-import { useToast } from '@/components/ui/use-toast';
 import Casl from '@/hooks/CASL';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import { UserMeType } from '@/types';
-import { fetchEventSource } from '@microsoft/fetch-event-source';
-import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import React from 'react';
 import Header from '../Header/Header';
@@ -18,49 +15,49 @@ const Container = ({
 }: {
    title: string;
    children: React.ReactNode;
-   dataUser: UserMeType | undefined;
+   dataUser: UserMeType;
 }) => {
-   const { toast } = useToast();
+   // const { toast } = useToast();
    const [show, setShow] = React.useState<boolean>(false);
-   const token = getCookie('access_token');
+   // const token = getCookie('access_token');
    const date = new Date().toDateString();
 
-   const { data } = UseQueryFetching<UserMeType>(
+   const { data: userData } = UseQueryFetching<UserMeType>(
       '/delivery/v1/user/me',
       ['getMe'],
       dataUser
    );
 
-   React.useEffect(() => {
-      if (data) {
-         for (let i = 0; i < data.module.length; i++) {
-            if (data.module[i].feature === 'event') {
-               fetchEventSource(
-                  'https://staging.saptakarsa.com/gtw/delivery/v1/events/po',
-                  {
-                     headers: {
-                        Authorization: `Bearer ${token}`,
-                     },
-                     method: 'GET',
-                     onmessage: (e: any) => {
-                        if (e.data) {
-                           const data = JSON.parse(e.data);
-                           toast({
-                              variant: 'notif',
-                              title: data.title,
-                              duration: 3000,
-                              description: data.body,
-                              color: 'green',
-                           });
-                        }
-                     },
-                  }
-               );
-            }
-         }
-      }
-      // eslint-disable-next-line
-   }, []);
+   // React.useEffect(() => {
+   //    if (dataUser) {
+   //       for (let i = 0; i < dataUser.data.module.length; i++) {
+   //          if (dataUser.data.module[i].feature === 'event') {
+   //             fetchEventSource(
+   //                'https://staging.saptakarsa.com/gtw/delivery/v1/events/po',
+   //                {
+   //                   headers: {
+   //                      Authorization: `Bearer ${token}`,
+   //                   },
+   //                   method: 'GET',
+   //                   onmessage: (e: any) => {
+   //                      if (e.data) {
+   //                         const data = JSON.parse(e.data);
+   //                         toast({
+   //                            variant: 'notif',
+   //                            title: data.title,
+   //                            duration: 3000,
+   //                            description: data.body,
+   //                            color: 'green',
+   //                         });
+   //                      }
+   //                   },
+   //                }
+   //             );
+   //          }
+   //       }
+   //    }
+   //    // eslint-disable-next-line
+   // }, []);
 
    const handleShowSidebar = () => {
       setShow(!show);
@@ -69,16 +66,19 @@ const Container = ({
    return (
       <div className="h-full w-full flex md:flex-row flex-col relative">
          <div className="sticky hidden md:flex h-screen top-0 z-[9]">
-            {data && (
+            {userData && (
                <HeaderY
-                  dataUser={data}
+                  dataUser={userData}
                   handleSidebar={handleShowSidebar}
                   show={show}
                />
             )}
          </div>
          <div className="w-[100vw] md:hidden sticky z-[9] top-0">
-            <Header name={data ? data.name : ''} title={title} />
+            <Header
+               name={userData && userData.data ? userData.data.name : ''}
+               title={title}
+            />
          </div>
          <div className="px-2 md:px-[30px] pb-[30px] pt-[20px] flex-1 h-screen mx-auto w-full max-w-[100vw] overflow-auto">
             <div className="mb-[30px] hidden md:flex justify-between items-center w-full">
@@ -108,7 +108,7 @@ const Container = ({
                </div>
             </div>
             <div>
-               <Casl userDetail={data}>{children}</Casl>
+               <Casl userDetail={userData && userData}>{children}</Casl>
             </div>
          </div>
       </div>

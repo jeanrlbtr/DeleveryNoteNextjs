@@ -12,21 +12,33 @@ import {
    DialogTrigger,
 } from '@/components/ui/dialog';
 import { CanRule } from '@/hooks/Can';
-import { DetailPoType } from '@/types';
+import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { DetailPoType, TimelineT } from '@/types';
 import { ArrowUpRightFromCircle } from 'lucide-react';
 import { useState } from 'react';
 
-const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
-   const data = detailPo.data;
-   console.log(data);
+const DetailPO = ({
+   detailPo,
+   noPo,
+}: {
+   detailPo: DetailPoType;
+   noPo: string;
+}) => {
    const [open, setOpen] = useState<boolean>(false);
+   const { data } = UseQueryFetching<DetailPoType>(
+      `/delivery/v1/note?no=${noPo}`,
+      ['getDetailNote'],
+      detailPo
+   );
+
+   const detailPoData = data ? data.data : detailPo.data;
    const Can = CanRule();
-   const dateDelivery = new Date(data.dateDelivery).toDateString();
+   const dateDelivery = new Date(detailPoData.dateDelivery).toDateString();
    return (
       <div className="pb-[50px]">
          <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
-               <UpdateStatusPO no={data.no} />
+               <UpdateStatusPO no={detailPoData.no} />
             </DialogContent>
          </Dialog>
          <div className=" mb-[30px]">
@@ -41,24 +53,24 @@ const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
                   <p className="text-[19px] font-[500] text-black">Status:</p>
                   <p
                      className={`font-[600] ${
-                        data.status === 'FINISH'
+                        detailPoData.status === 'FINISH'
                            ? 'text-[green] border-[green]'
                            : 'text-[#f58123] border-[#f58123]'
                      }  border-[1px] rounded-[5px] px-2 `}
                   >
-                     {data.status || 'Unprocessed'}
+                     {detailPoData.status || 'Unprocessed'}
                   </p>
                </div>
                <div>
                   <p className="text-[19px] text-black">Sender Address:</p>
                   <p className="border-[1px] rounded-[5px] p-1 text-[#242424] text-[16px]  w-[300px]">
-                     {data.senderAddress}
+                     {detailPoData.senderAddress}
                   </p>
                </div>
                <div>
                   <p className="text-[19px] text-black">Recieptent Address:</p>
                   <p className="border-[1px] rounded-[5px] p-1 text-[#242424] text-[16px]  w-[300px]">
-                     {data.recipientAddress}
+                     {detailPoData.recipientAddress}
                   </p>
                </div>
             </div>
@@ -68,7 +80,7 @@ const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
                <Button
                   onClick={async () => setOpen(true)}
                   className="bg-[#405189] text-[15px] text-white hover:bg-[#6862d4] z-0"
-                  disabled={data.status === 'FINISH'}
+                  disabled={detailPoData.status === 'FINISH'}
                >
                   Update Status
                </Button>
@@ -82,74 +94,78 @@ const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
                </h1>
                <div className="overflow-x-auto h-full">
                   <div className="mt-[20px] w-full">
-                     <DataTableDetail
-                        type={'detail'}
-                        data={[data]}
-                        columns={detailNoteColumn}
-                     >
-                        {(row: any) => {
-                           return (
-                              <div>
-                                 <ul className="w-full">
-                                    {row.original.timeline.map(
-                                       (data: any, index: number) => {
-                                          const date = new Date(
-                                             data.timestamp * 1000
-                                          ).toDateString();
-                                          const time = new Date(
-                                             data.timestamp * 1000
-                                          ).toLocaleTimeString();
-                                          return (
-                                             <div
-                                                key={index}
-                                                className={`relative`}
-                                             >
-                                                <li
-                                                   className={`p-[18px] text-[#272727]  border-l-[2px] flex gap-[40px] justify-between h-max w-[600px] border-[#c4c4c4]`}
+                     {detailPoData && (
+                        <DataTableDetail
+                           type={'detail'}
+                           data={[detailPoData]}
+                           columns={detailNoteColumn}
+                        >
+                           {(row: any) => {
+                              return (
+                                 <div>
+                                    <ul className="w-full">
+                                       {row.original.timeline.map(
+                                          (data: TimelineT, index: number) => {
+                                             const date = new Date(
+                                                data.timestamp * 1000
+                                             ).toDateString();
+                                             const time = new Date(
+                                                data.timestamp * 1000
+                                             ).toLocaleTimeString();
+                                             return (
+                                                <div
+                                                   key={index}
+                                                   className={`relative`}
                                                 >
-                                                   <div
-                                                      className={`${
-                                                         data.status == 'FINISH'
-                                                            ? 'bg-[green] text-white '
-                                                            : 'bg-[#fff] text-black border-[2px] border-[#405189]'
-                                                      } w-[15px]  absolute h-[15px] top-0 left-[-6px] rounded-full`}
-                                                   />
-                                                   <div className="">
-                                                      <p>{date}</p>
-                                                      <p>{time}</p>
-                                                   </div>
-                                                   <div className="flex flex-col gap-[5px] w-[400px]">
-                                                      <p
-                                                         className={`w-max text-[#3d3d3d] text-[17px] rounded-[4px] `}
-                                                      >
-                                                         {data.status}
-                                                         <span className="text-[14px] ml-[5px] text-[#525252]">
-                                                            (
-                                                            {data.user === null
-                                                               ? 'System'
-                                                               : data.user.name}
-                                                            )
-                                                         </span>
-                                                      </p>
-                                                      <p className="">
-                                                         Note :
-                                                         {data.note && (
-                                                            <span className="border-[1px] text-[#3d3d3d] ml-[5px] rounded-[4px] px-2">
-                                                               {data.note}
+                                                   <li
+                                                      className={`p-[18px] text-[#272727]  border-l-[2px] flex gap-[40px] justify-between h-max w-[600px] border-[#c4c4c4]`}
+                                                   >
+                                                      <div
+                                                         className={`${
+                                                            data.status ==
+                                                            'FINISH'
+                                                               ? 'bg-[green] text-white '
+                                                               : 'bg-[#fff] text-black border-[2px] border-[#405189]'
+                                                         } w-[15px]  absolute h-[15px] top-0 left-[-6px] rounded-full`}
+                                                      />
+                                                      <div className="">
+                                                         <p>{date}</p>
+                                                         <p>{time}</p>
+                                                      </div>
+                                                      <div className="flex flex-col gap-[5px] w-[400px]">
+                                                         <p
+                                                            className={`w-max text-[#3d3d3d] text-[17px] rounded-[4px] `}
+                                                         >
+                                                            {data.status}
+                                                            <span className="text-[14px] ml-[5px] text-[#525252]">
+                                                               (
+                                                               {data.updatedBy ===
+                                                               null
+                                                                  ? 'System'
+                                                                  : data.updatedBy}
+                                                               )
                                                             </span>
-                                                         )}
-                                                      </p>
-                                                   </div>
-                                                </li>
-                                             </div>
-                                          );
-                                       }
-                                    )}
-                                 </ul>
-                              </div>
-                           );
-                        }}
-                     </DataTableDetail>
+                                                         </p>
+                                                         <p className="">
+                                                            Note :
+                                                            {data.note && (
+                                                               <span className="border-[1px] text-[#3d3d3d] ml-[5px] rounded-[4px] px-2">
+                                                                  {data.note}
+                                                               </span>
+                                                            )}
+                                                         </p>
+                                                      </div>
+                                                   </li>
+                                                </div>
+                                             );
+                                          }
+                                       )}
+                                    </ul>
+                                 </div>
+                              );
+                           }}
+                        </DataTableDetail>
+                     )}
                   </div>
                </div>
             </div>
@@ -157,7 +173,7 @@ const DetailPO = ({ detailPo }: { detailPo: DetailPoType }) => {
                <h1 className="ml-[10px] mt-[10px] font-[500] text-[24px] mb-[10px]  text-[#474747]">
                   Items
                </h1>
-               {data.items.map((item: any, index: number) => {
+               {detailPoData.items.map((item: any, index: number) => {
                   return (
                      <div
                         key={index}

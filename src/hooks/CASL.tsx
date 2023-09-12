@@ -12,8 +12,11 @@ const Casl = ({
 }) => {
    const ability = defineAbility((can) => {
       if (userDetail) {
-         for (let i = 0; i < userDetail.module.length; i++) {
-            can(userDetail.module[i].method, userDetail.module[i]?.feature);
+         for (let i = 0; i < userDetail.data.module.length; i++) {
+            can(
+               userDetail.data.module[i].method,
+               userDetail.data.module[i]?.feature
+            );
          }
       }
    });

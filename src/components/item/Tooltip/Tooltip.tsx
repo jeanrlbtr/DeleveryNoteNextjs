@@ -20,7 +20,7 @@ const TooltipComponent = ({
             <TooltipContent
                sideOffset={20}
                side="right"
-               className="bg-[#5C6EAA] border-0"
+               className="bg-[#252851] border-0"
             >
                <p className="text-[white]">{title}</p>
             </TooltipContent>
