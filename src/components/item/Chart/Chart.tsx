@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { AreaChart, Card } from '@tremor/react';
 
 export default function Chart({ dataTotal }: { dataTotal: any }) {
@@ -78,11 +77,13 @@ export default function Chart({ dataTotal }: { dataTotal: any }) {
    return (
       <Card>
          <AreaChart
-            className="h-[200px] mt-4 border-0"
+            className="h-[200px] mt-2 dark:text-white border-0"
             data={data}
             index="name"
             categories={['Total', 'Cancel']}
             colors={['blue', 'red']}
+            curveType="monotone"
+            showTooltip={true}
          />
       </Card>
    );

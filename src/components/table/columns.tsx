@@ -77,11 +77,11 @@ const ItemPOColumns: ColumnDef<Item>[] = [
          const statusName = row.row.original.status?.name;
          return (
             <div
-               className={`border-[1px] px-2 py-1 rounded-[5px] w-max flex gap-2 items-center ${
-                  statusName !== 'finish' ? 'text-[#b88c3b]' : 'text-[green]'
+               className={`border-[1px] px-2 py-1 rounded-[5px]  w-max flex gap-2 items-center ${
+                  statusName !== 'finish' ? 'text-[#dfab4c]' : 'text-[green]'
                }`}
             >
-               <p>
+               <p className="font-medium">
                   {statusName || (
                      <span className="text-red-500">Unprocessed</span>
                   )}
@@ -349,7 +349,6 @@ const allHistoryColumn: ColumnDef<Allhistory>[] = [
       header: 'Store',
       accessorKey: 'store',
    },
-
    {
       header: 'Date Note',
       accessorKey: 'dateNote',
@@ -422,10 +421,6 @@ const userColumn: ColumnDef<Users>[] = [
    {
       header: 'Name',
       accessorKey: 'name',
-   },
-   {
-      header: 'Username',
-      accessorKey: 'username',
    },
    {
       header: 'Is Active',

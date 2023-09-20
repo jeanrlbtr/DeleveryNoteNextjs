@@ -19,7 +19,6 @@ const ModalAccess = ({
    defaultValues: any;
    handleClose: () => void;
 }) => {
-   console.log({ defaultValues, UserAccess, userFeature });
    const { register, handleSubmit } = useForm<Inputs>({
       defaultValues: {
          access: defaultValues.access,
@@ -231,7 +230,7 @@ const ModalAccess = ({
                   })}
                </div>
             </div>
-            <Can I="update" a="access" passThrough>
+            <Can I="update" a="user" passThrough>
                {(allow) => (
                   <Button
                      disabled={!allow}

@@ -3,11 +3,12 @@
 import Casl from '@/hooks/CASL';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import { UserMeType } from '@/types';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import React from 'react';
 import Header from '../Header/Header';
 import HeaderY from '../Header/HeaderY';
-
 const Container = ({
    title,
    children,
@@ -17,6 +18,7 @@ const Container = ({
    children: React.ReactNode;
    dataUser: UserMeType;
 }) => {
+   const { setTheme, theme } = useTheme();
    // const { toast } = useToast();
    const [show, setShow] = React.useState<boolean>(false);
    // const token = getCookie('access_token');
@@ -62,7 +64,6 @@ const Container = ({
    const handleShowSidebar = () => {
       setShow(!show);
    };
-
    return (
       <div className="h-full w-full flex md:flex-row flex-col relative">
          <div className="sticky hidden md:flex h-screen top-0 z-[9]">
@@ -83,25 +84,44 @@ const Container = ({
          <div className="px-2 md:px-[30px] pb-[30px] pt-[20px] flex-1 h-screen mx-auto w-full max-w-[100vw] overflow-auto">
             <div className="mb-[30px] hidden md:flex justify-between items-center w-full">
                <div>
-                  <p className="text-[30px] font-medium text-gray-700">
+                  <p className="text-[30px] font-medium text-gray-700 dark:text-white">
                      {title}
                   </p>
-                  <p className="text-sm text-gray-500">{String(date)}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-100">
+                     {String(date)}
+                  </p>
                </div>
-               <div className="flex items-center gap-[12px]">
-                  <div className="bg-[white] border-[white] border-[2.5px] rounded-full h-[50px] w-[50px] overflow-hidden relative">
+               <div className="flex items-center gap-[12px] ">
+                  <div className="bg-[white] border-gray-500 dark:border-[white] border-[2.5px] rounded-full h-[50px] w-[50px] overflow-hidden relative">
                      <Image
-                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3MzkxODYzOA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
+                        src="/profile.png"
                         alt=""
                         fill
                         className="object-cover"
                      />
                   </div>
                   <div className="flex flex-col h-max justify-center ">
-                     <span className="text-[18px] capitalize font-semibold">
-                        Jean Butar
-                     </span>
-                     <span className="text-[13px]  text-gray-500">
+                     <div className="text-[18px] text-gray-500 dark:text-white capitalize font-semibold flex items-center">
+                        <p>Jean Butar</p>
+                        <div className="flex">
+                           {theme !== 'dark' ? (
+                              <button
+                                 onClick={() => setTheme('dark')}
+                                 className="px-2"
+                              >
+                                 <Moon className="w-5 h-5" />
+                              </button>
+                           ) : (
+                              <button
+                                 onClick={() => setTheme('light')}
+                                 className="px-2"
+                              >
+                                 <Sun className="w-5 h-5" />
+                              </button>
+                           )}
+                        </div>
+                     </div>
+                     <span className="text-[13px] text-gray-800 dark:text-gray-100">
                         Customer Service
                      </span>
                   </div>

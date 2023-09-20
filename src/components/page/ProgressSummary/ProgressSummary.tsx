@@ -12,8 +12,7 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                <Search className="w-4 h-4 text-gray-600" />
                <input
                   placeholder="Search"
-                  className="w-[70%] outline-none text-gray-600
-                  "
+                  className="w-[70%] outline-none dark:bg-white text-gray-600"
                />
             </div>
          </div>
@@ -58,7 +57,7 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                                     <p className="text-[11px] font-medium bg-blue-200 px-2 w-max rounded-lg text-gray-600">
                                        {itemDetail.no}
                                     </p>
-                                    <p className="text-[14px] uppercase font-semibold ">
+                                    <p className="text-[14px] uppercase dark:text-gray-700 font-semibold ">
                                        {itemDetail.name}{' '}
                                        <span className="ml-1">
                                           {' '}
@@ -80,8 +79,8 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                                        <p>{itemDetail.inv.store}</p>
                                     </div>
                                  </div>
-                                 <div className="h-[1px] mt-[7px] w-full bg-gray-300" />
-                                 <div className="flex justify-between items-center">
+                                 <div className="h-[1px] mt-[7px]  w-full bg-gray-300" />
+                                 <div className="flex justify-between dark:text-gray-700 items-center">
                                     <div>
                                        <p className="text-[12px] capitalize">
                                           date Shipment :

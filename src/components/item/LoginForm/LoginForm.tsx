@@ -28,16 +28,12 @@ const LoginForm = () => {
    const onSubmit = handleSubmit(async (data: Data) => {
       setLoading(true);
       try {
-         const res = await axiosAuth.post(
-            'https://staging.saptakarsa.com/gtw/delivery/auth/login',
-            data,
-            {
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-               withCredentials: true,
-            }
-         );
+         const res = await axiosAuth.post('/delivery/auth/login', data, {
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+         });
          localStorage.setItem('data', JSON.stringify(res.data.data));
          push('/');
       } catch (error) {

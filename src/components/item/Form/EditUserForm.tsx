@@ -66,9 +66,9 @@ const EditUserForm = ({
          })}
          className="md:w-[700px]"
       >
-         <div className="mb-[10px] md:flex md:items-center md:justify-between">
+         <div className="mb-[10px]">
             <label htmlFor="">Name</label>
-            <div className="w-max md:w-[500px]">
+            <div className="w-full">
                <Input
                   placeholder="Name"
                   disabled={defaultValuesUser.autoUpdate}
@@ -77,53 +77,9 @@ const EditUserForm = ({
                />
             </div>
          </div>
-         <div className="mb-[10px] md:flex md:items-center md:justify-between">
-            <label htmlFor="">Username</label>
-            <div className="w-max md:w-[500px]">
-               <Input
-                  placeholder="Username"
-                  defaultValue={defaultValuesUser.username}
-                  disabled={defaultValuesUser.autoUpdate}
-                  {...register('username', {})}
-               />
-            </div>
-         </div>
-         <div className="mb-[10px] md:flex md:items-center md:justify-between">
-            <label htmlFor="">Password</label>
-            <div className="w-max md:w-[500px]">
-               <Input
-                  placeholder="Password"
-                  type="password"
-                  disabled={defaultValuesUser.autoUpdate}
-                  defaultValue={defaultValuesUser.password}
-                  {...register('password', {})}
-               />
-            </div>
-         </div>
-         <div className="mb-[20px] md:flex md:items-center md:justify-between">
-            <label htmlFor="">Is Actived</label>
-            <div className="w-max md:w-[500px]">
-               <input
-                  type="checkbox"
-                  disabled={defaultValuesUser.autoUpdate}
-                  className="cursor-pointer"
-                  {...register('isActive')}
-               />
-            </div>
-         </div>
-         <div className="mb-[20px] md:flex md:items-center md:justify-between">
-            <label htmlFor="">Auto Update</label>
-            <div className="w-max md:w-[500px]">
-               <input
-                  type="checkbox"
-                  className="cursor-pointer"
-                  {...register('autoUpdate')}
-               />
-            </div>
-         </div>
-         <div className="mb-[10px] md:flex md:items-center md:justify-between">
+         <div className="mb-[10px]">
             <label htmlFor="">Level Id</label>
-            <div className="w-max md:w-[500px]">
+            <div className="w-full">
                <Select
                   disabled={defaultValuesUser.autoUpdate}
                   defaultValue={`${defaultValuesUser.levelId}`}
@@ -145,21 +101,21 @@ const EditUserForm = ({
                </Select>
             </div>
          </div>
-         <div className="mb-[10px] md:flex md:items-center md:justify-between">
-            <label htmlFor="">Photo</label>
-            <div className="w-max md:w-[500px]">
-               <Input
-                  placeholder="Image"
-                  type="file"
+         <div className="mb-[20px]">
+            <label htmlFor="">Is Actived</label>
+            <div className="w-full">
+               <input
+                  type="checkbox"
                   disabled={defaultValuesUser.autoUpdate}
-                  defaultValue={defaultValuesUser.image}
-                  {...register('image', {})}
+                  className="cursor-pointer"
+                  {...register('isActive')}
                />
             </div>
          </div>
+
          <div className="flex justify-end">
             <Button
-               className="mt-[20px] bg-submit hover:bg-submit-hover"
+               className="mt-[20px] dark:bg-submit  bg-container border-dark  hover:dark:bg-submit-hover"
                type="submit"
                disabled={isLoading}
             >

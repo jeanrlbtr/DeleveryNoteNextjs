@@ -33,7 +33,7 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
                                     {progress.status.name}{' '}
                                     <span>({progress.user.name})</span>
                                  </h3>
-                                 <p className="text-gray-600 w-[300px] text-[12px] md:text-[17px]">
+                                 <p className="text-gray-600 w-[300px] text-[12px] md:text-[17px] dark:text-white">
                                     {progress.note}
                                  </p>
                               </div>
@@ -41,11 +41,10 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
                                  <div className="h-full w-6 flex items-center justify-center">
                                     <div className="h-full w-0.5 bg-gray-200 pointer-events-none"></div>
                                  </div>
-
                                  <div className="w-6 h-6 absolute top-1/2 -mt-3 border-2 border-blue-500 rounded-full bg-gray-100 shadow"></div>
                               </div>
-                              <div className="w-full col-start-6 col-end-10 flex items-center  ">
-                                 <h3 className="font-[400] text-[12px] md:text-[16px] mb-1 text-gray-600">
+                              <div className="w-full col-start-6 col-end-10 flex items-center">
+                                 <h3 className="font-[400] text-[12px] md:text-[16px] mb-1 text-gray-600 dark:text-white">
                                     {date}, {time}
                                  </h3>
                               </div>
@@ -65,7 +64,6 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
                                     <div className="w-6 h-6 border-2 border-blue-500 rounded-full bg-gray-100 shadow"></div>
                                  </div>
                               </div>
-
                               <div className="w-full col-start-6 col-end-10 my-4 mr-auto p-4 border border-gray-300 rounded-xl">
                                  <h3
                                     className={`font-semibold ${

@@ -62,14 +62,17 @@ export function DataTableDetail<TData, TValue>({
    return (
       <div className={className}>
          <div className="flex h-max items-center"></div>
-         <Table className="">
+         <Table className="dark:bg-container">
             <TableHeader>
                {getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
+                  <TableRow
+                     key={headerGroup.id}
+                     className="hover:bg-transparent"
+                  >
                      {headerGroup.headers.map((header) => {
                         return (
                            <TableHead
-                              className="text-[17px] font-[400] text-[#474747]"
+                              className="text-[17px] font-[400] dark:text-white text-[#474747]"
                               key={header.id}
                            >
                               {header.isPlaceholder
@@ -89,7 +92,7 @@ export function DataTableDetail<TData, TValue>({
                {getRowModel().rows?.length ? (
                   getRowModel().rows.map((row) => (
                      <React.Fragment key={row.id}>
-                        <TableRow>
+                        <TableRow className="hover:dark:bg-[#25295a]">
                            {row.getVisibleCells().map((cell: any) => (
                               <TableCell key={cell.id}>
                                  {flexRender(
@@ -102,7 +105,10 @@ export function DataTableDetail<TData, TValue>({
                         </TableRow>
                         {row.getIsExpanded() == true && (
                            <TableRow>
-                              <TableCell className="bg-white" colSpan={12}>
+                              <TableCell
+                                 className="dark:bg-container bg-white"
+                                 colSpan={12}
+                              >
                                  {children(row)}
                               </TableCell>
                            </TableRow>

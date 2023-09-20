@@ -154,8 +154,9 @@ module.exports = {
             },
          },
          backgroundColor: {
-            submit: '#374579', // for button submit,
-            'submit-hover': '#2C3760', // for hover button submit
+            submit: 'transparent', // for button submit,
+            'submit-hover': '#007BFF', // for hover button submit
+            container: '#292D5A',
          },
          accentColor: {
             checkbox: '#162764',

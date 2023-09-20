@@ -40,7 +40,7 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
 
    return (
       <>
-         <div className="h-full hidden mb-4 rounded-[5px] lg:flex gap-[10px] text-[14px] bg-gray-50 overflow-hidden w-max">
+         <div className="h-full hidden mb-8 rounded-[8px] lg:flex text-[14px] border-blue-600 bg-gray-50 overflow-hidden w-max">
             {allStatusPO.map((statusItem: StatusT, index: number) => {
                return (
                   <button
@@ -48,10 +48,10 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                      onClick={() => {
                         setStatusQuery(statusItem.id);
                      }}
-                     className={`px-[8px] lg:text-[16px] ${
+                     className={`px-[15px] lg:text-[16px] transition ${
                         statusQuery == statusItem.id
-                           ? 'bg-gray-200 rounded-[5px] text-[#525252]'
-                           : 'text-[#807f7f]'
+                           ? 'bg-[#071952] dark:bg-blue-600 text-white'
+                           : 'text-[#807f7f] hover:dark:bg-blue-400 hover:bg-[#2b3557] hover:text-white'
                      } py-[8px]`}
                   >
                      {statusItem.name}
@@ -59,13 +59,13 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                );
             })}
          </div>
-         <div className="lg:w-full lg:bg-white px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]">
+         <div className="lg:w-full bg-white dark:bg-container px-[12px] lg:gap-[12px] lg:pt-[20px] lg:rounded-[10px]">
             <div className="flex ml-2 border-[1px] w-[200px] mb-6 py-1 px-2 rounded-[5px] gap-4 items-center">
-               <Search className="w-4 h-4 text-gray-600" />
+               <Search className="w-4 h-4 text-gray-500 dark:text-gray-50" />
                <input
                   type="text"
                   placeholder="Search Item"
-                  className=" w-[150px] outline-none overflow-hidden"
+                  className=" w-[150px] dark:text-white placeholder:text-gray-500 bg-transparent placeholder:dark:text-[#a2b3eb] outline-none overflow-hidden"
                />
             </div>
             <div className="w-full">
@@ -82,15 +82,15 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                            <Dialog>
                               <DialogTrigger>
                                  <div
-                                    className={`flex items-center gap-2 border-[1px] rounded-[7px] px-2 py-1`}
+                                    className={`flex items-center gap-2 border-[1px] rounded-[7px] bg-white px-2 py-1`}
                                  >
-                                    <GanttChart className="w-[18px] h-[18px] cursor-pointer text-[#405189]" />
+                                    <GanttChart className="w-[18px] h-[18px] cursor-pointer transition-all text-[#405189]" />
                                  </div>
                               </DialogTrigger>
-                              <DialogContent className="rounded-[10px]">
+                              <DialogContent className="rounded-[10px] dark:bg-container">
                                  <DialogHeader>
                                     <DialogTitle>
-                                       <p className="text-[20px] text-[#525252] font-[500]">
+                                       <p className="text-[20px] dark:text-white text-[#525252] font-[500]">
                                           Timeline Items {row.original.name}
                                        </p>
                                     </DialogTitle>
@@ -102,7 +102,7 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                               <Dialog>
                                  <DialogTrigger>
                                     <div
-                                       className={`flex items-center gap-2 border-[1px] rounded-[7px] px-2 py-1`}
+                                       className={`flex items-center gap-2 border-[1px] rounded-[7px] bg-white px-2 py-1`}
                                     >
                                        <PlusCircle className="w-[18px] h-[18px] cursor-pointer text-[#405189]" />
                                     </div>

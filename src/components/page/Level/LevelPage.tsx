@@ -89,7 +89,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
    });
 
    return (
-      <div className="bg-white px-[20px] pt-[20px] rounded-[10px]">
+      <div className="dark:bg-container bg-white px-[20px] pt-[20px] rounded-[10px]">
          <DataTable
             data={levelData.data || []}
             columns={LevelColumn}
@@ -104,7 +104,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                   }}
                >
                   <DialogTrigger>
-                     <div className="ml-6 bg-submit hover:bg-submit-hover text-white px-3 py-1 rounded-[6px] text-[16px]">
+                     <div className="ml-6 hover:bg-submit-hover bg-container border-dark transition text-white px-3 py-1 rounded-[6px] text-[16px]">
                         Add Level
                      </div>
                   </DialogTrigger>
@@ -139,7 +139,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                            />
                            <Button
                               type="submit"
-                              className="bg-submit hover:bg-submit-hover"
+                              className="dark:bg-[#357FFA] bg-container hover:bg-container border-dark text-white  hover:dark:bg-submit-hover"
                            >
                               Submit
                            </Button>
@@ -164,7 +164,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                            Edit
                         </div>
                      </DialogTrigger>
-                     <DialogContent>
+                     <DialogContent className="dark:bg-container bg-white">
                         <DialogHeader>
                            <DialogTitle>Edit Level</DialogTitle>
                         </DialogHeader>
@@ -199,7 +199,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                               />
                               <Button
                                  type="submit"
-                                 className="bg-submit hover:bg-submit-hover"
+                                 className="dark:bg-[#357FFA] bg-container hover:bg-container border-dark text-white  hover:dark:bg-submit-hover"
                               >
                                  Submit
                               </Button>

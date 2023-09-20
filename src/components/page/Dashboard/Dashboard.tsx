@@ -1,6 +1,7 @@
 'use client';
 
 import { Chart } from '@/components/item';
+import ActivityItem from '@/components/item/Activity/Activity';
 import { DataTable } from '@/components/table/DataTabel';
 import { rankColumn } from '@/components/table/columns';
 import {
@@ -11,8 +12,14 @@ import {
    SelectValue,
 } from '@/components/ui/select';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
-import { DashboardType, RankType, Status, StatusType } from '@/types';
-import { CircleEllipsis, Clock3, FileCheck2, FileX2 } from 'lucide-react';
+import {
+   ActivityT,
+   DashboardType,
+   RankType,
+   Status,
+   StatusType,
+} from '@/types';
+import { CircleEllipsis, FileCheck2, FileX2 } from 'lucide-react';
 import React from 'react';
 
 const Dashboard = ({ data }: { data: DashboardType }) => {
@@ -22,10 +29,10 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
    const [limit, setLimit] = React.useState<number>(5);
    const [statusDate, setStatusDate] = React.useState<string>('year');
    const [statusData, setStatusData] = React.useState<StatusType[]>([
-      { status: dashboardData?.status.total, name: 'Total' },
-      { status: dashboardData?.status.inprogress, name: 'Process' },
-      { status: dashboardData?.status.finish, name: 'Finish' },
-      { status: dashboardData?.status.canceled, name: 'Canceled' },
+      { status: dashboardData?.status.total, name: 'Total', color: '' },
+      { status: dashboardData?.status.inprogress, name: 'Process', color: '' },
+      { status: dashboardData?.status.finish, name: 'Finish', color: '' },
+      { status: dashboardData?.status.canceled, name: 'Canceled', color: '' },
    ]);
    const dateRank = [
       {
@@ -75,69 +82,47 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
          ]);
       }
    }, [dataStatus]);
+
    return (
-      <div>
+      <div className="">
          <div className="grid grid-cols-4 md:grid-rows-1 grid-rows-2 justify-between gap-[20px]">
-            <div className="activity col-span-4 row-start-2 md:row-start-1 h-[400px] overflow-hidden  md:col-span-1 flex flex-col gap-[12px] md:h-[600px]  overflow-y-auto rounded-[12px] bg-white px-3 py-2">
+            <div className="activity dark:text-white col-span-4 row-start-2 md:row-start-1 h-[400px] overflow-hidden  md:col-span-1 flex flex-col gap-[12px] md:h-[600px]  overflow-y-auto rounded-[12px] bg-white dark:bg-container px-3 py-2">
                <p className="text-[20px] mb-[20px]">Activity</p>
                {dashboardData?.activity.length > 0 ? (
                   dashboardData?.activity.map(
-                     (activity: any, index: number) => {
+                     (activity: ActivityT, index: number) => {
                         return (
-                           <div key={index} className="flex  gap-[10px]">
-                              <div className="flex flex-col gap-[5px] items-center">
-                                 <div className="bg-[#5C469C] w-[30px] h-[30px] rounded-full flex justify-center items-center">
-                                    <p className="text-white">AD</p>
-                                 </div>
-                                 <div className="h-[10px] w-[5px] bg-[#5C469C] rounded-full"></div>
-                                 <div className="h-[7px] w-[5px] bg-[#5C469C] rounded-full"></div>
-                                 <div className="h-[5px] w-[5px] bg-[#5C469C] rounded-full"></div>
-                                 <div className="h-[3px] w-[3px] bg-[#5C469C] rounded-full"></div>
-                              </div>
-                              <div>
-                                 <div className="text-[#525252] items-center w-full flex mb-[5px] justify-between">
-                                    <p className="text-[#666666]">
-                                       {activity.user.name}
-                                    </p>
-                                    <div className="flex items-center gap-[6px]">
-                                       <Clock3 className="w-[10px] h-[10px] cursor-pointer text-[#405189]" />
-                                       <p className="text-[11px]">
-                                          {activity.fromTimestamp}
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <p className="text-[#7c7c7c] text-[13px]">
-                                    {activity.message}
-                                 </p>
-                              </div>
-                           </div>
+                           <ActivityItem
+                              key={index}
+                              name={activity.user.name}
+                              message={activity.message}
+                              timeStamp={activity.fromTimestamp}
+                           />
                         );
                      }
                   )
                ) : (
                   <div className="w-full flex justify-center lg:h-[300px] items-center">
-                     <p className="capitalize text-[#525252] text-[15px]">
-                        no activity
-                     </p>
+                     <p className="capitalize text-[15px]">no activity</p>
                   </div>
                )}
             </div>
-            <div className="col-span-4 row-span-1 md:col-span-3 flex flex-1 flex-col-reverse gap-[20px]">
-               <div className=" flex-1 w-full flex  bg-white rounded-[12px]  px-5 py-2">
+            <div className="col-span-4 row-span-1  md:col-span-3 flex flex-1 flex-col-reverse gap-[20px]">
+               <div className=" flex-1 w-full flex bg-white dark:bg-container rounded-[12px]  px-5 py-2">
                   <div className=" w-full flex-1 flex flex-col justify-between">
-                     <p className="mb-[10px] text-[20px] text-[#525252]">
+                     <p className="mb-[10px] text-gray-800 dark:text-white text-[20px] ">
                         Total Purchase Order
                      </p>
                      <Chart dataTotal={dashboardData?.total || false} />
                   </div>
                </div>
-               <div className="bg-white rounded-[10px] px-[20px] py-[15px]">
-                  <div className=" mb-[20px]  flex  justify-between items-center">
+               <div className="dark:bg-container bg-white rounded-[10px] px-[20px] py-[15px]">
+                  <div className=" mb-[20px] flex justify-between items-center">
                      <Select
                         defaultValue="year"
                         onValueChange={(e: string) => setStatusDate(e)}
                      >
-                        <SelectTrigger className="w-[200px] bg-white">
+                        <SelectTrigger className="w-[200px] bg-transparent border-[1px] dark:border-gray-50 dark:text-white">
                            <SelectValue placeholder="Date Filter" />
                         </SelectTrigger>
                         <SelectContent>
@@ -151,19 +136,21 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                         </SelectContent>
                      </Select>
                   </div>
-                  <div className="max-w-full flex gap-[15px] overflow-x-auto  py-[10px] px-[10px]">
+                  <div className="max-w-full flex gap-[15px] overflow-x-auto py-[10px] px-[10px]">
                      {statusData.map((data: any, index: number) => {
                         return (
                            <div
-                              className={`w-full p-2 flex flex-col items-center justify-center gap-[5px]   shadow-md h-[90px] rounded-[7px]  `}
+                              className={`w-full p-2 flex flex-col items-center justify-center gap-[5px]  shadow-md h-[90px] rounded-[7px]  `}
                               key={index}
                            >
-                              <p className={`w-max font-[600] text-[#818181]`}>
+                              <p
+                                 className={`w-max font-[600] text-gray-600 dark:text-[#fff]`}
+                              >
                                  {data.status}
                               </p>
                               <div className="flex gap-[10px] items-center w-max">
                                  {index == 1 && (
-                                    <CircleEllipsis className="text-[#6fa12c] w-[20px] h-[20px]" />
+                                    <CircleEllipsis className="text-[#d8cf56] w-[20px] h-[20px]" />
                                  )}
                                  {index == 2 && (
                                     <FileCheck2 className="text-[#6fa12c] w-[20px] h-[20px]" />
@@ -172,7 +159,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                                     <FileX2 className="text-[#e63e3e] w-[20px] h-[20px]" />
                                  )}
                                  <p
-                                    className={`text-center text-[23px]  text-[#a3a3a3] `}
+                                    className={`text-center text-[23px] text-gray-500 dark:text-[#f0f0f0] `}
                                  >
                                     {data.name}
                                  </p>
@@ -184,10 +171,10 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                </div>
             </div>
          </div>
-         <div className="bg-white px-1 md:px-4 rounded-[8px] py-1 md:py-3 mt-[20px]">
+         <div className="dark:bg-container bg-white px-1 md:px-4 rounded-[8px] py-1 md:py-3 mt-[20px]">
             <>
                <div className="mt-[20px] px-[7px] md:px-[28px] md:flex justify-between items-center">
-                  <p className="md:text-[26px] w-max text-[#525252]">
+                  <p className="md:text-[20px] w-max text-gray-800 dark:text-[#fff]">
                      Most Ordered Product
                   </p>
                   <div className="flex mt-[20px] md:mt-0 items-center gap-[10px]">
@@ -198,7 +185,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                            setLimit(limit);
                         }}
                      >
-                        <SelectTrigger className="md:w-[150px] w-max p-0 md:text-[16px] text-[12px] px-[5px]">
+                        <SelectTrigger className="md:w-[150px] w-max p-0 border-[1px] border-gray-300 dark:text-white md:text-[16px] text-[12px] px-[5px]">
                            <SelectValue placeholder="Limit" />
                         </SelectTrigger>
                         <SelectContent>
@@ -211,7 +198,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                         defaultValue="year"
                         onValueChange={(e: string) => setDateRanked(e)}
                      >
-                        <SelectTrigger className="md:w-[150px] w-max p-0 md:text-[16px] text-[12px] px-[5px]">
+                        <SelectTrigger className="md:w-[150px] w-max p-0 border-gray-300 border-[1px] dark:text-white md:text-[16px] text-[12px] px-[5px]">
                            <SelectValue placeholder="Date Filter" />
                         </SelectTrigger>
                         <SelectContent>

@@ -1,13 +1,7 @@
 import { Delevery } from '@/lib/types';
 
 export interface DashboardType {
-   activity: {
-      message: string;
-      fromTimestamp: number;
-      user: {
-         name: string;
-      };
-   }[];
+   activity: ActivityT[];
    total: {
       month: string;
       total: number;
@@ -26,9 +20,19 @@ export interface DashboardType {
    };
 }
 
+export interface ActivityT {
+   message: string;
+   fromTimestamp: number;
+   user: {
+      name: string;
+   };
+}
+
 export interface StatusType {
    status: number;
    name: string;
+   color?: string;
+   icon?: React.ReactNode;
 }
 
 export interface Status {

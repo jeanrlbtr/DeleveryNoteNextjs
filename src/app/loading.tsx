@@ -56,10 +56,10 @@ const Loading = () => {
             <div
                className={`relative h-screen pb-[40px] ${
                   show ? 'px-6' : 'px-3'
-               }  flex flex-col duration-300 pt-[20px] bg-[#5C6EAA] rounded-r-[10px]`}
+               }  flex flex-col duration-300 pt-[20px] bg-[#252851] rounded-r-[10px]`}
             >
                <div
-                  className={`absolute bg-[#6173ac]  top-[35px] right-[-10px]
+                  className={`absolute bg-[#232541]  top-[35px] right-[-10px]
             cursor-pointer shadow-2xl rounded-full`}
                >
                   {show ? (

@@ -57,7 +57,7 @@ const UpdateItems = ({
                   required
                   onValueChange={(e: string) => setValue('statusId', Number(e))}
                >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-[1px]">
                      <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -74,6 +74,7 @@ const UpdateItems = ({
                   Note <span className="text-[red]">*</span>
                </p>
                <Input
+                  className="border-[1px]"
                   placeholder="Note"
                   {...register('note', {
                      required: 'Note must be required',

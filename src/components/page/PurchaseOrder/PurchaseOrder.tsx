@@ -78,7 +78,7 @@ const PurchaseOrder = () => {
 
    return (
       <>
-         <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden mb-5 w-max">
+         <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden mb-8 w-max">
             {status.map((statusItem: any, index: number) => {
                return (
                   <button
@@ -88,10 +88,10 @@ const PurchaseOrder = () => {
                         setSearchValue('');
                         setSelectValue('');
                      }}
-                     className={`px-[8px] ${
+                     className={`px-[8px] transition ${
                         statusValue == statusItem.key
-                           ? 'bg-gray-200 rounded-[5px] text-[#525252]'
-                           : 'text-[#807f7f]'
+                           ? 'bg-[#071952] dark:bg-blue-600 text-white'
+                           : 'text-[#807f7f] hover:dark:bg-blue-400 hover:bg-[#2b3557] hover:text-white'
                      } py-[8px] lg:text-[16px]`}
                   >
                      {statusItem.name}
@@ -99,8 +99,8 @@ const PurchaseOrder = () => {
                );
             })}
          </div>
-         <div className="bg-white rounded-[7px] p-3">
-            <div className="flex bg-[#fff] justify-between items-center  rounded-[7px] p-2">
+         <div className="dark:bg-container bg-white rounded-[7px] p-3">
+            <div className="flex justify-between items-center rounded-[7px] p-2">
                <div className="w-[430px] h-max rounded-[5px] flex items-center">
                   <Select
                      onValueChange={(e) => {
@@ -109,7 +109,7 @@ const PurchaseOrder = () => {
                         setSelectValue(e);
                      }}
                   >
-                     <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] text-[#807f7f] gap-[12px] bg-[white]">
+                     <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] border-[1px] text-[#807f7f] gap-[12px] dark:bg-container">
                         <SelectValue placeholder="Select Filter" />
                      </SelectTrigger>
                      <SelectContent>
@@ -122,10 +122,10 @@ const PurchaseOrder = () => {
                         })}
                      </SelectContent>
                   </Select>
-                  <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[7px] bg-white">
+                  <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[7px] bg-white dark:bg-container dark:border-white">
                      <input
                         placeholder="Search"
-                        className={`w-full outline-none lg:text-[16px] border-none ${
+                        className={`w-full bg-transparent outline-none lg:text-[16px] border-none ${
                            selectValue === 'all' && 'cursor-not-allowed'
                         }`}
                         disabled={selectValue === 'all'}
@@ -136,7 +136,7 @@ const PurchaseOrder = () => {
                            setSearchValue(e.target.value);
                         }}
                      />
-                     <Search className="text-[#919191]" />
+                     <Search className="text-gray-700 dark:text-[#f0f0f0]" />
                   </div>
                </div>
             </div>
@@ -174,7 +174,7 @@ const PurchaseOrder = () => {
                   {(row: any) => {
                      return (
                         <div
-                           className="bg-[#405189] py-1 px-[10px] text-center cursor-pointer text-white rounded-[6px] text-[14px]"
+                           className="dark:bg-blue-600 bg-container py-1 px-[10px] text-center cursor-pointer text-gray-50 font-medium rounded-[6px] text-[14px]"
                            onClick={() => push(`/notes/no=${row.original?.no}`)}
                         >
                            Detail

@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
       <div className="w-full">
          {!type && (
             <div className="md:flex h-max mb-[30px] items-center">
-               <div className="w-[200px] rounded-[5px] border-[1px] bg-[#fff] px-1 border-[teal] flex justify-between items-center py-1 ">
+               <div className="w-[200px] rounded-[5px] border-[1px] dark:bg-[#292D5A] px-1 border-gray-500 dark:border-white flex justify-between items-center py-1 ">
                   <input
                      type="text"
                      placeholder="Search"
@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
                   <div>
                      <Icon
                         icon={'icons8:search'}
-                        color="#525252"
+                        color="#fefefe"
                         className="w-[22px] h-[22px]"
                      />
                   </div>
@@ -81,7 +81,7 @@ export function DataTable<TData, TValue>({
          <div
             className={`tableContainer h-[58vh] px-2 w-full rounded-sm overflow-auto relative`}
          >
-            <table className="bg-white  w-full">
+            <table className="dark:bg-[#292D5A]  w-full">
                <thead>
                   {getHeaderGroups().map((headerGroup) => (
                      <tr
@@ -92,9 +92,7 @@ export function DataTable<TData, TValue>({
                            return (
                               <th
                                  key={header.id}
-                                 className={`sticky top-0 py-3 px-3 ${
-                                    type !== 'item' ? 'bg-white' : 'bg-gray-50'
-                                 } font-[400] text-sm  text-left `}
+                                 className={`sticky top-0 py-3 px-3 dark:text-white dark:bg-[#292D5A] font-normal text-sm text-left `}
                               >
                                  {header.isPlaceholder
                                     ? null
@@ -107,9 +105,7 @@ export function DataTable<TData, TValue>({
                         })}
                         {action && !isLoading ? (
                            <th
-                              className={`sticky top-0  ${
-                                 type !== 'item' ? 'bg-white' : 'bg-gray-50'
-                              } py-3 px-3 font-[400] text-sm  text-left `}
+                              className={`sticky top-0 dark:text-white dark:bg-[#292D5A] py-3 px-3 font-[400] text-sm  text-left `}
                            >
                               Action
                            </th>
@@ -119,18 +115,18 @@ export function DataTable<TData, TValue>({
                      </tr>
                   ))}
                </thead>
-               <tbody className="text-gray-600 text-sm font-ligh">
+               <tbody className="text-gray-600 text-sm font-light">
                   {!isLoading ? (
                      getRowModel().rows?.length ? (
                         getRowModel().rows.map((row) => (
                            <tr
                               key={row.id}
-                              className="border-b border-gray-200 hover:bg-gray-50"
+                              className="border-b border-gray-200 hover:dark:bg-[#25295a] hover:bg-gray-50"
                            >
                               {row.getVisibleCells().map((cell) => (
                                  <td
                                     key={cell.id}
-                                    className="py-5 px-3 text-left whitespace-wrap"
+                                    className="py-5 px-3 text-left dark:text-white whitespace-wrap font-medium"
                                  >
                                     {flexRender(
                                        cell.column.columnDef.cell,
@@ -147,7 +143,7 @@ export function DataTable<TData, TValue>({
                         <tr>
                            <td
                               colSpan={columns.length}
-                              className="h-24 text-center"
+                              className="h-24 text-center dark:text-white"
                            >
                               No results.
                            </td>
