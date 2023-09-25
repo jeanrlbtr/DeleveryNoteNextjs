@@ -1,6 +1,7 @@
 'use client';
 
 import { Timeline } from '@/components/item';
+import ButtonTabs from '@/components/item/ButtonTabs/ButtonTabs';
 import UpdateItems from '@/components/item/Form/UpdateStatusItems';
 import { DataTable } from '@/components/table/DataTabel';
 import { ItemPOColumns } from '@/components/table/columns';
@@ -37,25 +38,22 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
    if (isError) {
       return <div>Erorr 404</div>;
    }
-
+   const handleSetStatus = (id: number) => {
+      setStatusQuery(id);
+   };
    return (
       <>
          <div className="h-full hidden mb-8 rounded-[8px] lg:flex text-[14px] border-blue-600 bg-gray-50 overflow-hidden w-max">
             {allStatusPO.map((statusItem: StatusT, index: number) => {
                return (
-                  <button
+                  <ButtonTabs
                      key={index}
                      onClick={() => {
-                        setStatusQuery(statusItem.id);
+                        handleSetStatus(statusItem.id);
                      }}
-                     className={`px-[15px] lg:text-[16px] transition ${
-                        statusQuery == statusItem.id
-                           ? 'bg-[#071952] dark:bg-blue-600 text-white'
-                           : 'text-[#807f7f] hover:dark:bg-blue-400 hover:bg-[#2b3557] hover:text-white'
-                     } py-[8px]`}
-                  >
-                     {statusItem.name}
-                  </button>
+                     statusValue={statusQuery}
+                     statusItem={statusItem}
+                  />
                );
             })}
          </div>

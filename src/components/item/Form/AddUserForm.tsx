@@ -75,7 +75,7 @@ const UserForm = ({ level }: { level: any[] }) => {
                   htmlFor="name"
                   className="text-sm dark:text-white text-gray-700"
                >
-                  Name <span className="text-red-700">*</span>{' '}
+                  Name <span className="text-red-700">*</span>
                   {!getValues('name') && (
                      <span className="text-red-700 text-xs">
                         (This field cannot be empty)

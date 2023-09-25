@@ -83,7 +83,7 @@ const EditUserForm = ({
                <Select
                   disabled={defaultValuesUser.autoUpdate}
                   defaultValue={`${defaultValuesUser.levelId}`}
-                  onValueChange={(e: any) => setValue('levelId', e)}
+                  onValueChange={(e: string) => setValue('levelId', Number(e))}
                >
                   <SelectTrigger
                      className="border-[#eee] py-2"

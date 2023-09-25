@@ -1,5 +1,6 @@
 'use client';
 
+import ButtonTabs from '@/components/item/ButtonTabs/ButtonTabs';
 import { DataTable } from '@/components/table/DataTabel';
 import { columnsDelevery } from '@/components/table/columns';
 import {
@@ -75,29 +76,28 @@ const PurchaseOrder = () => {
       url,
       queryKey
    );
-
+   const handleSetStatus = (key: string) => {
+      setStatusValue(key);
+      setSearchValue('');
+      setSelectValue('');
+   };
    return (
       <>
          <div className="h-full rounded-[5px] text-[14px] bg-gray-50 overflow-hidden mb-8 w-max">
-            {status.map((statusItem: any, index: number) => {
-               return (
-                  <button
-                     key={index}
-                     onClick={() => {
-                        setStatusValue(statusItem.key);
-                        setSearchValue('');
-                        setSelectValue('');
-                     }}
-                     className={`px-[8px] transition ${
-                        statusValue == statusItem.key
-                           ? 'bg-[#071952] dark:bg-blue-600 text-white'
-                           : 'text-[#807f7f] hover:dark:bg-blue-400 hover:bg-[#2b3557] hover:text-white'
-                     } py-[8px] lg:text-[16px]`}
-                  >
-                     {statusItem.name}
-                  </button>
-               );
-            })}
+            {status.map(
+               (statusItem: { name: string; key: string }, index: number) => {
+                  return (
+                     <ButtonTabs
+                        onClick={() => {
+                           handleSetStatus(statusItem.key);
+                        }}
+                        statusItem={statusItem}
+                        statusValue={statusValue}
+                        key={index}
+                     />
+                  );
+               }
+            )}
          </div>
          <div className="dark:bg-container bg-white rounded-[7px] p-3">
             <div className="flex justify-between items-center rounded-[7px] p-2">

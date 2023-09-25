@@ -29,10 +29,29 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
    const [limit, setLimit] = React.useState<number>(5);
    const [statusDate, setStatusDate] = React.useState<string>('year');
    const [statusData, setStatusData] = React.useState<StatusType[]>([
-      { status: dashboardData?.status.total, name: 'Total', color: '' },
-      { status: dashboardData?.status.inprogress, name: 'Process', color: '' },
-      { status: dashboardData?.status.finish, name: 'Finish', color: '' },
-      { status: dashboardData?.status.canceled, name: 'Canceled', color: '' },
+      {
+         status: dashboardData?.status.total,
+         name: 'Total',
+         color: '',
+      },
+      {
+         status: dashboardData?.status.inprogress,
+         name: 'Process',
+         color: '',
+         icon: <CircleEllipsis className="text-[#d8cf56] w-[20px] h-[20px]" />,
+      },
+      {
+         status: dashboardData?.status.finish,
+         name: 'Finish',
+         color: '',
+         icon: <FileCheck2 className="text-[#6fa12c] w-[20px] h-[20px]" />,
+      },
+      {
+         status: dashboardData?.status.canceled,
+         name: 'Canceled',
+         color: '',
+         icon: <FileX2 className="text-[#e63e3e] w-[20px] h-[20px]" />,
+      },
    ]);
    const dateRank = [
       {
@@ -137,7 +156,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                      </Select>
                   </div>
                   <div className="max-w-full flex gap-[15px] overflow-x-auto py-[10px] px-[10px]">
-                     {statusData.map((data: any, index: number) => {
+                     {statusData.map((data: StatusType, index: number) => {
                         return (
                            <div
                               className={`w-full p-2 flex flex-col items-center justify-center gap-[5px]  shadow-md h-[90px] rounded-[7px]  `}
@@ -149,15 +168,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                                  {data.status}
                               </p>
                               <div className="flex gap-[10px] items-center w-max">
-                                 {index == 1 && (
-                                    <CircleEllipsis className="text-[#d8cf56] w-[20px] h-[20px]" />
-                                 )}
-                                 {index == 2 && (
-                                    <FileCheck2 className="text-[#6fa12c] w-[20px] h-[20px]" />
-                                 )}
-                                 {index == 3 && (
-                                    <FileX2 className="text-[#e63e3e] w-[20px] h-[20px]" />
-                                 )}
+                                 {data.icon}
                                  <p
                                     className={`text-center text-[23px] text-gray-500 dark:text-[#f0f0f0] `}
                                  >
