@@ -1,5 +1,6 @@
 import { Toaster } from '@/components/ui/toaster';
 import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
+import 'flatpickr/dist/flatpickr.css';
 import { Montserrat } from 'next/font/google';
 import '../global.css';
 import ProviderThemes from './provider';

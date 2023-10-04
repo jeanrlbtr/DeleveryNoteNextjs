@@ -133,6 +133,26 @@ const ModalAccess = ({
                   </div>
                   <div className="flex items-center space-x-2">
                      <input
+                        id="shipment"
+                        type="checkbox"
+                        defaultChecked={
+                           UserAccess?.access.find(
+                              (item: any) => item == 'shipment'
+                           ) === 'shipment'
+                        }
+                        className="w-[15px] border-[#d1cfcf] accent-checkbox"
+                        value={'shipment'}
+                        {...register('access')}
+                     />
+                     <label
+                        htmlFor="shipment"
+                        className="text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                     >
+                        Shipment
+                     </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                     <input
                         id="item"
                         type="checkbox"
                         className="w-[15px]  border-[#d1cfcf] accent-checkbox"
@@ -230,12 +250,12 @@ const ModalAccess = ({
                   })}
                </div>
             </div>
-            <Can I="update" a="user" passThrough>
+            <Can I="create" a="user" passThrough>
                {(allow) => (
                   <Button
                      disabled={!allow}
                      type="submit"
-                     className="w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] bg-submit hover:bg-submit-hover"
+                     className="w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] hover:bg-container bg-container dark:bg-submit hover:dark:bg-submit-hover"
                   >
                      Apply
                   </Button>

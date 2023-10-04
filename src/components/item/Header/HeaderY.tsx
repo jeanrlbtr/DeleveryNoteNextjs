@@ -5,6 +5,7 @@ import { deleteCookie } from 'cookies-next';
 import {
    ChevronLeft,
    ChevronRight,
+   CreditCard,
    FileStack,
    FolderKanban,
    LayoutPanelLeft,
@@ -59,7 +60,13 @@ const menu = [
       access: 'level',
       spaceY: true,
    },
-
+   {
+      name: 'Shipment',
+      icon: <CreditCard className="w-[25px] h-[25px]" />,
+      url: '/shipment',
+      access: 'shipment',
+      spaceY: false,
+   },
    {
       name: 'Users',
       icon: <User className="w-[25px] h-[25px]" />,

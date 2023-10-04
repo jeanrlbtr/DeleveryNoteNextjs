@@ -11,12 +11,17 @@ import {
    RankItem,
    Users,
 } from '@/lib/types';
-import { DetailPoTableType, Item, LevelTabelType } from '@/types';
+import {
+   DetailPoTableType,
+   Item,
+   LevelTabelType,
+   ShipmentT,
+   TollMetaT,
+} from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
-
 const ItemPOColumns: ColumnDef<Item>[] = [
    {
       header: 'Name',
@@ -548,6 +553,65 @@ const rankColumn: ColumnDef<RankItem>[] = [
       accessorKey: 'total',
    },
 ];
+
+const tollPaymentColumn: ColumnDef<TollMetaT>[] = [
+   {
+      header: 'Gate',
+      accessorKey: 'gate',
+   },
+   {
+      header: 'Amount',
+      accessorKey: 'amount',
+      cell: (row) => {
+         return <p>Rp {row.row.original.amount.toLocaleString('id-ID')},00</p>;
+      },
+   },
+   {
+      header: 'Time',
+      accessorKey: 'time',
+   },
+];
+
+const shipmentColumn: ColumnDef<ShipmentT>[] = [
+   {
+      header: 'Driver Name',
+      accessorKey: 'driverName',
+   },
+   {
+      header: 'Driver Plate',
+      accessorKey: 'driverPlate',
+   },
+   {
+      header: 'Toll Balance',
+      accessorKey: 'tollBalance',
+      cell: (row) => {
+         return (
+            <p>Rp {row.row.original.tollBalance.toLocaleString('id-ID')},00</p>
+         );
+      },
+   },
+   {
+      header: 'Amount Request',
+      accessorKey: 'amountRequest',
+      cell: (row) => {
+         return (
+            <p>
+               Rp {row.row.original.amountRequest.toLocaleString('id-ID')},00
+            </p>
+         );
+      },
+   },
+
+   {
+      header: 'Shipment Date',
+      accessorKey: 'shipmentDate',
+      cell: (row) => {
+         const date = new Date(String(row.getValue())).toDateString();
+         return <p>{String(date)}</p>;
+      },
+   },
+];
+
 export {
    InvoiceColumn,
    ItemPOColumns,
@@ -560,5 +624,7 @@ export {
    itemColumn,
    itemHistoryColumn,
    rankColumn,
+   shipmentColumn,
+   tollPaymentColumn,
    userColumn,
 };

@@ -27,6 +27,7 @@ interface DataTableProps<TData, TValue> {
    disabledPrev?: boolean;
    limit?: string;
    onChange?: Function;
+   hiddenFooter?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
    disabledNext,
    disabledPrev,
    limit,
+   hiddenFooter,
    onChange = Function,
 }: DataTableProps<TData, TValue>) {
    const [globalFilter, setGlobalFilter] = React.useState('');
@@ -79,7 +81,9 @@ export function DataTable<TData, TValue>({
             </div>
          )}
          <div
-            className={`tableContainer h-[58vh] px-2 w-full rounded-sm overflow-auto relative`}
+            className={`tableContainer ${
+               hiddenFooter ? 'h-full' : 'h-[58vh]'
+            } px-2 w-full rounded-sm overflow-auto relative`}
          >
             <table className="dark:bg-[#292D5A]  w-full">
                <thead>
@@ -164,7 +168,11 @@ export function DataTable<TData, TValue>({
             </table>
          </div>
 
-         <div className="flex items-center justify-end space-x-2 py-4">
+         <div
+            className={`items-center justify-end space-x-2 py-4 ${
+               hiddenFooter ? 'hidden' : 'flex'
+            }`}
+         >
             {limit && <SelectLimit onValueChange={onChange} limit={limit} />}
             <Button
                variant="outline"

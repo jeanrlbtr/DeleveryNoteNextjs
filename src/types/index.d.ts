@@ -316,3 +316,122 @@ export interface ProgressSummaryT {
       items: Item[];
    }[];
 }
+
+export interface TollPaymentT {
+   gate: string;
+   amount: string;
+   time: string;
+}
+
+export interface ShipmentT {
+   id: string;
+   driverId: number;
+   driverName: string;
+   driverPlate: string;
+   parking: number;
+   porter: number;
+   whGate: number;
+   toll: number;
+   gas: number;
+   tollBalance: number;
+   amountRequest: number;
+   topupToll: number;
+   shipmentDate: string;
+   updatedBy: string;
+   UserUpdate: {
+      name: string;
+   };
+}
+
+export interface DataShipment {
+   data: ShipmentT[];
+}
+
+export interface DriverDataT {
+   data: DriverT[];
+}
+
+export interface DriverT {
+   id: number;
+   userId: string;
+   platNo: string;
+   User: {
+      name: string;
+   };
+   UserUpdate: {
+      name: string;
+   };
+}
+
+export interface DetailShipmentT {
+   data: {
+      id: string;
+      driverId: number;
+      driverName: string;
+      driverPlate: string;
+      parking: number;
+      porter: number;
+      whGate: number;
+      toll: number;
+      gas: number;
+      tollBalance: number;
+      amountRequest: number;
+      topupToll: number;
+      shipmentDate: string;
+      updatedBy: string;
+      tollMeta: TollMetaT[];
+      parkingMeta: ParkingMetaT;
+      porterMeta: PorterMetaT;
+      whGateMeta: WhGateMetaT;
+   };
+}
+
+export interface TollMetaT {
+   id: number;
+   shipmentId: string;
+   gate: string;
+   amount: number;
+   time: string;
+}
+
+export interface ParkingMetaT {
+   avail: AvailT[];
+   amount: AmountT[];
+}
+
+export interface PorterMetaT {
+   avail: AvailT[];
+   amount: AmountT[];
+}
+
+export interface WhGateMetaT {
+   avail: AvailT[];
+   amount: AmountT[];
+}
+
+export interface AmountT {
+   id: number;
+   shipmentId: string;
+   amount: number;
+   type: string;
+   Items: ItemShipmentT[];
+}
+
+export interface ItemShipmentT {
+   Item: {
+      name: string;
+   };
+   itemId: number;
+}
+
+export interface AvailT {
+   id: number;
+   no: string;
+   type: string;
+   name: string;
+   variant: string;
+   qty: number;
+   variantId: number;
+   itemId: number;
+   statusId: number;
+}
