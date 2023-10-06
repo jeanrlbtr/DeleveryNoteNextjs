@@ -83,8 +83,12 @@ const MutationFetch = (key: string[]) => {
    const { toast } = useToast();
    return useMutation({
       mutationFn: async ({ url, method, body, headers }: Params) => {
-         const res = await apiCall({ url, method, body, headers });
-         return res.data;
+         try {
+            const res = await apiCall({ url, method, body, headers });
+            return res.data;
+         } catch (error) {
+            console.log(error);
+         }
       },
       onSuccess: (res) => {
          toast({
@@ -92,6 +96,12 @@ const MutationFetch = (key: string[]) => {
             duration: 3000,
          });
          return queryClient.invalidateQueries({ queryKey: key });
+      },
+      onError: (err: any) => {
+         toast({
+            title: 'Error Update',
+            duration: 3000,
+         });
       },
    });
 };

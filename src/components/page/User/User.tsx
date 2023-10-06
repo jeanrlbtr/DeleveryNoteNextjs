@@ -18,7 +18,9 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { CanRule } from '@/hooks/Can';
 import ClientFetching from '@/hooks/clientFetching';
+import { Users } from '@/lib/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Row } from '@tanstack/react-table';
 import { Edit, Eraser, FolderLock } from 'lucide-react';
 import { useState } from 'react';
 
@@ -58,9 +60,8 @@ const User = () => {
          return res.data.data;
       },
    });
-
    const { mutate: postUser } = useMutation({
-      mutationFn: async (id) => {
+      mutationFn: async (id: string) => {
          const res = await fetchingUser.delete(`/delivery/v1/user/${id}`, {
             headers: {
                'Content-Type': 'multipart/json',
@@ -145,7 +146,7 @@ const User = () => {
                   </div>
                }
             >
-               {(row: any) => {
+               {(row: Row<Users>) => {
                   return (
                      <div key={row.index} className="flex items-center gap-4">
                         <Can I="update" a="user">
@@ -166,7 +167,6 @@ const User = () => {
                               </DialogContent>
                            </Dialog>
                         </Can>
-
                         <Can I="update" a="user">
                            <Dialog
                               open={open}

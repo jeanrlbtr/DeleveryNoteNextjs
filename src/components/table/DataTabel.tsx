@@ -72,8 +72,7 @@ export function DataTable<TData, TValue>({
                   <div>
                      <Icon
                         icon={'icons8:search'}
-                        color="#fefefe"
-                        className="w-[22px] h-[22px]"
+                        className="w-[22px] text-gray-500 dark:text-[#fefefe] h-[22px]"
                      />
                   </div>
                </div>

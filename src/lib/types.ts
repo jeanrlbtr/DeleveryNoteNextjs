@@ -78,10 +78,7 @@ export type Items = {
 export type Users = {
    id: string;
    name: string;
-   username: string;
    isActive: boolean;
-   autoUpdate: boolean;
-   image: string | null;
    levelUser: {
       id: number;
       name: string;

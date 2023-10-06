@@ -154,7 +154,7 @@ const UserForm = ({ level }: { level: any[] }) => {
          </div>
          <div className="flex justify-end">
             <Button
-               className="mt-[20px] dark:bg-submit text-white bg-container border-dark  hover:dark:bg-submit-hover"
+               className="mt-[20px] w-[110px] dark:bg-submit text-white bg-container border-dark  hover:dark:bg-submit-hover"
                type="submit"
                disabled={disable || isLoading}
             >

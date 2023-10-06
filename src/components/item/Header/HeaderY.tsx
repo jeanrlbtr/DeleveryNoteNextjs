@@ -9,6 +9,7 @@ import {
    FileStack,
    FolderKanban,
    LayoutPanelLeft,
+   LifeBuoy,
    LogOut,
    PackageCheck,
    TruckIcon,
@@ -65,6 +66,13 @@ const menu = [
       icon: <CreditCard className="w-[25px] h-[25px]" />,
       url: '/shipment',
       access: 'shipment',
+      spaceY: false,
+   },
+   {
+      name: 'Driver',
+      icon: <LifeBuoy className="w-[25px] h-[25px]" />,
+      url: '/driver',
+      access: 'driver',
       spaceY: false,
    },
    {

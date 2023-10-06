@@ -221,6 +221,26 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                <p className="text-gray-600 text-lg font-medium">
                   Customer info
                </p>
+               {dataShipmentDetail.customer.map((data, index) => {
+                  return (
+                     <div
+                        key={index}
+                        className="flex items-center gap-4 mt-4 border-b py-3 w-full bg-blue-100 px-2 border-l-2 border-l-cyan-900 rounded-lg"
+                     >
+                        <div className="text-gray-600 font-medium">
+                           {index + 1}.
+                        </div>
+                        <div>
+                           <p className="font-medium text-gray-700">
+                              {data.Inv.recipientName}
+                           </p>
+                           <p className="text-xs text-gray-600">
+                              {data.Inv.no}
+                           </p>
+                        </div>
+                     </div>
+                  );
+               })}
             </div>
          </div>
          <div className="px-3 py-2 pb-10 mt-5 bg-white rounded-md shadow-md">

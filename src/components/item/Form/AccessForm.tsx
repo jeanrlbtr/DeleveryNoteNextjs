@@ -211,6 +211,26 @@ const ModalAccess = ({
                         Level
                      </label>
                   </div>
+                  <div className="flex items-center space-x-2">
+                     <input
+                        id="driver"
+                        type="checkbox"
+                        className="w-[15px]  border-[#d1cfcf] accent-checkbox"
+                        defaultChecked={
+                           UserAccess?.access.find(
+                              (item: any) => item == 'driver'
+                           ) === 'driver'
+                        }
+                        value={'driver'}
+                        {...register('access')}
+                     />
+                     <label
+                        htmlFor="driver"
+                        className="text-[17px] text-[#525252] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                     >
+                        Driver
+                     </label>
+                  </div>
                </div>
             </div>
             <div className="mt-[15px]">

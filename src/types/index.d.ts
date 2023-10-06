@@ -149,10 +149,7 @@ export interface UserDataType {
    data: {
       id: string;
       name: string;
-      username: string;
       isActive: boolean;
-      autoUpdate: boolean;
-      image: string | null;
       levelUser: {
          id: number;
          name: string;
@@ -383,6 +380,15 @@ export interface DetailShipmentT {
       parkingMeta: ParkingMetaT;
       porterMeta: PorterMetaT;
       whGateMeta: WhGateMetaT;
+      customer: CustomerDetailT[];
+   };
+}
+
+export interface CustomerDetailT {
+   shipmentId: string;
+   Inv: {
+      recipientName: string;
+      no: string;
    };
 }
 
@@ -434,4 +440,20 @@ export interface AvailT {
    variantId: number;
    itemId: number;
    statusId: number;
+}
+
+export interface DriverInfoT {
+   data: DriverDetailT[];
+}
+
+export interface DriverDetailT {
+   id: number;
+   userId: string;
+   platNo: string;
+   User: {
+      name: string;
+   };
+   UserUpdate: {
+      name: string;
+   };
 }

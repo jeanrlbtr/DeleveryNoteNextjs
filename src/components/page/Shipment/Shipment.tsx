@@ -5,10 +5,11 @@ import { DataTable } from '@/components/table/DataTabel';
 import { shipmentColumn } from '@/components/table/columns';
 import MutationFetch from '@/hooks/MutationFetch';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { formatDate } from '@/lib/utils';
+import { shipmentStore } from '@/store/shipment';
 import { DataShipment, DriverDataT, ShipmentT } from '@/types';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import Flatpickr from 'react-flatpickr';
 
@@ -18,10 +19,14 @@ interface ShipmentProps {
 }
 
 const Shipment = ({ shipment, driverData }: ShipmentProps) => {
-   const [date, setDate] = useState<Date>(new Date());
+   // const [date, setDate] = useState<Date>(new Date());
+   const { date, setDate } = shipmentStore((state) => state);
+   console.log(date);
+   const shipmentDate = formatDate(date);
+
    const { data } = UseQueryFetching<DataShipment>(
-      `/delivery/v1/shipments?date=2023-09-19`,
-      ['shipment'],
+      `/delivery/v1/shipments?date=${shipmentDate}`,
+      ['shipment', String(date)],
       { data: shipment }
    );
 
@@ -43,7 +48,7 @@ const Shipment = ({ shipment, driverData }: ShipmentProps) => {
          });
    };
 
-   const shipmentData = data?.data;
+   const shipmentData = data?.data || shipment;
    const SelectDriverData = driver?.data;
    const route = useRouter();
    const column: ColumnDef<ShipmentT>[] = [

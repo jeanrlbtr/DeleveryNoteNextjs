@@ -102,7 +102,7 @@ const Container = ({
                   </div>
                   <div className="flex flex-col h-max justify-center ">
                      <div className="text-[18px] text-gray-500 dark:text-white capitalize font-semibold flex items-center">
-                        <p>Jean Butar</p>
+                        <p>{userData?.data.name}</p>
                         <div className="flex">
                            {theme !== 'dark' ? (
                               <button
@@ -122,7 +122,7 @@ const Container = ({
                         </div>
                      </div>
                      <span className="text-[13px] text-gray-800 dark:text-gray-100">
-                        Customer Service
+                        {userData?.data.level}
                      </span>
                   </div>
                </div>

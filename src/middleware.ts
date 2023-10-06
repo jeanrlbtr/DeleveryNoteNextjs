@@ -33,6 +33,7 @@ export async function middleware(req: NextRequest) {
       'level',
       'progress',
       'shipment',
+      'driver',
    ];
 
    const url = req.url;
@@ -76,5 +77,6 @@ export const config = {
       '/item',
       '/progress',
       '/shipment/:path*',
+      '/driver',
    ],
 };

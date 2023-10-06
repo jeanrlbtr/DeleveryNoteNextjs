@@ -13,6 +13,7 @@ import {
 } from '@/lib/types';
 import {
    DetailPoTableType,
+   DriverDetailT,
    Item,
    LevelTabelType,
    ShipmentT,
@@ -20,7 +21,6 @@ import {
 } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '../ui/button';
 const ItemPOColumns: ColumnDef<Item>[] = [
    {
@@ -408,22 +408,6 @@ const allHistoryColumn: ColumnDef<Allhistory>[] = [
 
 const userColumn: ColumnDef<Users>[] = [
    {
-      header: 'Photo',
-      accessorKey: 'image',
-      cell: () => {
-         return (
-            <div className="h-[45px] w-[45px] rounded-full bg-gray-500 text-center text-[white] relative overflow-hidden">
-               <Image
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY3MzkxODYzOA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
-                  alt=""
-                  fill
-                  className="object-cover"
-               />
-            </div>
-         );
-      },
-   },
-   {
       header: 'Name',
       accessorKey: 'name',
    },
@@ -448,21 +432,6 @@ const userColumn: ColumnDef<Users>[] = [
       cell: ({ row }) => {
          const userlevel: any = row.getValue('levelUser');
          return <div>{userlevel.name}</div>;
-      },
-   },
-   {
-      header: 'Auto Update',
-      accessorKey: 'autoUpdate',
-      cell: ({ row }) => {
-         return (
-            <div>
-               {row.getValue('autoUpdate') ? (
-                  <p className="  w-max px-1">Auto Update</p>
-               ) : (
-                  <p className=" w-max px-1">Non Auto Update</p>
-               )}
-            </div>
-         );
       },
    },
 ];
@@ -612,6 +581,20 @@ const shipmentColumn: ColumnDef<ShipmentT>[] = [
    },
 ];
 
+const driverColumn: ColumnDef<DriverDetailT>[] = [
+   {
+      header: 'Name',
+      accessorKey: 'User',
+      cell: (row) => {
+         return <p>{row.row.original.User.name}</p>;
+      },
+   },
+   {
+      header: 'Plat No',
+      accessorKey: 'platNo',
+   },
+];
+
 export {
    InvoiceColumn,
    ItemPOColumns,
@@ -620,6 +603,7 @@ export {
    allHistoryColumn,
    columnsDelevery,
    detailNoteColumn,
+   driverColumn,
    historyColumn,
    itemColumn,
    itemHistoryColumn,
