@@ -457,3 +457,26 @@ export interface DriverDetailT {
       name: string;
    };
 }
+
+export interface PoByNoT {
+   data: {
+      notes: NotesPoByNoT[];
+   };
+}
+
+export interface NotesPoByNoT {
+   attachment: string;
+   dateDelivery: string;
+   dateNote: string;
+   no: string;
+   note: string;
+   recipientAddress: string;
+   recipientName: string;
+   sales: string;
+   senderAddress: string;
+   senderName: string;
+   specialNote: boolean;
+   status: string;
+   store: string;
+   timestamp: number;
+}

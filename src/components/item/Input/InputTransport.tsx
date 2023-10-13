@@ -47,25 +47,27 @@ const InputTransport = ({
       <div className="px-3 w-[322px] bg-white py-3 rounded-[10px] shadow-md">
          <p className="text-gray-700  text-lg font-medium">{title}</p>
          <form className="mt-3" onSubmit={(e) => handleSubmitAmount(e)}>
-            <p className="text-gray-600 font-medium">{titleInput}</p>
-            <CurrencyInput
-               defaultValue={amount}
-               placeholder="amount"
-               className="w-full rounded-[7px] text-gray-600 p-1 border outline-none border-[#5c6eaa]"
-               decimalsLimit={2}
-               prefix="Rp "
-               onValueChange={(value) => {
-                  if (value) {
-                     setAmount(Number(value));
-                  }
-               }}
-            />
-            <button
-               type="submit"
-               className="py-1 px-2 text-white mt-3 rounded-md bg-container"
-            >
-               Save
-            </button>
+            <p className="text-gray-600 mb-1 font-medium">{titleInput}</p>
+            <div className="flex w-full justify-between items-center gap-3">
+               <CurrencyInput
+                  defaultValue={amount}
+                  placeholder="amount"
+                  className="w-full rounded-[7px] text-gray-600 p-1 border outline-none border-[#5c6eaa]"
+                  decimalsLimit={2}
+                  prefix="Rp "
+                  onValueChange={(value) => {
+                     if (value) {
+                        setAmount(Number(value));
+                     }
+                  }}
+               />
+               <button
+                  type="submit"
+                  className="py-1 px-2 text-white rounded-md bg-container"
+               >
+                  Save
+               </button>
+            </div>
          </form>
       </div>
    );

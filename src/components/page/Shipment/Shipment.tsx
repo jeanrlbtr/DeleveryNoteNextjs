@@ -6,22 +6,20 @@ import { shipmentColumn } from '@/components/table/columns';
 import MutationFetch from '@/hooks/MutationFetch';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import { formatDate } from '@/lib/utils';
-import { shipmentStore } from '@/store/shipment';
 import { DataShipment, DriverDataT, ShipmentT } from '@/types';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import Flatpickr from 'react-flatpickr';
-
 interface ShipmentProps {
    shipment: ShipmentT[];
    driverData: DriverDataT;
 }
 
 const Shipment = ({ shipment, driverData }: ShipmentProps) => {
-   // const [date, setDate] = useState<Date>(new Date());
-   const { date, setDate } = shipmentStore((state) => state);
-   console.log(date);
+   const [date, setDate] = useState<Date>(new Date());
+   // const { date, setDate } = shipmentStore((state) => state);
    const shipmentDate = formatDate(date);
 
    const { data } = UseQueryFetching<DataShipment>(
@@ -85,6 +83,7 @@ const Shipment = ({ shipment, driverData }: ShipmentProps) => {
          },
       },
    ];
+
    return (
       <div className="mt-10">
          <div className="w-full flex justify-between">

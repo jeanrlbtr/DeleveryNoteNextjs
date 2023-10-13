@@ -84,7 +84,7 @@ export function DataTable<TData, TValue>({
                hiddenFooter ? 'h-full' : 'h-[58vh]'
             } px-2 w-full rounded-sm overflow-auto relative`}
          >
-            <table className="dark:bg-[#292D5A]  w-full">
+            <table className="dark:bg-[#292D5A] bg-white  w-full">
                <thead>
                   {getHeaderGroups().map((headerGroup) => (
                      <tr
@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
                            return (
                               <th
                                  key={header.id}
-                                 className={`sticky top-0 py-3 px-3 dark:text-white dark:bg-[#292D5A] font-normal text-sm text-left `}
+                                 className={`sticky top-0 py-3 px-3 dark:text-white bg-white dark:bg-[#292D5A] font-normal text-sm text-left `}
                               >
                                  {header.isPlaceholder
                                     ? null
@@ -108,7 +108,7 @@ export function DataTable<TData, TValue>({
                         })}
                         {action && !isLoading ? (
                            <th
-                              className={`sticky top-0 dark:text-white dark:bg-[#292D5A] py-3 px-3 font-[400] text-sm  text-left `}
+                              className={`sticky top-0 bg-white dark:text-white dark:bg-[#292D5A] py-3 px-3 font-[400] text-sm  text-left `}
                            >
                               Action
                            </th>

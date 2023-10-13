@@ -156,76 +156,14 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                />
             </div>
          </div>
-         <div className=" mt-5 flex gap-4">
-            <div className="px-1 rounded-lg py-3 flex-[4] shadow-md bg-white">
-               <p className="px-2 mb-4 font-medium text-lg text-gray-600">
-                  Toll Payment
-               </p>
-               <DataTable
-                  columns={tollPaymentColumn}
-                  hiddenFooter={true}
-                  data={dataShipmentDetail.tollMeta}
-                  type={'item'}
-                  action={true}
-               >
-                  {(row: Row<TollMetaT>) => {
-                     return (
-                        <Trash2
-                           onClick={() => handleDeleteToll(row.original.id)}
-                           className="text-xl ml-4 cursor-pointer text-red-500"
-                        />
-                     );
-                  }}
-               </DataTable>
-               <div>
-                  <form
-                     onSubmit={handleSubmit((data) => {
-                        onSubmitToll(data);
-                     })}
-                     className="flex px-5 w-full gap-8 mt-5 items-center"
-                  >
-                     <input
-                        type="text"
-                        placeholder="Tol name"
-                        className="border p-2 rounded-md"
-                        required
-                        {...register('gate')}
-                     />
-                     <CurrencyInput
-                        required
-                        {...register('amount')}
-                        onValueChange={(value) =>
-                           value && setValue('amount', value)
-                        }
-                        className="border p-2 rounded-[5px]"
-                        placeholder="amount"
-                        prefix="Rp "
-                     />
-                     <input
-                        required
-                        type="time"
-                        {...register('time')}
-                        placeholder="Time"
-                        className="border p-1 "
-                     />
-                     <button
-                        type="submit"
-                        className="bg-container text-white px-3 py-1 rounded-md"
-                     >
-                        save
-                     </button>
-                  </form>
-               </div>
-            </div>
-            <div className="flex-1 bg-white shadow-md px-2 rounded-md py-3">
-               <p className="text-gray-600 text-lg font-medium">
-                  Customer info
-               </p>
+         <div className="flex-1 mt-5 bg-white shadow-md px-2 rounded-md py-3">
+            <p className="text-gray-600 text-lg font-medium">Customer info</p>
+            <div className="flex gap-4">
                {dataShipmentDetail.customer.map((data, index) => {
                   return (
                      <div
                         key={index}
-                        className="flex items-center gap-4 mt-4 border-b py-3 w-full bg-blue-100 px-2 border-l-2 border-l-cyan-900 rounded-lg"
+                        className="flex items-center gap-4 mt-4 border-b py-3 w-max bg-blue-100 px-2 border-l-2 border-l-cyan-900 rounded-lg"
                      >
                         <div className="text-gray-600 font-medium">
                            {index + 1}.
@@ -243,6 +181,67 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                })}
             </div>
          </div>
+         <div className="px-1 mt-5  rounded-lg py-3 flex-[4] shadow-md bg-white">
+            <p className="px-2 mb-4 font-medium text-lg text-gray-600">
+               Toll Payment
+            </p>
+            <DataTable
+               columns={tollPaymentColumn}
+               hiddenFooter={true}
+               data={dataShipmentDetail.tollMeta}
+               type={'item'}
+               action={true}
+            >
+               {(row: Row<TollMetaT>) => {
+                  return (
+                     <Trash2
+                        onClick={() => handleDeleteToll(row.original.id)}
+                        className="text-xl ml-4 cursor-pointer text-red-500"
+                     />
+                  );
+               }}
+            </DataTable>
+            <div>
+               <form
+                  onSubmit={handleSubmit((data) => {
+                     onSubmitToll(data);
+                  })}
+                  className="flex px-5 w-full gap-8 mt-5 items-center"
+               >
+                  <input
+                     type="text"
+                     placeholder="Tol name"
+                     className="border p-2 rounded-md"
+                     required
+                     {...register('gate')}
+                  />
+                  <CurrencyInput
+                     required
+                     {...register('amount')}
+                     onValueChange={(value) =>
+                        value && setValue('amount', value)
+                     }
+                     className="border p-2 rounded-[5px]"
+                     placeholder="amount"
+                     prefix="Rp "
+                  />
+                  <input
+                     required
+                     type="time"
+                     {...register('time')}
+                     placeholder="Time"
+                     className="border p-1 "
+                  />
+                  <button
+                     type="submit"
+                     className="bg-container text-white px-3 py-1 rounded-md"
+                  >
+                     save
+                  </button>
+               </form>
+            </div>
+         </div>
+
          <div className="px-3 py-2 pb-10 mt-5 bg-white rounded-md shadow-md">
             <p className="font-medium text-lg text-gray-600">Item Payment</p>
             <div className="mt-4 flex justify-between">

@@ -2,18 +2,10 @@
 import MutationFetch from '@/hooks/MutationFetch';
 import { AmountT, AvailT } from '@/types';
 import { Trash2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { useForm } from 'react-hook-form';
 import Select from 'react-select';
-
-const options = [
-   { value: 'chocolate', label: 'item A' },
-   { value: 'strawberry', label: 'item B' },
-   { value: 'vanilla', label: 'item C' },
-   { value: 'vanilla1', label: 'item D' },
-   { value: 'vanilla2', label: 'item E' },
-];
 
 interface PaymentItemT {
    amount: number;
@@ -29,8 +21,23 @@ const PaymentForm = ({
    avail: AvailT[];
    type: string;
 }) => {
-   const { mutate } = MutationFetch(['shipmentDetail']);
+   const { mutate, isLoading } = MutationFetch(['shipmentDetail']);
+   const [isClear, setIsClear] = useState(false);
+   const [currencyValue, setCurrencyValue] = useState<string>('');
    const [shipmentId, setShipmentId] = useState<string>('');
+   const ref = useRef<any>(null);
+   const inputRef = useRef<HTMLInputElement | null>(null);
+
+   const handleClear = () => {
+      if (ref) {
+         ref.current.clearValue();
+      }
+      if (inputRef.current?.value) {
+         console.log('object');
+         inputRef.current.value = '0';
+      }
+   };
+
    const returnItem = () => {
       return avail.map((data) => {
          return {
@@ -46,6 +53,7 @@ const PaymentForm = ({
          itemId: [],
       },
    });
+
    const handleSubmitPayment = (dataPayment: PaymentItemT) => {
       const body = () => {
          if (type === 'whGate') {
@@ -64,13 +72,17 @@ const PaymentForm = ({
             };
          }
       };
+
       mutate({
          url: `/delivery/v1/shipment/${shipmentId}/cost-item`,
          body: body(),
          method: 'post',
          headers: 'json',
       });
+
+      handleClear();
    };
+
    const handleDeleteItem = (itemId: number) => {
       mutate({
          url: `/delivery/v1/shipment/${shipmentId}/cost-item/${itemId}?type=${type}`,
@@ -87,19 +99,19 @@ const PaymentForm = ({
 
    return (
       <div className="w-max">
-         <div className="flex flex-col w-full gap-1">
+         <div className="flex flex-col w-full gap-3">
             {amount &&
                amount.map((amountData, index) => {
                   return (
                      <div key={index}>
                         <div className="flex gap-2 items-center">
-                           <div className="border-2 rounded-md flex flex-wrap w-full gap-2 p-1">
+                           <div className="border-2 rounded-md flex w-full flex-col gap-2 p-1">
                               {amountData.Items &&
                                  amountData.Items.map((item, index) => {
                                     return (
                                        <p
                                           key={index}
-                                          className="border text-sm px-1 text-white font-medium rounded-lg bg-[#B2B0FF]"
+                                          className="border text-sm px-1 text-white  font-medium rounded-lg bg-[#B2B0FF]"
                                        >
                                           {item.Item.name}
                                        </p>
@@ -133,7 +145,9 @@ const PaymentForm = ({
                <div className="min-w-[200px] max-w-max">
                   <Select
                      required
+                     ref={ref}
                      isMulti
+                     isClearable={isClear}
                      closeMenuOnSelect={false}
                      options={returnItem()}
                      onChange={(e) => {
@@ -146,16 +160,19 @@ const PaymentForm = ({
                   />
                </div>
                <CurrencyInput
+                  ref={inputRef}
                   required
                   className="border-2 w-[130px] rounded-md p-[5px]"
                   placeholder="amount"
                   prefix="Rp "
-                  onValueChange={(value) =>
-                     value && setValue('amount', Number(value))
-                  }
+                  value={currencyValue}
+                  onValueChange={(value) => {
+                     value && setValue('amount', Number(value));
+                     if (value) setCurrencyValue(value);
+                  }}
                />
             </div>
-            <div className="mt-[10px]">
+            <div className=" mt-[10px]">
                <button
                   type="submit"
                   className="bg-container text-white py-1 px-2 rounded-md"

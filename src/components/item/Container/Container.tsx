@@ -9,6 +9,7 @@ import Image from 'next/image';
 import React from 'react';
 import Header from '../Header/Header';
 import HeaderY from '../Header/HeaderY';
+
 const Container = ({
    title,
    children,
