@@ -13,8 +13,10 @@ import {
 } from '@/components/ui/dialog';
 import { CanRule } from '@/hooks/Can';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { tanggal } from '@/lib/date';
 import { DetailPoType, TimelineT } from '@/types';
 import { ArrowUpRightFromCircle } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const DetailPO = ({
@@ -24,6 +26,7 @@ const DetailPO = ({
    detailPo: DetailPoType;
    noPo: string;
 }) => {
+   console.log(detailPo);
    const [open, setOpen] = useState<boolean>(false);
    const { data } = UseQueryFetching<DetailPoType>(
       `/delivery/v1/note?no=${noPo}`,
@@ -34,6 +37,9 @@ const DetailPO = ({
    const detailPoData = data ? data.data : detailPo.data;
    const Can = CanRule();
    const dateDelivery = new Date(detailPoData.dateDelivery).toDateString();
+   const pathname = usePathname();
+   const detail = pathname.split('=')[1];
+   const date = new Date(dateDelivery);
    return (
       <div className="pb-[50px]">
          <Dialog open={open} onOpenChange={setOpen}>
@@ -44,10 +50,10 @@ const DetailPO = ({
          <div className=" mb-[30px]">
             <div>
                <p className="dark:text-[#fff] text-gray-600 text-[27px] font-[500]">
-                  Ordinary Purchase Order
+                  {detail}
                </p>
                <p className="text-[15px] text-gray-500 dark:text-white">
-                  {dateDelivery}
+                  {tanggal(date)}
                </p>
             </div>
             <div className={`flex justify-between mt-[40px]`}>
@@ -67,7 +73,7 @@ const DetailPO = ({
                </div>
                <div>
                   <p className="text-[19px] mb-1 text-gray-600 dark:text-white">
-                     Sender Address
+                     Alamat Pengirim
                   </p>
                   <p className="border-[1px] rounded-[5px] p-1 dark:border-gray-100 dark:text-[#fefefe] text-[16px]  w-[300px]">
                      {detailPoData.senderAddress}
@@ -75,7 +81,7 @@ const DetailPO = ({
                </div>
                <div>
                   <p className="text-[19px] mb-1 text-gray-600 dark:text-white">
-                     Recieptent Address
+                     Alamat Penerima
                   </p>
                   <p className="border-[1px] rounded-[5px] p-1 dark:border-gray-100 dark:text-[#fefefe] text-[16px]  w-[300px]">
                      {detailPoData.recipientAddress}
@@ -100,7 +106,7 @@ const DetailPO = ({
          <div className="bg-white dark:bg-container rounded-[10px] py-[20px] mt-[40px] ">
             <div className=" bg-white dark:bg-container  shadow-md h-max w-[100vw] md:w-[100%] ">
                <h1 className="ml-[10px] mt-[10px] font-[500] dark:text-white text-[24px] text-[#474747]">
-                  Purchase Order
+                  Detail
                </h1>
                <div className="overflow-x-auto h-full">
                   <div className="mt-[20px] w-full">
@@ -118,7 +124,7 @@ const DetailPO = ({
                                           (data: TimelineT, index: number) => {
                                              const date = new Date(
                                                 data.timestamp * 1000
-                                             ).toDateString();
+                                             );
                                              const time = new Date(
                                                 data.timestamp * 1000
                                              ).toLocaleTimeString();
@@ -139,7 +145,7 @@ const DetailPO = ({
                                                          } w-[15px]  absolute h-[15px] top-0 left-[-6px] rounded-full`}
                                                       />
                                                       <div className="dark:text-white">
-                                                         <p>{date}</p>
+                                                         <p>{tanggal(date)}</p>
                                                          <p>{time}</p>
                                                       </div>
                                                       <div className="flex flex-col gap-[5px] w-[400px]">
@@ -147,14 +153,6 @@ const DetailPO = ({
                                                             className={`w-max dark:text-white text-[#3d3d3d] text-[17px] rounded-[4px] `}
                                                          >
                                                             {data.status}
-                                                            <span className="text-[14px] ml-[5px] dark:text-white text-[#525252]">
-                                                               (
-                                                               {data.updatedBy ===
-                                                               null
-                                                                  ? 'System'
-                                                                  : data.updatedBy}
-                                                               )
-                                                            </span>
                                                          </p>
                                                          <p className="dark:text-white">
                                                             Note :
@@ -181,7 +179,7 @@ const DetailPO = ({
             </div>
             <div className="mt-[40px] min-w-[200px] w-full max-w-[400px] max-h-[230px]  overflow-y-auto dark:bg-container bg-white shadow-md px-[10px] pb-[10px]">
                <h1 className="ml-[10px] mt-[10px] font-[500] text-[24px] mb-[10px] dark:text-white text-[#474747]">
-                  Items
+                  Item
                </h1>
                {detailPoData.items.map((item: any, index: number) => {
                   return (
@@ -211,7 +209,7 @@ const DetailPO = ({
                                     <DialogHeader>
                                        <DialogTitle>
                                           <p className="text-[30px] text-[#525252] font-[500]">
-                                             Timeline Items ({item.name})
+                                             {item.name}
                                           </p>
                                        </DialogTitle>
                                     </DialogHeader>
@@ -227,7 +225,7 @@ const DetailPO = ({
                                  </span>
                               </p>
                               <p className="dark:text-white">
-                                 Quantity : {item.qty}
+                                 Jumlah : {item.qty}
                               </p>
                            </div>
                         </div>

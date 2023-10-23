@@ -1,16 +1,16 @@
-import { axiosAuth } from '@/lib/api';
+import { axiosAuthServer } from '@/lib/api';
 import { cookies } from 'next/headers';
 
 const ServerFetching = () => {
    const access_token: string = cookies().get('access_token')?.value || '';
    const refresh_token: string = cookies().get('refresh_token')?.value || '';
-   axiosAuth.interceptors.request.use((config) => {
+   axiosAuthServer.interceptors.request.use((config) => {
       if (!config.headers['Authorization']) {
          config.headers['Authorization'] = `Bearer ${access_token}`;
       }
       return config;
    });
-   axiosAuth.interceptors.response.use(
+   axiosAuthServer.interceptors.response.use(
       (response) => {
          return response;
       },
@@ -19,21 +19,23 @@ const ServerFetching = () => {
             console.log(error);
             try {
                const originalRequest = error.config;
-               const refresh = await axiosAuth.post(
+               const refresh = await axiosAuthServer.post(
                   '/delivery/auth/login/refresh',
-                  { refresh_token }
+                  { refresh_token },
+                  {
+                     withCredentials: true,
+                  }
                );
-               console.log(refresh);
-               axiosAuth.defaults.headers.common['Authorization'] =
+               axiosAuthServer.defaults.headers.common['Authorization'] =
                   'Bearer ' + refresh.data.access_token;
-               return axiosAuth(originalRequest);
+               return axiosAuthServer(originalRequest);
             } catch (error) {
                Promise.reject(error);
             }
          }
       }
    );
-   return axiosAuth;
+   return axiosAuthServer;
 };
 
 export default ServerFetching;

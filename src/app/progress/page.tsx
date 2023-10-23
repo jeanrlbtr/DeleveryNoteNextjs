@@ -1,5 +1,6 @@
 import ProgressSummary from '@/components/page/ProgressSummary/ProgressSummary';
 import fetchingServer from '@/fetchingServer';
+import { tanggal } from '@/lib/date';
 import { ProgressSummaryT } from '@/types';
 
 const Page = async () => {
@@ -12,12 +13,11 @@ const Page = async () => {
       }
    });
 
-   const date = new Date().toDateString();
+   const date = new Date();
    return (
       <div className="h-[100vh] w-[100%] pt-5 px-4 bg-white">
          <div className="mb-5">
-            <p className="text-[30px] text-gray-700">Progress Summary</p>
-            <p className="text-gray-600">{date}</p>
+            <p className="text-gray-600 font-medium text-xl">{tanggal(date)}</p>
          </div>
          <ProgressSummary allItem={{ data: allItemProgress }} />
       </div>

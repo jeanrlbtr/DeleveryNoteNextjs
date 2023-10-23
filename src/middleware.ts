@@ -1,29 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { UserMeType } from './types/index.d';
 
 export async function middleware(req: NextRequest) {
    const token = req.cookies.get('access_token')?.value;
-   const userData = async () => {
-      if (token) {
-         try {
-            const res = await fetch(
-               'https://staging.saptakarsa.com/gtw/delivery/v1/user/me',
-               {
-                  method: 'GET',
-                  headers: {
-                     Authorization: `Bearer ${token}`,
-                  },
-               }
-            );
-            const response: UserMeType = await res.json();
-            return response.data.access;
-         } catch (error) {
-            // do nothing
-         }
-      }
-   };
-   const theAccess = await userData();
-   const access: string[] = theAccess || [''];
+
+   const data = req.cookies.get('data')?.value;
+   const dataAccess: string[] = data ? JSON?.parse(data || '')?.access : [];
+   const access: string[] = dataAccess || [''];
    const matcher: string[] = [
       'login',
       'users',

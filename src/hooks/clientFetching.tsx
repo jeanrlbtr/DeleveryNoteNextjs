@@ -13,6 +13,7 @@ const ClientFetching = () => {
       }
       return config;
    });
+
    axiosAuth.interceptors.response.use(
       (response) => {
          return response;
@@ -21,9 +22,13 @@ const ClientFetching = () => {
          if (error.response.status == 401) {
             try {
                const originalRequest = error.config;
+               console.log(refresh_token);
                const refresh = await axiosAuth.post(
                   '/delivery/auth/login/refresh',
-                  { refresh_token }
+                  { refresh_token },
+                  {
+                     withCredentials: true,
+                  }
                );
                axiosAuth.defaults.headers.common['Authorization'] =
                   'Bearer ' + refresh.data.access_token;

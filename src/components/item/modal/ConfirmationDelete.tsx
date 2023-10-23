@@ -31,11 +31,11 @@ const ConfirmationDelete = ({
          </DialogTrigger>
          <DialogContent>
             <DialogHeader>
-               <p className="text-[19px]">Delete User</p>
+               <p className="text-[19px]">Hapus Supir</p>
             </DialogHeader>
-            <div className="px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto">
+            <div className="px-2 ">
                <div className="flex gap-[20px] mb-[10px] text-[#525252]">
-                  Are you sure to delete driver {name}?
+                  Apakah anda ingin menghapus Supir {name}?
                </div>
                <div className="w-full flex justify-end mt-[10px]">
                   <Button
@@ -45,7 +45,7 @@ const ConfirmationDelete = ({
                      size={'sm'}
                      className="bg-[red] text-[14px] hover:bg-[#f34848]"
                   >
-                     Delete
+                     Hapus
                   </Button>
                </div>
             </div>

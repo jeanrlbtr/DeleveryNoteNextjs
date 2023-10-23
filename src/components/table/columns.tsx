@@ -1,5 +1,6 @@
 'use client';
 
+import { tanggal } from '@/lib/date';
 import {
    Allhistory,
    Delevery,
@@ -24,7 +25,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
 const ItemPOColumns: ColumnDef<Item>[] = [
    {
-      header: 'Name',
+      header: 'Nama',
       accessorKey: 'name',
       cell: (row) => {
          return (
@@ -38,11 +39,11 @@ const ItemPOColumns: ColumnDef<Item>[] = [
       },
    },
    {
-      header: 'Color',
+      header: 'Warna',
       accessorKey: 'variant',
    },
    {
-      header: 'Quantity',
+      header: 'Jumlah',
       accessorKey: 'qty',
    },
    {
@@ -53,14 +54,14 @@ const ItemPOColumns: ColumnDef<Item>[] = [
       },
    },
    {
-      header: 'Ricipient Name',
+      header: 'Penerima',
       cell: (row) => {
          const value = String(row.row.original.inv.recipientName);
          return <div>{value}</div>;
       },
    },
    {
-      header: 'Date Shipment',
+      header: 'Pengiriman',
       cell: (row) => {
          const value = String(row.row.original.inv.dateDelivery);
          const date = new Date(value).toLocaleDateString();
@@ -68,7 +69,7 @@ const ItemPOColumns: ColumnDef<Item>[] = [
       },
    },
    {
-      header: 'Date Order',
+      header: 'Tanggal Order',
       cell: (row) => {
          const value = String(row.row.original.inv.dateNote);
          const date = new Date(value).toLocaleDateString();
@@ -113,7 +114,7 @@ const LevelColumn: ColumnDef<LevelTabelType>[] = [
       accessorKey: 'code',
    },
    {
-      header: 'Level Name',
+      header: 'Nama Level',
       accessorKey: 'name',
    },
 ];
@@ -123,7 +124,7 @@ const LoadingColumn: ColumnDef<Loading>[] = [
       header: 'Loading',
       accessorKey: 'loading',
       cell: () => {
-         return <div>loading please Wait</div>;
+         return <div>loading Mohon Tunggu</div>;
       },
    },
 ];
@@ -157,19 +158,19 @@ const detailNoteColumn: ColumnDef<DetailPoTableType>[] = [
       accessorKey: 'sales',
    },
    {
-      header: 'Store',
+      header: 'Toko',
       accessorKey: 'store',
    },
    {
-      header: 'Date PO',
+      header: 'Tanggal SJ',
       accessorKey: 'dateNote',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('dateNote')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateNote')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
-      header: 'Attachment',
+      header: 'Lampiran',
       accessorKey: 'attachment',
       cell: ({ row }) => {
          const link = `${row.getValue('attachment')}`;
@@ -181,15 +182,15 @@ const detailNoteColumn: ColumnDef<DetailPoTableType>[] = [
       },
    },
    {
-      header: 'Sender Name',
+      header: 'Pengirim',
       accessorKey: 'senderName',
    },
    {
-      header: 'Recieptent Name',
+      header: 'Penerima',
       accessorKey: 'recipientName',
    },
    {
-      header: 'Note',
+      header: 'Keterangan',
       accessorKey: 'note',
       cell: ({ row }) => {
          return <p className="max-w-[200px]">{row.getValue('note')}</p>;
@@ -210,26 +211,24 @@ const historyColumn: ColumnDef<History>[] = [
       header: 'Date PO',
       accessorKey: 'dateNote',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('dateNote')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateNote')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
       header: 'Date Delevery',
       accessorKey: 'dateDelivery',
       cell: ({ row }) => {
-         const date = new Date(
-            `${row.getValue('dateDelivery')}`
-         ).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateDelivery')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
       header: 'Date History',
       accessorKey: 'addDate',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('addDate')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('addDate')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
@@ -316,8 +315,8 @@ const itemColumn: ColumnDef<Items>[] = [
       header: 'Date',
       accessorKey: 'addDate',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('addDate')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('addDate')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
 ];
@@ -358,26 +357,24 @@ const allHistoryColumn: ColumnDef<Allhistory>[] = [
       header: 'Date Note',
       accessorKey: 'dateNote',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('dateNote')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateNote')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
       header: 'Date Delevery',
       accessorKey: 'dateDelivery',
       cell: ({ row }) => {
-         const date = new Date(
-            `${row.getValue('dateDelivery')}`
-         ).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateDelivery')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
       header: 'Add Date',
       accessorKey: 'addDate',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('addDate')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('addDate')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
@@ -408,11 +405,11 @@ const allHistoryColumn: ColumnDef<Allhistory>[] = [
 
 const userColumn: ColumnDef<Users>[] = [
    {
-      header: 'Name',
+      header: 'Nama',
       accessorKey: 'name',
    },
    {
-      header: 'Is Active',
+      header: 'User Aktif',
       accessorKey: 'isActive',
       cell: ({ row }) => {
          return (
@@ -427,7 +424,7 @@ const userColumn: ColumnDef<Users>[] = [
       },
    },
    {
-      header: 'Level User',
+      header: 'Level Pengguna',
       accessorKey: 'levelUser',
       cell: ({ row }) => {
          const userlevel: any = row.getValue('levelUser');
@@ -447,32 +444,30 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
       accessorKey: 'sales',
    },
    {
-      header: 'Recipient Address',
+      header: 'Alamat Penerima',
       accessorKey: 'recipientAddress',
       cell: ({ row }) => {
          return <p className="w-[200px]">{row.getValue('recipientAddress')}</p>;
       },
    },
    {
-      header: 'Store',
+      header: 'Toko',
       accessorKey: 'store',
    },
    {
-      header: 'Date Delevery',
+      header: 'Tanggal Pengiriman',
       accessorKey: 'dateDelivery',
       cell: ({ row }) => {
-         const date = new Date(
-            `${row.getValue('dateDelivery')}`
-         ).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateDelivery')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
-      header: 'Date Note',
+      header: 'Tanggal Note',
       accessorKey: 'dateNote',
       cell: ({ row }) => {
-         const date = new Date(`${row.getValue('dateNote')}`).toDateString();
-         return <div>{date}</div>;
+         const date = new Date(`${row.getValue('dateNote')}`);
+         return <div>{tanggal(date)}</div>;
       },
    },
    {
@@ -510,11 +505,11 @@ const columnsDelevery: ColumnDef<Delevery>[] = [
 
 const rankColumn: ColumnDef<RankItem>[] = [
    {
-      header: 'Name',
+      header: 'Nama',
       accessorKey: 'name',
    },
    {
-      header: 'Variant',
+      header: 'Warna',
       accessorKey: 'variant',
    },
    {
@@ -529,29 +524,29 @@ const tollPaymentColumn: ColumnDef<TollMetaT>[] = [
       accessorKey: 'gate',
    },
    {
-      header: 'Amount',
+      header: 'Biaya',
       accessorKey: 'amount',
       cell: (row) => {
          return <p>Rp {row.row.original.amount.toLocaleString('id-ID')},00</p>;
       },
    },
    {
-      header: 'Time',
+      header: 'Waktu',
       accessorKey: 'time',
    },
 ];
 
 const shipmentColumn: ColumnDef<ShipmentT>[] = [
    {
-      header: 'Driver Name',
+      header: 'Nama Supir',
       accessorKey: 'driverName',
    },
    {
-      header: 'Driver Plate',
+      header: 'Plat Supir',
       accessorKey: 'driverPlate',
    },
    {
-      header: 'Toll Balance',
+      header: 'Saldo Toll',
       accessorKey: 'tollBalance',
       cell: (row) => {
          return (
@@ -560,7 +555,7 @@ const shipmentColumn: ColumnDef<ShipmentT>[] = [
       },
    },
    {
-      header: 'Amount Request',
+      header: 'Request Saldo',
       accessorKey: 'amountRequest',
       cell: (row) => {
          return (
@@ -572,18 +567,18 @@ const shipmentColumn: ColumnDef<ShipmentT>[] = [
    },
 
    {
-      header: 'Shipment Date',
+      header: 'tanggal Pengiriman',
       accessorKey: 'shipmentDate',
       cell: (row) => {
-         const date = new Date(String(row.getValue())).toDateString();
-         return <p>{String(date)}</p>;
+         const date = new Date(String(row.getValue()));
+         return <p>{tanggal(date)}</p>;
       },
    },
 ];
 
 const driverColumn: ColumnDef<DriverDetailT>[] = [
    {
-      header: 'Name',
+      header: 'Nama',
       accessorKey: 'User',
       cell: (row) => {
          return <p>{row.row.original.User.name}</p>;

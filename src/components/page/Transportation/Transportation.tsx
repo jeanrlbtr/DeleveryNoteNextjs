@@ -14,7 +14,6 @@ import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { useForm } from 'react-hook-form';
-import AsyncSelect from 'react-select/async';
 
 interface TollpaymentT {
    amount: number | string;
@@ -45,6 +44,7 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
       shipmentDetail
    );
    const dataShipmentDetail = data?.data || shipmentDetail.data;
+   const disable = new Date(dataShipmentDetail.shipmentDate) !== new Date();
    const { mutate } = MutationFetch(['shipmentDetail']);
    const { register, handleSubmit, setValue } = useForm<TollPaymentT>({
       defaultValues: {
@@ -98,11 +98,10 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
          </div> */}
 
          <div className="pt-4">
-            <div className=" mb-5 flex justify-between w-full items-center">
-               <div className="flex gap-5">
+            <div className=" mb-5  flex justify-between w-full items-center">
+               {/* <div className="flex gap-5">
                   <div className="min-w-[200px]">
                      <AsyncSelect
-                        isMulti
                         styles={{
                            control: (baseStyles) => ({
                               ...baseStyles,
@@ -130,34 +129,32 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                      onClick={handleAddPO}
                      className="bg-container px-2 py-[6px] text-white rounded-md"
                   >
-                     Save
+                     Submit
                   </button>
-               </div>
+               </div> */}
                <div>
-                  <QRScanner>
-                     <div className="bg-container px-2 py-[6px] text-white rounded-md">
-                        Add PO with QR
-                     </div>
-                  </QRScanner>
+                  <QRScanner handleSave={handleAddPO} disabled={disable} />
                </div>
             </div>
             <div className="flex items-center gap-9">
                <InputTransport
-                  title="Gas Payment"
-                  titleInput="Amount"
+                  disable={disable}
+                  title="Uang Bensin"
+                  titleInput="Jumlah"
                   value={dataShipmentDetail.gas}
                   type="gas"
                />
                <InputTransport
-                  title="Travel Expense"
-                  titleInput="Toll Balance"
+                  disable={disable}
+                  title="Biaya Perjalanan"
+                  titleInput="Biaya Toll"
                   value={dataShipmentDetail.tollBalance}
                   type="tollBalance"
                />
             </div>
          </div>
          <div className="flex-1 mt-5 bg-white shadow-md px-2 rounded-md py-3">
-            <p className="text-gray-600 text-lg font-medium">Customer info</p>
+            <p className="text-gray-600 text-lg font-medium">Customer</p>
             <div className="flex gap-4">
                {dataShipmentDetail.customer.map((data, index) => {
                   return (
@@ -183,7 +180,7 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
          </div>
          <div className="px-1 mt-5  rounded-lg py-3 flex-[4] shadow-md bg-white">
             <p className="px-2 mb-4 font-medium text-lg text-gray-600">
-               Toll Payment
+               Biaya Toll
             </p>
             <DataTable
                columns={tollPaymentColumn}
@@ -222,7 +219,7 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                         value && setValue('amount', value)
                      }
                      className="border p-2 rounded-[5px]"
-                     placeholder="amount"
+                     placeholder="Jumlah Biaya"
                      prefix="Rp "
                   />
                   <input
@@ -236,22 +233,23 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                      type="submit"
                      className="bg-container text-white px-3 py-1 rounded-md"
                   >
-                     save
+                     Submit
                   </button>
                </form>
             </div>
          </div>
 
          <div className="px-3 py-2 pb-10 mt-5 bg-white rounded-md shadow-md">
-            <p className="font-medium text-lg text-gray-600">Item Payment</p>
+            <p className="font-medium text-lg text-gray-600">Item Pembiayaan</p>
             <div className="mt-4 flex justify-between">
                <div>
                   <p className="font-medium text-gray-600 text-base">
-                     Parking amount
+                     Biaya Parkir
                   </p>
                   <div className="mt-3 ">
                      <PaymentForm
                         type="parking"
+                        disable={disable}
                         avail={dataShipmentDetail.parkingMeta.avail}
                         amount={dataShipmentDetail.parkingMeta.amount}
                      />
@@ -259,11 +257,12 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                </div>
                <div>
                   <p className="font-medium text-gray-600 text-base">
-                     Warehouse Parking
+                     Biaya Warehouse
                   </p>
                   <div className="mt-3">
                      <PaymentForm
                         type="whGate"
+                        disable={disable}
                         amount={dataShipmentDetail.whGateMeta.amount}
                         avail={dataShipmentDetail.whGateMeta.avail}
                      />
@@ -271,11 +270,12 @@ const Transportation = ({ shipmentDetail }: DetailProps) => {
                </div>
                <div>
                   <p className="font-medium text-gray-600 text-base">
-                     Porter amount
+                     Biaya Porter
                   </p>
                   <div className="mt-3">
                      <PaymentForm
                         type="porter"
+                        disable={disable}
                         amount={dataShipmentDetail.porterMeta.amount}
                         avail={dataShipmentDetail.porterMeta.avail}
                      />

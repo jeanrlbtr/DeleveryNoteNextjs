@@ -8,7 +8,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
 
    return (
       <section>
-         <Container dataUser={userMe} title="Delevery Note">
+         <Container dataUser={userMe} title="Surat Jalan">
             {children}
          </Container>
       </section>

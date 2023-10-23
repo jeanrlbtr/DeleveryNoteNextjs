@@ -1,12 +1,10 @@
 'use client';
 
-import React from 'react';
-import { Input } from '../../../components/ui/input';
-import { Button } from '../../../components/ui/button';
-import { useForm } from 'react-hook-form';
-import { useToast } from '../../../components/ui/use-toast';
-import { Loader } from 'lucide-react';
 import MutationFetch from '@/hooks/MutationFetch';
+import { Loader } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { Input } from '../../../components/ui/input';
+import { useToast } from '../../../components/ui/use-toast';
 
 interface Inputs {
    feature: string;
@@ -110,13 +108,13 @@ const ModalPageAccess = () => {
                      Delete
                   </label>
                </div>
-               <Button
+               <button
                   type="submit"
-                  className="h-max p-[1px] mt-[5px] text-[17px] bg-submit hover:bg-submit-hover"
+                  className="h-max px-2 py-1 mt-[5px] bg-container text-[17px] text-white rounded-md hover:dark:bg-submit-hover"
                   disabled={isLoading}
                >
                   {isLoading ? <Loader /> : 'Apply'}
-               </Button>
+               </button>
             </div>
          </div>
       </form>

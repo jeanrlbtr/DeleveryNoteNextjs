@@ -8,3 +8,7 @@ export const API = axios.create({
 export const axiosAuth = axios.create({
    baseURL,
 });
+
+export const axiosAuthServer = axios.create({
+   baseURL,
+});

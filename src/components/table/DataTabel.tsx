@@ -21,8 +21,8 @@ interface DataTableProps<TData, TValue> {
    topTable?: any;
    type?: any;
    isLoading?: boolean;
-   nextPage?: Function;
-   previousPage?: Function;
+   nextPage?: () => void;
+   previousPage?: () => void;
    disabledNext?: boolean;
    disabledPrev?: boolean;
    limit?: string;
@@ -38,8 +38,8 @@ export function DataTable<TData, TValue>({
    action,
    children = Function,
    topTable,
-   nextPage = Function,
-   previousPage = Function,
+   nextPage,
+   previousPage,
    disabledNext,
    disabledPrev,
    limit,
@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({
                <div className="w-[200px] rounded-[5px] border-[1px] dark:bg-[#292D5A] px-1 border-gray-500 dark:border-white flex justify-between items-center py-1 ">
                   <input
                      type="text"
-                     placeholder="Search"
+                     placeholder="Cari "
                      onChange={(e) => setGlobalFilter(e.target.value)}
                      className="font-sans outline-none bg-[transparent] w-[150px]"
                   />
@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
                            return (
                               <th
                                  key={header.id}
-                                 className={`sticky top-0 py-3 px-3 dark:text-white bg-white dark:bg-[#292D5A] font-normal text-sm text-left `}
+                                 className={`sticky top-0 py-3 px-3 dark:text-white bg-gray-50 dark:bg-[#292D5A] text-sm font-semibold text-left `}
                               >
                                  {header.isPlaceholder
                                     ? null
@@ -108,7 +108,7 @@ export function DataTable<TData, TValue>({
                         })}
                         {action && !isLoading ? (
                            <th
-                              className={`sticky top-0 bg-white dark:text-white dark:bg-[#292D5A] py-3 px-3 font-[400] text-sm  text-left `}
+                              className={`sticky top-0 bg-gray-50 dark:text-white dark:bg-[#292D5A] py-3 px-3  text-sm font-semibold  text-left `}
                            >
                               Action
                            </th>
@@ -176,18 +176,20 @@ export function DataTable<TData, TValue>({
             <Button
                variant="outline"
                size="sm"
-               onClick={() => previousPage()}
+               onClick={() => previousPage && previousPage()}
                disabled={disabledPrev}
+               className={`${disabledPrev && 'cursor-not-allowed'}`}
             >
-               Previous
+               Sebelumnya
             </Button>
             <Button
                variant="outline"
                size="sm"
-               onClick={() => nextPage()}
+               className={`${disabledNext && 'cursor-not-allowed '}`}
+               onClick={() => nextPage && nextPage()}
                disabled={disabledNext}
             >
-               Next
+               Selanjutnya
             </Button>
          </div>
       </div>

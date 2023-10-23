@@ -72,7 +72,7 @@ export function DataTableDetail<TData, TValue>({
                      {headerGroup.headers.map((header) => {
                         return (
                            <TableHead
-                              className="text-[17px] font-[400] dark:text-white text-[#474747]"
+                              className="text-[15px] font-medium bg-gray-100 dark:text-white text-[#474747]"
                               key={header.id}
                            >
                               {header.isPlaceholder

@@ -7,80 +7,81 @@ export default function Chart({ dataTotal }: { dataTotal: any }) {
       {
          name: 'Jan',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Feb',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Mar',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Apr',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
-         name: 'May',
+         name: 'Mei',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Jun',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Jul',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
-         name: 'Aug',
+         name: 'Agu',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
-         name: 'Sept',
+         name: 'Sep',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
-         name: 'Oct',
+         name: 'Okt',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
          name: 'Nov',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
       {
-         name: 'Dec',
+         name: 'Des',
          Total: 0,
-         Cancel: 0,
+         Batal: 0,
       },
    ];
 
    for (let i = 0; i < data.length; i++) {
       dataTotal?.filter((item: any) => {
          if (item.month == i + 1) {
-            data[i].Cancel = item.canceled;
+            data[i].Batal = item.canceled;
             data[i].Total = item.total;
          }
       });
    }
+
    return (
       <Card>
          <AreaChart
             className="h-[200px] mt-2 dark:text-white border-0"
             data={data}
             index="name"
-            categories={['Total', 'Cancel']}
+            categories={['Total', 'Batal']}
             colors={['blue', 'red']}
             curveType="monotone"
             showTooltip={true}

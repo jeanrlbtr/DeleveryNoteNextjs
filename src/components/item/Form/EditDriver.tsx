@@ -41,7 +41,7 @@ const EditDriver = ({
             <Edit className="text-[green]" />
          </DialogTrigger>
          <DialogContent>
-            <DialogTitle>Edit Driver</DialogTitle>
+            <DialogTitle>Edit Supir</DialogTitle>
             <div className="w-[500px] bg-white">
                <form
                   onSubmit={handleSubmit((data) => {
@@ -50,7 +50,7 @@ const EditDriver = ({
                >
                   <div className="mt-4">
                      <p className="text-sm mb-1 text-gray-600">
-                        Plat Number <span className="text-red-500">*</span>
+                        Nomor Plat <span className="text-red-500">*</span>
                      </p>
                      <Input
                         defaultValue={platNo}
@@ -64,7 +64,7 @@ const EditDriver = ({
                         className="mt-[20px] w-[110px] dark:bg-submit text-white bg-container border-dark hover:bg-container  hover:dark:bg-submit-hover"
                         type="submit"
                      >
-                        {isLoading ? <Loader /> : 'Save'}
+                        {isLoading ? <Loader /> : 'Submit'}
                      </Button>
                   </div>
                </form>

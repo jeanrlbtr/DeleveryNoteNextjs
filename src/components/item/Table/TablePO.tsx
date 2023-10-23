@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use client';
 import {
    Table,
@@ -11,7 +12,7 @@ import { Trash2 } from 'lucide-react';
 
 interface TablePoProps {
    dataPo: string[];
-   handleDelete: (value: string) => void;
+   handleDelete: (item: string) => void;
 }
 
 const TablePO = ({ dataPo, handleDelete }: TablePoProps) => {
@@ -20,7 +21,7 @@ const TablePO = ({ dataPo, handleDelete }: TablePoProps) => {
          <TableHeader>
             <TableRow>
                <TableHead>No</TableHead>
-               <TableHead>Purchase Order</TableHead>
+               <TableHead>Surat Jalan</TableHead>
                <TableHead></TableHead>
             </TableRow>
          </TableHeader>
@@ -45,7 +46,7 @@ const TablePO = ({ dataPo, handleDelete }: TablePoProps) => {
             ) : (
                <TableRow>
                   <TableCell colSpan={3} className="text-gray-600 text-center">
-                     No results.
+                     Belum ada Surat Jalan
                   </TableCell>
                </TableRow>
             )}

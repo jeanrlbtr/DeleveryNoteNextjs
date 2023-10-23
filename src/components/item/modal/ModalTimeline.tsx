@@ -1,3 +1,4 @@
+import { tanggal } from '@/lib/date';
 import { ItemProgressT } from '@/types';
 
 const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
@@ -6,9 +7,7 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
          <div className="max-h-[60vh] flex ">
             <div className=" flex flex-col md:grid md:grid-cols-9 mx-auto p-2 ">
                {dataItems.map((progress: ItemProgressT, index: number) => {
-                  const date = new Date(
-                     progress.timestamp * 1000
-                  ).toDateString();
+                  const date = new Date(progress.timestamp * 1000);
                   const time = new Date(
                      progress.timestamp * 1000
                   ).toLocaleTimeString();
@@ -45,7 +44,7 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
                               </div>
                               <div className="w-full col-start-6 col-end-10 flex items-center">
                                  <h3 className="font-[400] text-[12px] md:text-[16px] mb-1 text-gray-600 dark:text-white">
-                                    {date}, {time}
+                                    {tanggal(date)}, {time}
                                  </h3>
                               </div>
                            </>
@@ -53,7 +52,7 @@ const Timeline = ({ dataItems }: { dataItems: ItemProgressT[] }) => {
                            <>
                               <div className="w-full col-start-1 col-end-5 flex items-center  justify-end">
                                  <h3 className="font-[400] text-[12px] md:text-[16px] mb-1 text-gray-600">
-                                    {date}, {time}
+                                    {tanggal(date)}, {time}
                                  </h3>
                               </div>
                               <div className="col-start-5 col-end-6 mr-10 md:mx-auto relative">

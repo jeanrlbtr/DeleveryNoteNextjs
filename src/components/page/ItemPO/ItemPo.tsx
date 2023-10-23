@@ -15,7 +15,7 @@ import { UseQueryFetching } from '@/hooks/UseQueryFetch';
 import { Item, ItemPO, StatusItem, StatusT } from '@/types';
 import { Dialog, DialogTrigger } from '@radix-ui/react-dialog';
 import { Row } from '@tanstack/react-table';
-import { GanttChart, PlusCircle, Search } from 'lucide-react';
+import { GanttChart, Pencil, Search } from 'lucide-react';
 import { useState } from 'react';
 
 const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
@@ -26,7 +26,7 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
 
    const url =
       statusQuery !== 0
-         ? `/delivery/v1/note/items?statusId=${1}&limit=${10}&page=${page}`
+         ? `/delivery/v1/note/items?statusId=${statusQuery}&limit=${10}&page=${page}`
          : `/delivery/v1/note/items?page=${page}&limit=${10}`;
 
    const { data, isError } = UseQueryFetching<ItemPO>(url, [
@@ -40,6 +40,19 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
    }
    const handleSetStatus = (id: number) => {
       setStatusQuery(id);
+   };
+   const disableNext = data && data.data.totalPages === page;
+   const disablePrev = data && data.data.totalPages === 1;
+   const handlePrevPage = () => {
+      if (page !== 1) {
+         setPage((prev) => prev - 1);
+      }
+   };
+
+   const handleNextPage = () => {
+      if (page >= 1) {
+         setPage((prev) => prev + 1);
+      }
    };
    return (
       <>
@@ -62,16 +75,20 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                <Search className="w-4 h-4 text-gray-500 dark:text-gray-50" />
                <input
                   type="text"
-                  placeholder="Search Item"
+                  placeholder="Cari Item"
                   className=" w-[150px] dark:text-white placeholder:text-gray-500 bg-transparent placeholder:dark:text-[#a2b3eb] outline-none overflow-hidden"
                />
             </div>
             <div className="w-full">
                <DataTable
                   data={data?.data.items || []}
+                  disabledNext={disableNext}
+                  disabledPrev={disablePrev}
                   type={'item'}
                   columns={ItemPOColumns}
                   action={true}
+                  previousPage={handlePrevPage}
+                  nextPage={handleNextPage}
                >
                   {(row: Row<Item>) => {
                      const itemProgress = row.original.itemProgress;
@@ -89,7 +106,7 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                                  <DialogHeader>
                                     <DialogTitle>
                                        <p className="text-[20px] dark:text-white text-[#525252] font-[500]">
-                                          Timeline Items {row.original.name}
+                                          {row.original.name}
                                        </p>
                                     </DialogTitle>
                                  </DialogHeader>
@@ -97,21 +114,23 @@ const ItemPurchaseOrder = ({ data: statusPO }: StatusItem) => {
                               </DialogContent>
                            </Dialog>
                            <div className="">
-                              <Dialog>
-                                 <DialogTrigger>
-                                    <div
-                                       className={`flex items-center gap-2 border-[1px] rounded-[7px] bg-white px-2 py-1`}
-                                    >
-                                       <PlusCircle className="w-[18px] h-[18px] cursor-pointer text-[#405189]" />
-                                    </div>
-                                 </DialogTrigger>
-                                 <DialogContent className="rounded-[10px]">
-                                    <UpdateItems
-                                       status={{ data: statusPO }}
-                                       id={`${row.original.id}`}
-                                    />
-                                 </DialogContent>
-                              </Dialog>
+                              <Can I="read" a={'poItem'}>
+                                 <Dialog>
+                                    <DialogTrigger>
+                                       <div
+                                          className={`flex items-center gap-2 border-[1px] rounded-[7px] bg-white px-2 py-1`}
+                                       >
+                                          <Pencil className="w-[18px] h-[18px] cursor-pointer text-[#405189]" />
+                                       </div>
+                                    </DialogTrigger>
+                                    <DialogContent className="rounded-[10px]">
+                                       <UpdateItems
+                                          status={{ data: statusPO }}
+                                          id={`${row.original.id}`}
+                                       />
+                                    </DialogContent>
+                                 </Dialog>
+                              </Can>
                            </div>
                         </div>
                      );

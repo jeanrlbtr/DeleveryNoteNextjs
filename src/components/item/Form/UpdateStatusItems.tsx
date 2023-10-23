@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
    Select,
@@ -37,7 +36,7 @@ const UpdateItems = ({
 
    return (
       <div className="w-[200px] md:w-[500px]">
-         <p className="text-[20px] text-[#3d3d3d]">Update Status PO</p>
+         <p className="text-[20px] text-[#3d3d3d]">Update Status SJ</p>
          <form
             onSubmit={handleSubmit((data) => {
                mutate({
@@ -82,13 +81,12 @@ const UpdateItems = ({
                   })}
                />
             </div>
-            <Button
-               type="submit"
-               className="w-full bg-[#405189]"
+            <button
+               className="w-full bg-container flex justify-center items-center text-white py-1 rounded-md"
                disabled={disable}
             >
-               {isLoading ? <Loader /> : 'Update Status Items'}
-            </Button>
+               {isLoading ? <Loader /> : 'Update Status Barang'}
+            </button>
          </form>
       </div>
    );

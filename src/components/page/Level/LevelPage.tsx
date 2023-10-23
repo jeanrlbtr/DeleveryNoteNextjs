@@ -104,13 +104,13 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                   }}
                >
                   <DialogTrigger>
-                     <div className="ml-6 hover:bg-submit-hover bg-container border-dark transition text-white px-3 py-1 rounded-[6px] text-[16px]">
-                        Add Level
+                     <div className="ml-6 hover:dark:bg-submit-hover bg-container border-dark transition text-white px-3 py-1 rounded-[6px] text-[16px]">
+                        Tambah Level
                      </div>
                   </DialogTrigger>
                   <DialogContent>
                      <DialogHeader>
-                        <DialogTitle>Add Level</DialogTitle>
+                        <DialogTitle>Tambah Level</DialogTitle>
                      </DialogHeader>
                      <div>
                         <form
@@ -165,9 +165,7 @@ const LevelPage = ({ initialLevelData }: { initialLevelData: LevelType }) => {
                         </div>
                      </DialogTrigger>
                      <DialogContent className="dark:bg-container bg-white">
-                        <DialogHeader>
-                           <DialogTitle>Edit Level</DialogTitle>
-                        </DialogHeader>
+                        <DialogTitle>Edit Level</DialogTitle>
                         <div>
                            <form
                               onSubmit={handleSubmit((data: any) => {

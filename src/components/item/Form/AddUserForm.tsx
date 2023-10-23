@@ -1,13 +1,17 @@
 'use client';
 
-import { Checkbox } from '@/components/ui/checkbox';
+import {
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from '@/components/ui/select';
 import MutationFetch from '@/hooks/MutationFetch';
 import ClientFetching from '@/hooks/clientFetching';
 import { Loader } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
-import { Button } from '../../ui/button';
-import ControllerSelect from '../Input/ControllerSelect';
 import './form.css';
 
 interface User {
@@ -28,22 +32,16 @@ const UserForm = ({ level }: { level: any[] }) => {
    };
 
    const {
+      register,
       handleSubmit,
-      control,
       setValue,
-      getValues,
       formState: { errors },
    } = useForm<User>({ defaultValues: defaultValuesUser });
    const { mutate: postUser, isLoading } = MutationFetch(['getUser']);
-
    const addUser = async (data: any) => {
-      const body: any = {};
-      for (let i in data) {
-         if (data[i]) body[`${i}`] = data[i];
-      }
       postUser({
-         body,
-         headers: 'formData',
+         body: data,
+         headers: 'json',
          url: `/delivery/v1/user/register`,
          method: 'post',
       });
@@ -75,15 +73,11 @@ const UserForm = ({ level }: { level: any[] }) => {
                   htmlFor="name"
                   className="text-sm dark:text-white text-gray-700"
                >
-                  Name <span className="text-red-700">*</span>
-                  {!getValues('name') && (
-                     <span className="text-red-700 text-xs">
-                        (This field cannot be empty)
-                     </span>
-                  )}
+                  Nama <span className="text-red-700">*</span>
                </label>
                <div className="bg-red-300">
                   <AsyncSelect
+                     required
                      styles={{
                         control: (baseStyles) => ({
                            ...baseStyles,
@@ -110,21 +104,27 @@ const UserForm = ({ level }: { level: any[] }) => {
                      htmlFor="name"
                      className="text-sm dark:text-white text-gray-700"
                   >
-                     Level User <span className="text-red-700">*</span>{' '}
-                     {!getValues('levelId') && (
-                        <span className="text-red-700 text-xs">
-                           (This field cannot be empty)
-                        </span>
-                     )}
+                     Level Pengguna <span className="text-red-700">*</span>{' '}
                   </label>
-                  <ControllerSelect
-                     control={control}
-                     name="level"
-                     rules={{ require: true }}
-                     title="level"
-                     level={level}
-                     type="level"
-                  />
+                  <Select
+                     required
+                     onValueChange={(e) => {
+                        setValue('levelId', Number(e));
+                     }}
+                  >
+                     <SelectTrigger className="text-black">
+                        <SelectValue placeholder="Pilih Level" />
+                     </SelectTrigger>
+                     <SelectContent>
+                        {level.map((data, index) => {
+                           return (
+                              <SelectItem key={index} value={`${data.id}`}>
+                                 {data.name}
+                              </SelectItem>
+                           );
+                        })}
+                     </SelectContent>
+                  </Select>
                </div>
             </div>
             <div className="flex  gap-5 w-full">
@@ -133,33 +133,32 @@ const UserForm = ({ level }: { level: any[] }) => {
                      htmlFor="name"
                      className="text-sm dark:text-white text-gray-700"
                   >
-                     Is Active <span className="text-red-700">*</span>
-                     {!getValues('isActive') && (
-                        <span className="text-red-700 text-xs">
-                           (This field cannot be empty)
-                        </span>
-                     )}
+                     User Aktif <span className="text-red-700">*</span>
                   </label>
                   <div className="flex gap-2 items-center">
-                     <Checkbox
+                     {/* <Checkbox
                         onCheckedChange={(e: boolean) => {
                            setValue('isActive', e);
                         }}
                         className="bg-transparent border-gray-400"
+                     /> */}
+                     <input
+                        required
+                        type="checkbox"
+                        className="cursor-pointer"
+                        {...register('isActive')}
                      />
-                     <p className="text-sm font-light">User Not Active</p>
                   </div>
                </div>
             </div>
          </div>
          <div className="flex justify-end">
-            <Button
-               className="mt-[20px] w-[110px] dark:bg-submit text-white bg-container border-dark  hover:dark:bg-submit-hover"
-               type="submit"
+            <button
+               className="mt-[20px] w-[110px] flex justify-center py-1 rounded-md dark:bg-submit text-white bg-container border-dark  hover:dark:bg-submit-hover"
                disabled={disable || isLoading}
             >
                {isLoading ? <Loader /> : 'submit'}
-            </Button>
+            </button>
          </div>
       </form>
    );

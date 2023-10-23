@@ -34,21 +34,21 @@ const menu = [
       spaceY: false,
    },
    {
-      name: 'Purchase Order',
+      name: 'Surat Jalan',
       icon: <TruckIcon className="w-[25px] h-[25px]" />,
       url: '/notes',
       access: 'notes',
       spaceY: false,
    },
    {
-      name: 'Progress Summary',
+      name: 'Progres Item',
       icon: <FolderKanban className="w-[25px] h-[25px]" />,
       url: '/progress',
       access: 'progress',
       spaceY: false,
    },
    {
-      name: 'Check Item',
+      name: 'Item Status',
       icon: <PackageCheck className="w-[25px] h-[25px]" />,
       url: '/item',
       access: 'item',
@@ -62,21 +62,21 @@ const menu = [
       spaceY: true,
    },
    {
-      name: 'Shipment',
+      name: 'Biaya Perjalanan',
       icon: <CreditCard className="w-[25px] h-[25px]" />,
       url: '/shipment',
       access: 'shipment',
       spaceY: false,
    },
    {
-      name: 'Driver',
+      name: 'Supir',
       icon: <LifeBuoy className="w-[25px] h-[25px]" />,
       url: '/driver',
       access: 'driver',
       spaceY: false,
    },
    {
-      name: 'Users',
+      name: 'User',
       icon: <User className="w-[25px] h-[25px]" />,
       url: '/users',
       access: 'users',
@@ -192,7 +192,7 @@ const HeaderY = ({ handleSidebar, show, dataUser }: HeaderYProps) => {
                            !show && 'scale-0 hidden'
                         }`}
                      >
-                        logout
+                        Keluar
                      </p>
                   </div>
                </TooltipComponent>

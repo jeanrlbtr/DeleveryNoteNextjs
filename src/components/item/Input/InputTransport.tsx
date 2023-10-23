@@ -8,11 +8,13 @@ const InputTransport = ({
    value,
    titleInput,
    type,
+   disable,
 }: {
    title: string;
    value: string | number;
    titleInput: string;
    type: string;
+   disable: boolean;
 }) => {
    const [amount, setAmount] = useState(Number(value));
    const [shipmentId, setShipmentId] = useState<string | null>('');
@@ -51,6 +53,7 @@ const InputTransport = ({
             <div className="flex w-full justify-between items-center gap-3">
                <CurrencyInput
                   defaultValue={amount}
+                  disabled={disable}
                   placeholder="amount"
                   className="w-full rounded-[7px] text-gray-600 p-1 border outline-none border-[#5c6eaa]"
                   decimalsLimit={2}
@@ -63,9 +66,12 @@ const InputTransport = ({
                />
                <button
                   type="submit"
-                  className="py-1 px-2 text-white rounded-md bg-container"
+                  disabled={disable}
+                  className={`py-1 px-2 text-white rounded-md  ${
+                     disable ? 'bg-gray-400 cursor-not-allowed' : 'bg-container'
+                  }`}
                >
-                  Save
+                  Submit
                </button>
             </div>
          </form>

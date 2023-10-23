@@ -2,10 +2,12 @@
 
 import Casl from '@/hooks/CASL';
 import { UseQueryFetching } from '@/hooks/UseQueryFetch';
+import { tanggal } from '@/lib/date';
 import { UserMeType } from '@/types';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import Header from '../Header/Header';
 import HeaderY from '../Header/HeaderY';
@@ -19,11 +21,12 @@ const Container = ({
    children: React.ReactNode;
    dataUser: UserMeType;
 }) => {
+   const pathName = usePathname();
    const { setTheme, theme } = useTheme();
    // const { toast } = useToast();
    const [show, setShow] = React.useState<boolean>(false);
    // const token = getCookie('access_token');
-   const date = new Date().toDateString();
+   const date = new Date();
 
    const { data: userData } = UseQueryFetching<UserMeType>(
       '/delivery/v1/user/me',
@@ -31,6 +34,33 @@ const Container = ({
       dataUser
    );
 
+   const titlePathname = () => {
+      // console.log(pathName === '/users');
+      if (pathName === '/') {
+         return 'Dashboard';
+      }
+      if (pathName.split('/').includes('notes')) {
+         return 'Surat Jalan';
+      }
+      if (pathName === '/item') {
+         return 'Status Barang';
+      }
+      if (pathName === '/level') {
+         return 'Level Pengguna';
+      }
+      if (pathName === '/shipment') {
+         return 'Biaya Perjalan';
+      }
+      if (pathName.split('/').includes('shipment')) {
+         return 'Detail Biaya Perjalanan';
+      }
+      if (pathName === '/driver') {
+         return 'Driver';
+      }
+      if (pathName === '/users') {
+         return 'Users';
+      }
+   };
    // React.useEffect(() => {
    //    if (dataUser) {
    //       for (let i = 0; i < dataUser.data.module.length; i++) {
@@ -86,10 +116,10 @@ const Container = ({
             <div className="mb-[30px] hidden md:flex justify-between items-center w-full">
                <div>
                   <p className="text-[30px] font-medium text-gray-700 dark:text-white">
-                     {title}
+                     {String(titlePathname())}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-100">
-                     {String(date)}
+                     {tanggal(date)}
                   </p>
                </div>
                <div className="flex items-center gap-[12px] ">

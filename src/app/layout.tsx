@@ -1,4 +1,3 @@
-import { Toaster } from '@/components/ui/toaster';
 import { ReactQueryProvider } from '@/hooks/ReactQueryProvider';
 import 'flatpickr/dist/flatpickr.css';
 import { Montserrat } from 'next/font/google';
@@ -11,7 +10,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-   title: 'Delivery Note',
+   title: 'Catatan Pengiriman',
    description: 'see all notes for the delevery',
 };
 
@@ -26,10 +25,7 @@ export default function RootLayout({
             className={`bg-[#f5f5f5] dark:bg-[#323a67] ${montserrat.className}`}
          >
             <ProviderThemes>
-               <ReactQueryProvider>
-                  <Toaster />
-                  {children}
-               </ReactQueryProvider>
+               <ReactQueryProvider>{children}</ReactQueryProvider>
             </ProviderThemes>
          </body>
       </html>

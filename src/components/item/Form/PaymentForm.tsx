@@ -16,13 +16,14 @@ const PaymentForm = ({
    amount,
    avail,
    type,
+   disable,
 }: {
    amount: AmountT[];
    avail: AvailT[];
    type: string;
+   disable: boolean;
 }) => {
-   const { mutate, isLoading } = MutationFetch(['shipmentDetail']);
-   const [isClear, setIsClear] = useState(false);
+   const { mutate } = MutationFetch(['shipmentDetail']);
    const [currencyValue, setCurrencyValue] = useState<string>('');
    const [shipmentId, setShipmentId] = useState<string>('');
    const ref = useRef<any>(null);
@@ -33,7 +34,6 @@ const PaymentForm = ({
          ref.current.clearValue();
       }
       if (inputRef.current?.value) {
-         console.log('object');
          inputRef.current.value = '0';
       }
    };
@@ -141,13 +141,12 @@ const PaymentForm = ({
             })}
             className="border-t w-full mt-4 pt-5"
          >
-            <div className=" flex flex-wrap gap-4 w-[360px] items-center">
+            <div className=" flex flex-wrap gap-4 min-w-[250px] max-w-[360px] items-center">
                <div className="min-w-[200px] max-w-max">
                   <Select
                      required
                      ref={ref}
                      isMulti
-                     isClearable={isClear}
                      closeMenuOnSelect={false}
                      options={returnItem()}
                      onChange={(e) => {
@@ -162,8 +161,9 @@ const PaymentForm = ({
                <CurrencyInput
                   ref={inputRef}
                   required
+                  disabled={disable}
                   className="border-2 w-[130px] rounded-md p-[5px]"
-                  placeholder="amount"
+                  placeholder="biaya"
                   prefix="Rp "
                   value={currencyValue}
                   onValueChange={(value) => {
@@ -175,9 +175,11 @@ const PaymentForm = ({
             <div className=" mt-[10px]">
                <button
                   type="submit"
-                  className="bg-container text-white py-1 px-2 rounded-md"
+                  className={` text-white py-1 px-2 rounded-md ${
+                     disable ? 'bg-gray-400 cursor-not-allowed' : 'bg-container'
+                  }`}
                >
-                  save
+                  Submit
                </button>
             </div>
          </form>

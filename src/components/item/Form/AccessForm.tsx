@@ -1,7 +1,6 @@
 import { CanRule } from '@/hooks/Can';
 import MutationFetch from '@/hooks/MutationFetch';
 import { useForm } from 'react-hook-form';
-import { Button } from '../../../components/ui/button';
 
 interface Inputs {
    access: string[];
@@ -235,7 +234,7 @@ const ModalAccess = ({
             </div>
             <div className="mt-[15px]">
                <p className="text-[#525252] text-[19px] mb-[10px]">
-                  User Access
+                  Akses Pengguna
                </p>
                <div className=" flex flex-col gap-[10px]">
                   {userFeature?.data.map((feature: any, i: number) => {
@@ -272,13 +271,13 @@ const ModalAccess = ({
             </div>
             <Can I="create" a="user" passThrough>
                {(allow) => (
-                  <Button
+                  <button
                      disabled={!allow}
                      type="submit"
-                     className="w-full  h-max p-[1px] mt-[40px] disabled:cursor-not-allowed text-[17px] hover:bg-container bg-container dark:bg-submit hover:dark:bg-submit-hover"
+                     className="w-full  h-max py-1 px-2 mt-[40px] disabled:cursor-not-allowed text-[17px] hover:bg-container rounded-md text-white bg-container dark:bg-submit hover:dark:bg-submit-hover"
                   >
                      Apply
-                  </Button>
+                  </button>
                )}
             </Can>
          </form>

@@ -44,11 +44,11 @@ const AddDriver = ({ allUserData }: { allUserData: Users[] }) => {
       <Dialog>
          <DialogTrigger>
             <div className="ml-6 cursor-pointer hover:dark:bg-submit-hover bg-container border-dark transition text-white px-3 py-1 rounded-[6px] text-[16px]">
-               Add Driver
+               Tambah Supir
             </div>
          </DialogTrigger>
          <DialogContent>
-            <DialogTitle>Add Driver</DialogTitle>
+            <DialogTitle>Tambah Supir</DialogTitle>
             <div className="w-[500px] bg-white">
                <form
                   onSubmit={handleSubmit((data) => {
@@ -57,7 +57,7 @@ const AddDriver = ({ allUserData }: { allUserData: Users[] }) => {
                >
                   <div className="mt-4">
                      <p className="text-sm mb-1 text-gray-600">
-                        name <span className="text-red-500">*</span>
+                        nama <span className="text-red-500">*</span>
                      </p>
                      <Select
                         onValueChange={(e: string) => {
@@ -80,7 +80,7 @@ const AddDriver = ({ allUserData }: { allUserData: Users[] }) => {
                   </div>
                   <div className="mt-4">
                      <p className="text-sm mb-1 text-gray-600">
-                        Plat Number <span className="text-red-500">*</span>
+                        Nomor Plat <span className="text-red-500">*</span>
                      </p>
                      <Input
                         type="text"
@@ -93,7 +93,7 @@ const AddDriver = ({ allUserData }: { allUserData: Users[] }) => {
                         className="mt-[20px] w-[110px] dark:bg-submit text-white bg-container border-dark hover:bg-container  hover:dark:bg-submit-hover"
                         type="submit"
                      >
-                        {isLoading ? <Loader /> : 'Save'}
+                        {isLoading ? <Loader /> : 'Submit'}
                      </Button>
                   </div>
                </form>

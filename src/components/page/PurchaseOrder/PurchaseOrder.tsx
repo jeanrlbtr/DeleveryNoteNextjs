@@ -21,34 +21,32 @@ const PurchaseOrder = () => {
    const filter = [
       { query: 'salesSearch', title: 'Sales' },
       { query: 'noSearch', title: 'No SJ' },
-      { query: 'recipientSearch', title: 'Recipient Search' },
+      { query: 'recipientSearch', title: 'Penerima' },
    ];
 
    const status = [
       {
-         name: 'view All',
+         name: 'Semua',
          key: 'ALL',
       },
-
       {
-         name: 'Unprocessed',
+         name: 'Belum di Proses',
          key: 'UNPROCESSED',
       },
       {
-         name: 'Confirm',
+         name: 'Konfirmasi',
          key: 'CONFIRM',
       },
       {
-         name: 'InProgress',
+         name: 'Dalam Proses',
          key: 'INPROGRESS',
       },
       {
-         name: 'Canceled',
+         name: 'Batal',
          key: 'CANCELED',
       },
-
       {
-         name: 'Finish',
+         name: 'Selesai',
          key: 'FINISH',
       },
    ];
@@ -110,7 +108,7 @@ const PurchaseOrder = () => {
                      }}
                   >
                      <SelectTrigger className="w-[330px] lg:text-[16px] rounded-l-[5px] rounded-r-[0] border-[1px] text-[#807f7f] gap-[12px] dark:bg-container">
-                        <SelectValue placeholder="Select Filter" />
+                        <SelectValue placeholder="Pilih Filter" />
                      </SelectTrigger>
                      <SelectContent>
                         {filter.map((filterItem: any, index: number) => {
@@ -124,7 +122,7 @@ const PurchaseOrder = () => {
                   </Select>
                   <div className="flex items-center px-[10px] border-[1px] rounded-r-[5px] py-[7px] bg-white dark:bg-container dark:border-white">
                      <input
-                        placeholder="Search"
+                        placeholder="Cari"
                         className={`w-full bg-transparent outline-none lg:text-[16px] border-none ${
                            selectValue === 'all' && 'cursor-not-allowed'
                         }`}

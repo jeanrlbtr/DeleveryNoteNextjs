@@ -1,21 +1,12 @@
 'use client';
 
 import { ProgressSummaryT } from '@/types';
-import { Search } from 'lucide-react';
 
 const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
    const statusAllItem = allItem.data;
    return (
       <div className="">
-         <div className="flex justify-end gap-4 mb-5 w-full items-center">
-            <div className="flex gap-2 border-[1px] items-center px-1 py-1 rounded-md overflow-hidden w-[200px]">
-               <Search className="w-4 h-4 text-gray-600" />
-               <input
-                  placeholder="Search"
-                  className="w-[70%] outline-none dark:bg-white text-gray-600"
-               />
-            </div>
-         </div>
+         <div className="flex justify-end gap-4 mb-5 w-full items-center"></div>
          <div className="bg-white w-full min-w-[100%]  rounded-[7px] min-h-[73vh] overflow-auto">
             <div className="grid grid-cols-5 w-full gap-5">
                {statusAllItem.map((item, index) => {
@@ -74,7 +65,7 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                                     </div>
                                     <div>
                                        <p className="text-[12px] text-gray-700 font-normal">
-                                          Update By:
+                                          Penangung Jawab:
                                        </p>
                                        <p>{itemDetail.inv.store}</p>
                                     </div>
@@ -83,7 +74,7 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                                  <div className="flex justify-between dark:text-gray-700 items-center">
                                     <div>
                                        <p className="text-[12px] capitalize">
-                                          date Shipment :
+                                          Tanggal Pengiriman :
                                        </p>
                                        <p className="text-sm font-medium">
                                           {dateNote}
@@ -91,7 +82,7 @@ const ProgressSummary = ({ allItem }: { allItem: ProgressSummaryT }) => {
                                     </div>
                                     <div>
                                        <p className="text-[12px] capitalize">
-                                          date Order :
+                                          Tanggal SJ :
                                        </p>
                                        <p className="text-sm font-medium">
                                           {dateDelevery}

@@ -54,6 +54,12 @@ const Shipment = ({ shipment, driverData }: ShipmentProps) => {
       {
          header: 'Top Up Toll',
          cell: (row) => {
+            const dateNow = new Date().toLocaleDateString();
+            const dateShipment = new Date(
+               row.row.original.shipmentDate
+            ).toLocaleDateString();
+
+            const disable = dateNow !== dateShipment;
             let amountToll = row.row.original.topupToll;
             return (
                <div className="flex gap-4">
@@ -61,7 +67,10 @@ const Shipment = ({ shipment, driverData }: ShipmentProps) => {
                      defaultValue={amountToll}
                      placeholder="amount"
                      decimalsLimit={2}
-                     className="border rounded-md w-[130px] px-2 py-1"
+                     disabled={disable}
+                     className={`border rounded-md w-[130px] px-2 py-1 ${
+                        disable && 'cursor-not-allowed'
+                     }`}
                      prefix="Rp "
                      onValueChange={(value) => {
                         if (value) {
@@ -71,12 +80,17 @@ const Shipment = ({ shipment, driverData }: ShipmentProps) => {
                      }}
                   />
                   <button
+                     disabled={disable}
                      onClick={() => {
                         handleSaveToll(row.row.original.id, amountToll);
                      }}
-                     className="text-white bg-container px-2 py-1 rounded-md"
+                     className={`text-white  ${
+                        disable
+                           ? 'bg-[gray] cursor-not-allowed'
+                           : 'bg-container'
+                     } px-2 py-1 rounded-md`}
                   >
-                     Save
+                     Submit
                   </button>
                </div>
             );

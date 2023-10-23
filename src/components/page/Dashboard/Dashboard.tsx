@@ -55,23 +55,23 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
    ]);
    const dateRank = [
       {
-         name: 'Today',
+         name: 'Hari Ini',
          key: 'today',
       },
       {
-         name: 'Year',
+         name: 'Tahun',
          key: 'year',
       },
       {
-         name: 'Last Week',
+         name: 'Minggu Lalu',
          key: 'lweek',
       },
       {
-         name: 'Month',
+         name: 'Bulan',
          key: 'month',
       },
       {
-         name: 'Last Month',
+         name: 'Bulan Lalu',
          key: 'lmonth',
       },
    ];
@@ -95,9 +95,9 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
       if (dataStatus) {
          setStatusData([
             { status: dataStatus.status.total, name: 'Total' },
-            { status: dataStatus.status.inprogress, name: 'Process' },
-            { status: dataStatus.status.finish, name: 'Finish' },
-            { status: dataStatus.status.canceled, name: 'Canceled' },
+            { status: dataStatus.status.inprogress, name: 'Proses' },
+            { status: dataStatus.status.finish, name: 'Selesai' },
+            { status: dataStatus.status.canceled, name: 'Batal' },
          ]);
       }
    }, [dataStatus]);
@@ -106,7 +106,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
       <div className="">
          <div className="grid grid-cols-4 md:grid-rows-1 grid-rows-2 justify-between gap-[20px]">
             <div className="activity dark:text-white col-span-4 row-start-2 md:row-start-1 h-[400px] overflow-hidden  md:col-span-1 flex flex-col gap-[12px] md:h-[600px]  overflow-y-auto rounded-[12px] bg-white dark:bg-container px-3 py-2">
-               <p className="text-[20px] mb-[20px]">Activity</p>
+               <p className="text-[20px] mb-[20px]">Aktivitas</p>
                {dashboardData?.activity.length > 0 ? (
                   dashboardData?.activity.map(
                      (activity: ActivityT, index: number) => {
@@ -122,7 +122,9 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                   )
                ) : (
                   <div className="w-full flex justify-center lg:h-[300px] items-center">
-                     <p className="capitalize text-[15px]">no activity</p>
+                     <p className="capitalize text-[15px]">
+                        tidak ada aktivitas
+                     </p>
                   </div>
                )}
             </div>
@@ -130,7 +132,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
                <div className=" flex-1 w-full flex bg-white dark:bg-container rounded-[12px]  px-5 py-2">
                   <div className=" w-full flex-1 flex flex-col justify-between">
                      <p className="mb-[10px] text-gray-800 dark:text-white text-[20px] ">
-                        Total Purchase Order
+                        Total Surat Jalan
                      </p>
                      <Chart dataTotal={dashboardData?.total || false} />
                   </div>
@@ -186,7 +188,7 @@ const Dashboard = ({ data }: { data: DashboardType }) => {
             <>
                <div className="mt-[20px] px-[7px] md:px-[28px] md:flex justify-between items-center">
                   <p className="md:text-[20px] w-max text-gray-800 dark:text-[#fff]">
-                     Most Ordered Product
+                     Produk Paling Populer
                   </p>
                   <div className="flex mt-[20px] md:mt-0 items-center gap-[10px]">
                      <Select

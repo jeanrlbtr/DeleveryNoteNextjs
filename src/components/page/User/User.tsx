@@ -110,12 +110,12 @@ const User = () => {
                            <Dialog>
                               <DialogTrigger>
                                  <div className="dark:bg-submit bg-container hover:dark:bg-submit-hover border-dark transition text-white px-3 py-1 rounded-[6px] text-[16px]">
-                                    Add User
+                                    Tambah User
                                  </div>
                               </DialogTrigger>
                               <DialogContent className="w-full">
                                  <DialogHeader>
-                                    <DialogTitle>Add User</DialogTitle>
+                                    <DialogTitle>Tambah User</DialogTitle>
                                  </DialogHeader>
                                  <div className="px-4 py-2 w-full">
                                     <UserForm level={level} />
@@ -129,13 +129,13 @@ const User = () => {
                            <Dialog>
                               <DialogTrigger>
                                  <div className="dark:bg-submit bg-container border-dark transition hover:dark:bg-submit-hover text-white px-3 ml-[30px] py-1 rounded-[6px] text-[16px]">
-                                    Add Feature
+                                    Tambah Feature
                                  </div>
                               </DialogTrigger>
                               <DialogContent className="w-full dark:bg-container">
                                  <div className="px-4 py-2 min-w-[700px] max-w-[800px]">
                                     <p className="text-[24px] text-[#525252] mb-[20px]">
-                                       Add Features
+                                       Tambah Feature
                                     </p>
                                     <ModalPageAccess />
                                  </div>
@@ -167,7 +167,7 @@ const User = () => {
                               </DialogContent>
                            </Dialog>
                         </Can>
-                        <Can I="update" a="user">
+                        <Can I="create" a="access">
                            <Dialog
                               open={open}
                               onOpenChange={async (e) => {
@@ -208,7 +208,7 @@ const User = () => {
                               <DialogContent className="dark:bg-container">
                                  <DialogHeader>
                                     <p className="text-[24px] text-[#525252] mb-[10px]">
-                                       User Access
+                                       Akses Pengguna
                                     </p>
                                  </DialogHeader>
                                  <div className="px-4 py-2 min-w-[700px] max-w-[800px] max-h-[70vh] overflow-y-auto">
@@ -236,12 +236,12 @@ const User = () => {
                               <DialogContent>
                                  <DialogHeader>
                                     <p className="text-[19px] text-[#525252]">
-                                       Delete User
+                                       Hapus Pengguna
                                     </p>
                                  </DialogHeader>
                                  <div className="px-2 min-w-[400px] max-w-[800px] max-h-[70vh] overflow-y-auto">
                                     <div className="flex gap-[20px] mb-[10px] text-[#525252]">
-                                       Are you sure to delete{' '}
+                                       Apakah anda yakin ingin menghapus{' '}
                                        {row.original.name}?
                                     </div>
                                     <div className="w-full flex justify-end mt-[10px]">
@@ -253,7 +253,7 @@ const User = () => {
                                           size={'sm'}
                                           className="bg-[red] text-[14px] hover:bg-[#f34848]"
                                        >
-                                          Delete
+                                          Hapus
                                        </Button>
                                     </div>
                                  </div>

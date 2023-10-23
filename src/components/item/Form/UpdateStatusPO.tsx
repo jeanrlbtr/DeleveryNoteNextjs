@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
    Select,
@@ -17,9 +16,13 @@ interface DefaulValue {
    status: string;
    note: string;
 }
-
+// 'CONFIRM', 'FINISH'
 const UpdateStatusPO = ({ no }: { no: string }) => {
-   const status = ['CANCELED', 'CONFIRM', 'FINISH'];
+   const status = [
+      { key: 'CANCELED', title: 'Batalkan' },
+      { key: 'CONFIRM', title: 'Konfirmasi' },
+      { key: 'FINISH', title: 'Selesai ' },
+   ];
    const {
       register,
       setValue,
@@ -32,7 +35,7 @@ const UpdateStatusPO = ({ no }: { no: string }) => {
    const { mutate, isLoading } = MutationFetch(['getDetailNote']);
    return (
       <div className="w-[500px]">
-         <p className="text-[20px] text-[#3d3d3d]">Update Status PO</p>
+         <p className="text-[20px] text-[#3d3d3d]">Update Status SJ</p>
          <form
             onSubmit={handleSubmit((data) => {
                mutate({
@@ -57,8 +60,8 @@ const UpdateStatusPO = ({ no }: { no: string }) => {
                   </SelectTrigger>
                   <SelectContent>
                      {status.map((data, index) => (
-                        <SelectItem value={`${data}`} key={index}>
-                           {data}
+                        <SelectItem value={`${data.key}`} key={index}>
+                           {data.title}
                         </SelectItem>
                      ))}
                   </SelectContent>
@@ -76,13 +79,12 @@ const UpdateStatusPO = ({ no }: { no: string }) => {
                   })}
                />
             </div>
-            <Button
-               type="submit"
-               className="w-max bg-[#405189]"
+            <button
+               className="w-max bg-container px-2 py-1 text-white rounded-md"
                disabled={disable}
             >
                {isLoading ? <Loader /> : 'Update Status'}
-            </Button>
+            </button>
          </form>
       </div>
    );
